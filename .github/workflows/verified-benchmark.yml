@@ -4,8 +4,11 @@ on:
   push:
     paths:
       - '.github/workflows/verified-benchmark.yml'
+concurrency:
+  group: unsw-full-benchmark
+  cancel-in-progress: true
 permissions:
-  contents: read
+  contents: write
 jobs:
   benchmark:
     runs-on: ubuntu-latest
@@ -40,7 +43,7 @@ jobs:
           PY
           python src/data_audit.py --train data/UNSW_NB15_training-set.csv --test data/UNSW_NB15_testing-set.csv --output results/data_audit.json
       - name: Full baseline experiment
-        run: python src/run_experiments.py --output results
+        run: python src/run_experiments.py --cv --output results
       - name: Robustness experiment
         run: python src/run_robustness.py --output results/robustness.json
       - name: Summarize results
@@ -66,3 +69,33 @@ jobs:
             environment-freeze.txt
           if-no-files-found: warn
           retention-days: 30
+      - name: Validate completed results before publication
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import pandas as pd
+          x=pd.read_csv('results/metrics_FULL_BENCHMARK.csv')
+          meta=json.loads(Path('results/metadata_FULL_BENCHMARK.json').read_text())
+          robustness=json.loads(Path('results/robustness.json').read_text())
+          assert len(x)==3, f"Expected 3 baselines, got {len(x)}"
+          assert (x['test_rows']==82332).all()
+          assert (x['train_rows']==175341).all()
+          assert ((x[['f1','precision','recall','balanced_accuracy','average_precision']]>=0)&(x[['f1','precision','recall','balanced_accuracy','average_precision']]<=1)).all().all()
+          assert (x[['tn','fp','fn','tp']].sum(axis=1)==82332).all()
+          assert meta['train_sha256']=='bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa'
+          assert meta['test_sha256']=='734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559'
+          assert len(robustness['results'])>3
+          assert len(robustness['features'])>0
+          print('All minimum evidence checks passed')
+          PY
+      - name: Publish real outputs to results/ on main
+        if: success() && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/metrics_FULL_BENCHMARK.csv results/metadata_FULL_BENCHMARK.json results/train_cv_FULL_BENCHMARK.csv results/robustness.json results/data_audit.json results/environment-freeze.txt results/SUMMARY.md
+          git commit -m "results: publish verified executed UNSW-NB15 benchmark [skip ci]"
+          git push origin HEAD:main
