@@ -12,10 +12,11 @@ import numpy as np
 import pandas as pd
 from sklearn.base import clone
 from sklearn.compose import ColumnTransformer
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import balanced_accuracy_score, confusion_matrix, f1_score, precision_score, recall_score
+from sklearn.metrics import average_precision_score, balanced_accuracy_score, confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.model_selection import StratifiedKFold, cross_validate
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -85,6 +86,7 @@ def prepare(train: pd.DataFrame, test: pd.DataFrame):
 
 def models():
     return {
+        "Majority Dummy": DummyClassifier(strategy="most_frequent"),
         "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42),
         "Random Forest": RandomForestClassifier(n_estimators=100, min_samples_leaf=2, random_state=42, n_jobs=1),
     }
@@ -102,11 +104,17 @@ def measure(name, estimator, transformer, x_train, y_train, x_test, y_test):
         predictions = pipeline.predict(x_test)
         elapsed.append(time.perf_counter() - start)
     tn, fp, fn, tp = (int(v) for v in confusion_matrix(y_test, predictions, labels=[0, 1]).ravel())
+    if hasattr(pipeline, "predict_proba"):
+        positive_scores = pipeline.predict_proba(x_test)[:, 1]
+    else:
+        positive_scores = pipeline.decision_function(x_test)
+    pr_auc = float(average_precision_score(y_test, positive_scores))
     return {
         "model": name, "train_rows": int(len(x_train)), "test_rows": int(len(x_test)),
         "precision": float(precision_score(y_test, predictions, zero_division=0)),
         "recall": float(recall_score(y_test, predictions, zero_division=0)),
         "f1": float(f1_score(y_test, predictions, zero_division=0)),
+        "average_precision": pr_auc,
         "balanced_accuracy": float(balanced_accuracy_score(y_test, predictions)),
         "false_positive_rate": fp / (fp + tn) if fp + tn else None,
         "false_negative_rate": fn / (fn + tp) if fn + tp else None,
