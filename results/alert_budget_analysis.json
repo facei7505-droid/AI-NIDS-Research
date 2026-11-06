@@ -1,0 +1,153 @@
+{
+  "mode": "DESCRIPTIVE_POST_HOC_ANALYSIS",
+  "fpr_budget": 0.05,
+  "train_sha256": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa",
+  "test_sha256": "734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559",
+  "findings": [
+    {
+      "model": "Majority Dummy",
+      "subset": "official_test",
+      "threshold": 1.0000000000000002,
+      "validation_fpr": 0,
+      "validation_fpr_upper_one_sided": 0.0002368566224352909,
+      "default_fpr": 1,
+      "constrained_fpr": 0,
+      "fpr_reduction_pp": 100,
+      "constrained_test_fpr_95pct_wilson": [
+        6.776263578034403e-21,
+        0.00010381243322991343
+      ],
+      "budget_violated": false,
+      "budget_overshoot_pp": -5,
+      "default_recall": 1,
+      "constrained_recall": 0,
+      "recall_cost_pp": 100,
+      "false_alarms_prevented": 37000,
+      "additional_attacks_missed": 45332,
+      "normal_rows": 37000,
+      "attack_rows": 45332
+    },
+    {
+      "model": "Majority Dummy",
+      "subset": "nonoverlap_test",
+      "threshold": 1.0000000000000002,
+      "validation_fpr": 0,
+      "validation_fpr_upper_one_sided": 0.0002368566224352909,
+      "default_fpr": 1,
+      "constrained_fpr": 0,
+      "fpr_reduction_pp": 100,
+      "constrained_test_fpr_95pct_wilson": [
+        0,
+        0.00010811313635816341
+      ],
+      "budget_violated": false,
+      "budget_overshoot_pp": -5,
+      "default_recall": 1,
+      "constrained_recall": 0,
+      "recall_cost_pp": 100,
+      "false_alarms_prevented": 35528,
+      "additional_attacks_missed": 38263,
+      "normal_rows": 35528,
+      "attack_rows": 38263
+    },
+    {
+      "model": "Logistic Regression",
+      "subset": "official_test",
+      "threshold": 0.7965980913321519,
+      "validation_fpr": 0.04658493870402802,
+      "validation_fpr_upper_one_sided": 0.04993755552853491,
+      "default_fpr": 0.3914054054054054,
+      "constrained_fpr": 0.11408108108108109,
+      "fpr_reduction_pp": 27.73243243243243,
+      "constrained_test_fpr_95pct_wilson": [
+        0.11088176569934624,
+        0.1173605228268208
+      ],
+      "budget_violated": true,
+      "budget_overshoot_pp": 6.408108108108109,
+      "default_recall": 0.9729771463866584,
+      "constrained_recall": 0.8671137386393718,
+      "recall_cost_pp": 10.586340774728665,
+      "false_alarms_prevented": 10261,
+      "additional_attacks_missed": 4799,
+      "normal_rows": 37000,
+      "attack_rows": 45332
+    },
+    {
+      "model": "Logistic Regression",
+      "subset": "nonoverlap_test",
+      "threshold": 0.7965980913321519,
+      "validation_fpr": 0.04658493870402802,
+      "validation_fpr_upper_one_sided": 0.04993755552853491,
+      "default_fpr": 0.39354875028146813,
+      "constrained_fpr": 0.10656383697365458,
+      "fpr_reduction_pp": 28.698491330781355,
+      "constrained_test_fpr_95pct_wilson": [
+        0.10339778361614543,
+        0.10981496156624676
+      ],
+      "budget_violated": true,
+      "budget_overshoot_pp": 5.656383697365458,
+      "default_recall": 0.9681938164806733,
+      "constrained_recall": 0.8429553354415493,
+      "recall_cost_pp": 12.523848103912394,
+      "false_alarms_prevented": 10196,
+      "additional_attacks_missed": 4792,
+      "normal_rows": 35528,
+      "attack_rows": 38263
+    },
+    {
+      "model": "Random Forest",
+      "subset": "official_test",
+      "threshold": 0.6844428910236416,
+      "validation_fpr": 0.04658493870402802,
+      "validation_fpr_upper_one_sided": 0.04993755552853491,
+      "default_fpr": 0.2861891891891892,
+      "constrained_fpr": 0.1453783783783784,
+      "fpr_reduction_pp": 14.081081081081079,
+      "constrained_test_fpr_95pct_wilson": [
+        0.14182362239593307,
+        0.14900676262765664
+      ],
+      "budget_violated": true,
+      "budget_overshoot_pp": 9.537837837837838,
+      "default_recall": 0.988440836495191,
+      "constrained_recall": 0.9531897996999912,
+      "recall_cost_pp": 3.525103679519981,
+      "false_alarms_prevented": 5210,
+      "additional_attacks_missed": 1598,
+      "normal_rows": 37000,
+      "attack_rows": 45332
+    },
+    {
+      "model": "Random Forest",
+      "subset": "nonoverlap_test",
+      "threshold": 0.6844428910236416,
+      "validation_fpr": 0.04658493870402802,
+      "validation_fpr_upper_one_sided": 0.04993755552853491,
+      "default_fpr": 0.28391691060571944,
+      "constrained_fpr": 0.1414940328754785,
+      "fpr_reduction_pp": 14.242287773024096,
+      "constrained_test_fpr_95pct_wilson": [
+        0.13790865352468673,
+        0.14515693063528817
+      ],
+      "budget_violated": true,
+      "budget_overshoot_pp": 9.149403287547848,
+      "default_recall": 0.9866189269006612,
+      "constrained_recall": 0.9449860178240075,
+      "recall_cost_pp": 4.163290907665374,
+      "false_alarms_prevented": 5060,
+      "additional_attacks_missed": 1593,
+      "normal_rows": 35528,
+      "attack_rows": 38263
+    }
+  ],
+  "caution": [
+    "The validation budget is not guaranteed under test distribution shift.",
+    "Wilson intervals are descriptive under iid row assumptions; correlated network flows can make them too narrow.",
+    "Comparisons use a previously inspected test split and are exploratory, not confirmatory.",
+    "The nonoverlap subset is selected by train-match status and is not a random external sample.",
+    "No assertion of new algorithm, novelty, live deployment performance, or guaranteed future FPR."
+  ]
+}
