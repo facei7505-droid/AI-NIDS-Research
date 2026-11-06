@@ -1,0 +1,75 @@
+name: Exploratory false-alarm budget transfer study
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/alert-budget-study.yml'
+permissions:
+  contents: write
+concurrency:
+  group: alert-budget-study
+  cancel-in-progress: false
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Run automated tests
+        run: python -m pytest -q
+      - name: Acquire verifiable benchmark inputs
+        run: python src/download_data.py
+      - name: Run grouped-validation decision-budget experiment
+        run: |
+          python src/alert_budget_study.py \
+            --train data/UNSW_NB15_training-set.csv \
+            --test data/UNSW_NB15_testing-set.csv \
+            --max-fpr 0.05 \
+            --output results/alert_budget_study.json
+          python src/report_alert_budget.py \
+            --input results/alert_budget_study.json \
+            --output results/ALERT_BUDGET_REPORT.md
+      - name: Validate output invariants
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('results/alert_budget_study.json').read_text())
+          assert r['test_rows']==82332
+          assert r['nonoverlap_rows']+r['overlap_rows']==r['test_rows']
+          assert r['fit_rows']+r['validation_rows']==175341
+          assert len(r['results']) == 6
+          for item in r['results']:
+              if item['status'] == 'evaluated':
+                  for key, total in [('official_test', r['test_rows']), ('nonoverlap_test', r['nonoverlap_rows'])]:
+                      m=item[key]
+                      assert m['tn']+m['fp']+m['fn']+m['tp']==total
+                      assert 0 <= m['f1'] <= 1
+                      assert 0 <= m['recall'] <= 1
+          assert r['train_sha256']=='bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa'
+          assert r['test_sha256']=='734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559'
+          print('Evidence invariants checked')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: exploratory-alert-budget-evidence
+          path: |
+            results/alert_budget_study.json
+            results/ALERT_BUDGET_REPORT.md
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Publish executed outputs, not hypothetical scores
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/alert_budget_study.json results/ALERT_BUDGET_REPORT.md
+          git commit -m "results: publish executed exploratory threshold-transfer study [skip ci]"
+          git push origin HEAD:main
