@@ -1,45 +1,44 @@
-# Novelty audit — Failure Fingerprints (6 Nov 2026)
+# Literature and novelty audit — Failure Fingerprints
 
-**Status:** targeted preliminary literature audit; NOT a systematic review or proof of first-in-world priority. Searches should be repeated with formal inclusion/exclusion criteria, citation chaining, and scholarly indexes before publication.
+**Updated 2026-11-06. Preliminary evidence search, not a systematic review.**
 
-## What already exists
+## Verified relevant publications and context
 
-| Prior work | Relevance | What we must NOT claim |
+| Source | Overlap with this project | Implication |
 |---|---|---|
-| Abdelaziz et al., *Enhancing Network Threat Detection with Random Forest-Based NIDS and Permutation Feature Importance*, Journal of Network and Systems Management (published Oct 2024). https://doi.org/10.1007/s10922-024-09874-0 | Permutation analysis of NIDS features is not novel. | That introducing permutation importance to network intrusion detection is new. |
-| *Formally Verifying Robustness and Generalisation of Network Intrusion Detection Models*, ACM SAC 2025. https://doi.org/10.1145/3672608.3707927 | Natural perturbations, generalisation and robustness have been studied. | That studying feature perturbations in NIDS is new. |
-| Gabriška et al., *Random Forest-Based Network Intrusion Detection with Feature Selection and Class Balancing on UNSW-NB15 Traffic*, Information (2026), 17(9), 836. https://doi.org/10.3390/info17090836 | Attack-specific RF, feature selection and false-alarm tradeoffs already investigated. | That RF ablation and false alarms on UNSW-NB15 are unexplored. |
-| *Robustness-Aware Machine Learning for Network Intrusion Detection under Feature and Distribution Variations Using UNSW-NB15*, IJSMR (2025). https://doi.org/10.37502/IJSMR.2025.81218 | Feature perturbation, reduction, and distribution shifts on UNSW-NB15 exist. | That UNSW-NB15 perturbation robustness is a fresh research branch. |
-| Ologunde, *Reading the Testbed: How Three TTL Features Make Network Intrusion Detection on UNSW-NB15 Look Solved*, ResearchGate preprint (Aug 2026). https://doi.org/10.13140/RG.2.2.21500.30087 | A particularly relevant *non-peer-reviewed* claim about TTL feature shortcut and group ablation. Must replicate independently and distinguish features. | That discovering TTL-related testbed confounding or group ablation is inherently our first discovery. |
+| Gabriška et al. (2026), *Random Forest-Based Network Intrusion Detection with Feature Selection and Class Balancing on UNSW-NB15 Traffic*, Information, 17(9), 836. https://doi.org/10.3390/info17090836 | RF, feature selection, false alarms and class balancing on UNSW-NB15. | We cannot claim to introduce RF feature study or confusion-matrix-driven false-alarm analysis. |
+| *Reliability auditing of explanations for machine-learning-based intrusion detection systems* (2026), Journal of Computer Virology and Hacking Techniques. https://link.springer.com/article/10.1007/s11416-026-00664-7 | SHAP vs permutation importance on UNSW-NB15; model explanation stability. | Permutation as an explanation/evaluation method is established. |
+| *An Explainable and Interpretable GNN Based on Temporal Time Series: An IDS Approach* (2026), Electronics, 15(17), 3764. https://www.mdpi.com/2079-9292/15/17/3764 | Notes that TTL-related UNSW-NB15 attributes may reflect testbed-specific shortcuts, not genuine transferable threat signals. | Our observed protocol/context effects might be driven by TTL-associated features; study them explicitly. |
+| Shrestha (2026), *Machine Learning-Driven Network Anomaly Detection: An Empirical Study Using Isolation Forest and Random Forest on the UNSW-NB15 Benchmark*. https://ausjournal.com/index.php/j/article/view/92 | Reports high discriminative influence of TTL and flow-rate attributes. | TTL/flow-rate dependence is already known in related studies. |
+| Mishra & Mishra (2026), *When Cost-Sensitive Thresholds Fail to Transfer: A Leakage-Controlled Evaluation of Network Intrusion Detection on UNSW-NB15*. https://www.jetir.org/view?paper=JETIR2610258 | Threshold/cost transfer failures studied on the same benchmark. | Earlier alert-budget transfer results cannot be treated as a novel topic in isolation. |
 
-These citations provide background/context, **not** a complete novelty determination. Verify individual bibliographic metadata against the publisher and check newer papers, preprints, and methods in adjacent areas (model interpretation, functional ANOVA, interaction importance, conditional permutation importance).
+These sources have different methodological quality and are **not** equivalent independent replications. Bibliographic metadata should be rechecked at the publisher when preparing a submission. A systematic search should cover grouped/conditional permutation, functional ANOVA interactions, data-drift sensitivity, and multiple hypothesis correction.
 
-## Current unique question candidate
+## Measured preliminary result
 
-For a fixed feature-group partition (timing, volume, protocol, context), evaluate **non-additive false-positive-rate interaction** under jointly permuted feature blocks, with matched group-level randomness and duplicate-group training/validation split. Study whether effect sign and magnitude persist under changes of random split, perturbation severity, perturbation mechanism, model family and external datasets.
+The initial `results/failure_fingerprints.json` contains 66 training-only validation conditions and 36 pair-interaction records from 3 group-held-out split seeds.
 
-Crucially, combinations of existing methods do not automatically constitute novelty; publish the question as **research candidate** rather than an original algorithm.
+For **Random Forest + Protocol/Context**, excess FPR interaction equals approximately **+1.773, +1.905, +1.711 percentage points** for split seeds 13, 29 and 47, with mean **+1.796 pp**. This means the combined synthetic permutation had more impact on FPR than the sum of the separately permuted groups under this experimental definition.
 
-## Existing observation (training-only results, exploratory)
+**This is not a first-in-world discovery or independently replicated result.** The three split seeds reuse the same training corpus and the group construction was researcher-defined.
 
-The executed three-seed study found that Random Forest protocol+context excess FPR was positive in all three group-held-out splits, with a mean increase of about **1.80 percentage points** (individual values about 1.77, 1.91, 1.71). This is a preliminary model sensitivity signal, **not independent replication**. Three overlapping training resamples cannot establish significance or deployment consequences.
+## Next falsifiable analysis: TTL-shortcut decomposition
 
-## Important confounders
+Protocol includes `sttl` and `dttl`, while Context includes `ct_state_ttl`. These variables have known UNSW-NB15 testbed relevance, so it would be scientifically misleading to infer the group interaction is a new network phenomenon without removing or isolating them.
 
-1. The `protocol` group includes TTL-associated attributes (`sttl`, `dttl`) and `context` includes `ct_state_ttl`. Their interaction may be driven by preexisting testbed shortcuts. Future analysis should separate these explicitly, especially in light of the 2026 TTL preprint.
-2. Swapping group values across arbitrary rows may violate physical consistency of network flows. Conclusions must be limited to synthetic sensitivity.
-3. Four groups were manually defined; alternative groupings can change interactions. Group partition is a researcher choice, not discovered ground truth.
-4. Split-seed stability is not independent-dataset stability. Multiple tested pairs also invite selection bias.
-5. No untouched independent dataset is available in our current evidence set.
+The follow-up `src/ttl_decomposition.py` measures synthetic sensitivity using TTL-only, protocol without TTL, context without TTL, paired core groups and complete protocol/context groups, over 3 predefined validation seeds and 2 independent perturbation seeds. This follow-up was designed *after* observing the first protocol+context result; it is explicitly **post-hoc exploratory analysis**.
 
-## Falsifiable next steps
+If protocol-core+context-core remains similar in magnitude after excluding TTL features, TTL shortcut alone cannot fully account for the observed interaction under this perturbation. If effect disappears, the shortcut hypothesis becomes more plausible. **Neither outcome proves causality** without more controls and external validation.
 
-- Study **dose response** on the training split with perturbation fractions 0.10, 0.25 and 0.50, use prespecified independent corruption seeds, and report all conditions.
-- Break the highest observed interaction into TTL-related and non-TTL fields to test whether that shortcut alone explains the effect.
-- Compare against the alternative null control of independent marginal column shuffling and, where possible, physical-validity-constrained perturbations.
-- On a completely untouched external corpus, harmonize feature definitions, repeat split/hyperparameter controls and compare to published group interaction methods.
-- Maintain versioned source searches and distinguish first hypothesis registration from post-hoc selection of a leading pair.
+## Main limitations and standards
 
-## Research ownership
+- Group permutations can violate feature constraints and represent unrealistic flows.
+- Split-seed stability is not new-network generalization.
+- The study has multiple tested group pairs and models, requiring transparency about selection and statistical uncertainty.
+- A cross-dataset evaluation would require feature harmonization, fully untouched data and a written protocol before labels are opened.
+- An original contribution requires a careful systematic comparison with prior literature and new reproducible results, not a novel-sounding title.
+- Software and draft text have substantial AI assistance; the human student's independent contributions and methodological understanding must be accurately represented.
 
-The current software, literature scan and manuscript are AI-assisted. A human investigator must check the citations, independently replicate analyses, question assumptions, and disclose tool use appropriately. Neither a 9–10 rating nor a scientific discovery can be promised before evidence and independent review.
+## Sources
+
+Publisher and article landing pages linked in the table. Original baseline data and numerical outputs are tracked separately in `results/`, along with input hashes.
