@@ -40,3 +40,27 @@ Results are generated only when the designated input files are present. They are
 4. Produce a paper from *measured* results with appropriate citations and AI-assistance disclosure.
 
 **Do not claim a 10/10 scientific evaluation until the experiments are independently reproduced.**
+
+
+## Research-quality components
+
+| Component | File | Purpose |
+|---|---|---|
+| Benchmark | [src/run_experiments.py](src/run_experiments.py) | Train-only preprocessing, LR/RF and majority dummy, F1/FPR/average precision |
+| Data audit | [src/data_audit.py](src/data_audit.py) | Check duplicate and cross-split feature fingerprints, conflicting labels |
+| Uncertainty | [src/uncertainty.py](src/uncertainty.py) | Paired bootstrap intervals for predictions made on the same held-out rows |
+| Stress testing | [src/robustness.py](src/robustness.py) | Synthetic missingness, numeric noise, and unseen categorical values |
+| Tests | [tests/](tests/) | Synthetic-data unit tests |
+| Scientific protocol | [RESEARCH_PROTOCOL.md](RESEARCH_PROTOCOL.md) | Questions, hypotheses, controls, evidence limitations |
+
+**Important:** the data audit and stress-test modules are research utilities, not yet integrated into the main benchmark execution command. No robustness results have been collected. Do not confuse added experiments with executed experiments.
+
+### Audit original splits
+
+```bash
+python src/data_audit.py \
+  --train data/UNSW_NB15_training-set.csv \
+  --test data/UNSW_NB15_testing-set.csv
+```
+
+Read [RESEARCH_STATUS.md](RESEARCH_STATUS.md) for the evidence status and [EXPERIMENT_LOG_TEMPLATE.md](EXPERIMENT_LOG_TEMPLATE.md) to record run metadata.
