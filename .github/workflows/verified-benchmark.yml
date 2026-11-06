@@ -1,0 +1,68 @@
+name: Verified UNSW-NB15 Full Benchmark
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/verified-benchmark.yml'
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip freeze > environment-freeze.txt
+          mkdir -p results
+          cp environment-freeze.txt results/environment-freeze.txt
+      - name: Run automated validation
+        run: python -m pytest -q
+      - name: Download and verify dataset checksums
+        run: python src/download_data.py
+      - name: Confirm official row counts and cross-split audit
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          from pathlib import Path
+          for split, expected in [('training',175341),('testing',82332)]:
+              path = Path('data') / f'UNSW_NB15_{split}-set.csv'
+              df = pd.read_csv(path)
+              assert len(df) == expected, (split, len(df), expected)
+              print(split, len(df))
+          PY
+          python src/data_audit.py --train data/UNSW_NB15_training-set.csv --test data/UNSW_NB15_testing-set.csv --output results/data_audit.json
+      - name: Full baseline experiment
+        run: python src/run_experiments.py --output results
+      - name: Robustness experiment
+        run: python src/run_robustness.py --output results/robustness.json
+      - name: Summarize results
+        run: |
+          python - <<'PY'
+          import json, pathlib, pandas as pd
+          metrics = pd.read_csv('results/metrics_FULL_BENCHMARK.csv')
+          out=['# Executed benchmark (see artifacts)', '', '## Binary classification']
+          out += [metrics.to_markdown(index=False)]
+          record=json.loads(pathlib.Path('results/robustness.json').read_text())
+          out += ['', f"Stress-test rows: {len(record['results'])}",
+                  'Synthetic stress tests cannot verify performance on new real attacks.',
+                  'See data_audit.json for cross-split overlap and conflicting-label warnings.']
+          pathlib.Path('results/SUMMARY.md').write_text('\n'.join(out)+'\n')
+          print('\n'.join(out))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unsw-nb15-research-evidence
+          path: |
+            results/
+            environment-freeze.txt
+          if-no-files-found: warn
+          retention-days: 30
