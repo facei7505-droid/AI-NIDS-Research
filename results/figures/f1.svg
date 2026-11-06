@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="273" viewBox="0 0 760 273" role="img" aria-label="F1 score">
+<rect width="760" height="100%" fill="#ffffff"/>
+<text x="30" y="39" font-size="19" fill="#111827" font-weight="bold">F1 score</text>
+<text x="30" y="65" font-size="12" fill="#4b5563">Measured offline UNSW-NB15 official test results</text>
+<text x="30" y="103" font-size="13" fill="#111827">Majority Dummy</text>
+<rect x="238" y="86" width="420" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="238" y="86" width="298.3" height="24" rx="4" fill="#0f766e"/>
+<text x="672" y="103" font-size="13" fill="#111827">71.02%</text>
+<text x="30" y="159" font-size="13" fill="#111827">Logistic Regression</text>
+<rect x="238" y="142" width="420" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="238" y="142" width="356.7" height="24" rx="4" fill="#2563eb"/>
+<text x="672" y="159" font-size="13" fill="#111827">84.92%</text>
+<text x="30" y="215" font-size="13" fill="#111827">Random Forest</text>
+<rect x="238" y="198" width="420" height="24" rx="4" fill="#e5e7eb"/>
+<rect x="238" y="198" width="373.9" height="24" rx="4" fill="#64748b"/>
+<text x="672" y="215" font-size="13" fill="#111827">89.02%</text>
+</svg>
