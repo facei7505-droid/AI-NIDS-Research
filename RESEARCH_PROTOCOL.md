@@ -1,8 +1,8 @@
-# Preregistered-style research protocol (draft; before full benchmark)
+# Research protocol (draft, with prospective components and retrospective follow-up)
 
 **Project title:** Reliable and Efficient Network Intrusion Detection Under Data Shift and Limited Computational Resources
 
-**Status:** a prospective protocol, not completed research. Protocol revisions must be documented before reading the designated test labels.
+**Status:** The baseline benchmark has now been executed and its test outcomes inspected. The alarm-budget transfer and non-overlap subgroup analyses were specified AFTER those results and are explicitly EXPLORATORY. Only independent untouched external data could support confirmatory evaluation of this follow-up hypothesis. Preserve dated protocol revisions and do not claim this was preregistered before the official test was seen.
 
 ## Research questions
 
@@ -62,3 +62,7 @@ Student investigator should personally explain preprocessing choices, data split
 - Bouke & Abdullah (2023). Pattern leakage in ML-based IDS, *Expert Systems with Applications*. https://doi.org/10.1016/j.eswa.2023.120715
 - Berhili, Chaieb & Benabdellah (2026). Evaluation protocol choices and IDS accuracy, *Computers & Security*. https://doi.org/10.1016/j.cose.2026.105218
 - UNSW-NB15 official dataset. https://research.unsw.edu.au/projects/unsw-nb15-dataset
+
+## 6 November 2026 update: executed baseline and exploratory follow-up
+
+Baseline results are at `results/metrics_FULL_BENCHMARK.csv`; Random Forest F1=0.8902, recall=0.9885, false-positive rate=0.2847. The feature fingerprint audit flagged 8,541 overlapping predictor rows (10.37% of the official test). We subsequently defined the exploratory threshold-policy transfer study in `src/alert_budget_study.py`. The threshold is selected only on group-held-out training validation; however, because the official test baseline was previously inspected, the follow-up test analyses are not prospectively preregistered confirmation. Any eventual originality claim requires comparison to literature and fresh external evaluation.
