@@ -117,3 +117,22 @@ Reproduce the descriptive statistics after running the threshold study:
 ```bash
 python src/analyze_alert_budget.py --input results/alert_budget_study.json
 ```
+
+
+## Failure Fingerprints: training-only feature-group interaction experiment
+
+New exploratory analysis designed to investigate potential **non-additive increases in false alarms** when two groups of traffic features change together. This is a hypothesis, **not a confirmed discovery**.
+
+- [Predefined protocol](FAILURE_FINGERPRINTS_PROTOCOL.md) — hypotheses, seeds (13, 29, 47), four groups, all six pairs, limits and falsification.
+- [Experiment code](src/failure_fingerprints.py) — only the official 175,341-row **training CSV** is used; the official test CSV is never loaded.
+- [Research reporting](src/report_failure_fingerprints.py) — reports all group effects and pair interactions; no selective best-case reporting.
+- [Tests](tests/test_failure_fingerprints.py) and [GitHub Actions workflow](.github/workflows/failure-fingerprints.yml) for automatic execution.
+
+After successful execution, outputs will be `results/failure_fingerprints.json` and `results/FAILURE_FINGERPRINTS_REPORT.md`. Their absence means **results not yet confirmed**.
+
+```bash
+python src/failure_fingerprints.py --train data/UNSW_NB15_training-set.csv
+python src/report_failure_fingerprints.py
+```
+
+These perturbations can create unrealistic traffic-feature combinations and are not evidence of deployment robustness or a globally new discovery. An untouched external benchmark and comparison with feature-interaction literature are required.
