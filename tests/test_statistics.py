@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from statistics import binary_metrics, paired_bootstrap_difference
+from uncertainty import binary_metrics, paired_bootstrap_difference
 
 
 def test_binary_confusion_matrix():
