@@ -1,0 +1,12 @@
+{
+  "train_rows": 175341,
+  "test_rows": 82332,
+  "predictor_columns": 42,
+  "duplicate_train_rows": 74301,
+  "duplicate_test_rows": 28386,
+  "test_rows_matching_training_predictors": 8541,
+  "test_overlap_fraction": 0.10373852208132925,
+  "conflicting_duplicate_feature_groups_train": 229,
+  "conflicting_feature_groups_pooled": 414,
+  "warning": "Non-cryptographic row fingerprints are for diagnostic screening, not proof of identical records. Verify suspicious matches from source data. Do not remove overlapping records without documenting benchmark modifications."
+}
