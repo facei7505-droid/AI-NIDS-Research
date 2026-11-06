@@ -97,3 +97,23 @@ The alert-budget workflow is designed to publish `results/alert_budget_study.jso
 ## AI assistance and student ownership
 
 Much of the software and draft text was AI-assisted. Scientific authorship must accurately reflect the investigator's personal contributions, independent verification and ability to explain the study. A high school research project should not present automated output as a student-discovered result without independent validation.
+
+
+## Executed exploratory false-alarm follow-up (2026-11-06)
+
+The [executed threshold study](results/alert_budget_study.json) and its [descriptive statistical report](results/ALERT_BUDGET_ANALYSIS.md) are now available. Selection targeted a **5% false-positive rate on training-only held-out validation**. It **did not transfer** to the official test set:
+
+| Model | Default test FPR | Constrained test FPR | Constrained test recall |
+|---|---:|---:|---:|
+| Logistic Regression | 39.14% | 11.41% | 86.71% |
+| Random Forest | 28.62% | 14.54% | 95.32% |
+
+For Random Forest, this removed 5,210 false alarms but produced 1,598 more missed attacks than the default threshold in the same study. On the non-overlap test subset, constrained FPR remained 14.15% for Random Forest and 10.66% for Logistic Regression.
+
+**Status:** These are real executed historical benchmark measurements, but follow-up design occurred after baseline test inspection. Consequently findings are exploratory, not independently validated novel science. See the [updated research manuscript](paper/MANUSCRIPT_DRAFT.md).
+
+Reproduce the descriptive statistics after running the threshold study:
+
+```bash
+python src/analyze_alert_budget.py --input results/alert_budget_study.json
+```
