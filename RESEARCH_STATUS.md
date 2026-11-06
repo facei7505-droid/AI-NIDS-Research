@@ -38,3 +38,12 @@ Research planning, baseline code, tests, and documentation were AI-assisted. Res
 5. Discuss leakage, distribution shift, external validity and limitations without exaggeration.
 
 **Do not claim the project is complete, 10/10, or accepted by a university.**
+
+## Update: research utilities added (2026-11-06)
+
+- `src/data_audit.py` + dedicated tests: screening for train/test overlap and contradictory feature/label groups.
+- `src/uncertainty.py` + dedicated tests: paired bootstrap confidence intervals from fixed predictions.
+- `src/robustness.py` + dedicated tests: seeded synthetic input corruptions for prospective stress testing.
+- Majority-class dummy control and average precision were added to the benchmark.
+- These utilities have been committed, but full experiment integration, actual UNSW-NB15 execution, and confirmed successful CI run are **not yet verified**.
+- GitHub file existence was checked through the connector; this is not equivalent to running unit tests.
