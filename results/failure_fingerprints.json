@@ -1,0 +1,1406 @@
+{
+  "status": "TRAINING_ONLY_EXPLORATORY_SYNTHETIC_DIAGNOSTIC",
+  "split_seeds": [
+    13,
+    29,
+    47
+  ],
+  "fraction": 0.25,
+  "groups": {
+    "timing": [
+      "dur",
+      "sinpkt",
+      "dinpkt",
+      "sjit",
+      "djit",
+      "tcprtt",
+      "synack",
+      "ackdat"
+    ],
+    "volume": [
+      "sbytes",
+      "dbytes",
+      "spkts",
+      "dpkts",
+      "sload",
+      "dload",
+      "sloss",
+      "dloss",
+      "smean",
+      "dmean"
+    ],
+    "protocol": [
+      "proto",
+      "service",
+      "state",
+      "sttl",
+      "dttl",
+      "swin",
+      "dwin",
+      "stcpb",
+      "dtcpb"
+    ],
+    "context": [
+      "ct_srv_src",
+      "ct_srv_dst",
+      "ct_dst_ltm",
+      "ct_src_ltm",
+      "ct_dst_src_ltm",
+      "ct_src_dport_ltm",
+      "ct_dst_sport_ltm",
+      "ct_state_ttl",
+      "ct_flw_http_mthd",
+      "ct_ftp_cmd",
+      "is_ftp_login",
+      "is_sm_ips_ports",
+      "trans_depth",
+      "response_body_len",
+      "rate"
+    ]
+  },
+  "rows": [
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "clean",
+      "features": [],
+      "fraction": 0.0,
+      "fpr": 0.17861963466210745,
+      "recall": 0.987618414492272,
+      "f1": 0.9541777893743854,
+      "tn": 9128,
+      "fp": 1985,
+      "fn": 298,
+      "tp": 23770
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "timing",
+      "features": [
+        "timing"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1814991451453253,
+      "recall": 0.9879508060495263,
+      "f1": 0.9537332290475904,
+      "tn": 9096,
+      "fp": 2017,
+      "fn": 290,
+      "tp": 23778
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "volume",
+      "features": [
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.16917124088904886,
+      "recall": 0.9526342030912415,
+      "f1": 0.9382109828954907,
+      "tn": 9233,
+      "fp": 1880,
+      "fn": 1140,
+      "tp": 22928
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "protocol",
+      "features": [
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.2434986052371097,
+      "recall": 0.9203091241482466,
+      "f1": 0.9054860600114463,
+      "tn": 8407,
+      "fp": 2706,
+      "fn": 1918,
+      "tp": 22150
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "context",
+      "features": [
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17286061369567174,
+      "recall": 0.969419976732591,
+      "f1": 0.9461284239978913,
+      "tn": 9192,
+      "fp": 1921,
+      "fn": 736,
+      "tp": 23332
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "timing+volume",
+      "features": [
+        "timing",
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17349050661387563,
+      "recall": 0.9540053182649161,
+      "f1": 0.9380068223134588,
+      "tn": 9185,
+      "fp": 1928,
+      "fn": 1107,
+      "tp": 22961
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "timing+protocol",
+      "features": [
+        "timing",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.2460181769099253,
+      "recall": 0.9202675752035898,
+      "f1": 0.9049457620886192,
+      "tn": 8379,
+      "fp": 2734,
+      "fn": 1919,
+      "tp": 22149
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "timing+context",
+      "features": [
+        "timing",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17646000179969404,
+      "recall": 0.970250955625727,
+      "f1": 0.9457888661630992,
+      "tn": 9152,
+      "fp": 1961,
+      "fn": 716,
+      "tp": 23352
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "volume+protocol",
+      "features": [
+        "volume",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.24313866642670745,
+      "recall": 0.8904354329400033,
+      "f1": 0.8892346631812618,
+      "tn": 8411,
+      "fp": 2702,
+      "fn": 2637,
+      "tp": 21431
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "volume+context",
+      "features": [
+        "volume",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.16863133267344552,
+      "recall": 0.9349759016120991,
+      "f1": 0.9290122819692435,
+      "tn": 9239,
+      "fp": 1874,
+      "fn": 1565,
+      "tp": 22503
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "condition": "protocol+context",
+      "features": [
+        "protocol",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.242418788805903,
+      "recall": 0.9035233505068971,
+      "f1": 0.8965943761853715,
+      "tn": 8419,
+      "fp": 2694,
+      "fn": 2322,
+      "tp": 21746
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "clean",
+      "features": [],
+      "fraction": 0.0,
+      "fpr": 0.0989831728606137,
+      "recall": 0.9798487618414492,
+      "f1": 0.9674878464031507,
+      "tn": 10013,
+      "fp": 1100,
+      "fn": 485,
+      "tp": 23583
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "timing",
+      "features": [
+        "timing"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.10960136776747953,
+      "recall": 0.9805966428452717,
+      "f1": 0.9655327592202426,
+      "tn": 9895,
+      "fp": 1218,
+      "fn": 467,
+      "tp": 23601
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "volume",
+      "features": [
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.12453882839917214,
+      "recall": 0.9823416985208576,
+      "f1": 0.9631530705774519,
+      "tn": 9729,
+      "fp": 1384,
+      "fn": 425,
+      "tp": 23643
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "protocol",
+      "features": [
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.14082605956987312,
+      "recall": 0.9233006481635366,
+      "f1": 0.9287221815902205,
+      "tn": 9548,
+      "fp": 1565,
+      "fn": 1846,
+      "tp": 22222
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "context",
+      "features": [
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.12084945559254927,
+      "recall": 0.9823001495762007,
+      "f1": 0.9639369661386663,
+      "tn": 9770,
+      "fp": 1343,
+      "fn": 426,
+      "tp": 23642
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "timing+volume",
+      "features": [
+        "timing",
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1302078646630073,
+      "recall": 0.9800565065647333,
+      "f1": 0.9607559619575179,
+      "tn": 9666,
+      "fp": 1447,
+      "fn": 480,
+      "tp": 23588
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "timing+protocol",
+      "features": [
+        "timing",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1613425717628003,
+      "recall": 0.9238823333887319,
+      "f1": 0.9246314738965008,
+      "tn": 9320,
+      "fp": 1793,
+      "fn": 1832,
+      "tp": 22236
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "timing+context",
+      "features": [
+        "timing",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.12624853774858275,
+      "recall": 0.9795579192288516,
+      "f1": 0.9613635900258936,
+      "tn": 9710,
+      "fp": 1403,
+      "fn": 492,
+      "tp": 23576
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "volume+protocol",
+      "features": [
+        "volume",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17556015477368847,
+      "recall": 0.9231344523849094,
+      "f1": 0.9212015672616456,
+      "tn": 9162,
+      "fp": 1951,
+      "fn": 1850,
+      "tp": 22218
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "volume+context",
+      "features": [
+        "volume",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.14505534059209935,
+      "recall": 0.9827571879674256,
+      "f1": 0.9589118845397604,
+      "tn": 9501,
+      "fp": 1612,
+      "fn": 415,
+      "tp": 23653
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "condition": "protocol+context",
+      "features": [
+        "protocol",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1804193287141186,
+      "recall": 0.9203922220375602,
+      "f1": 0.9186936236391913,
+      "tn": 9108,
+      "fp": 2005,
+      "fn": 1916,
+      "tp": 22152
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "clean",
+      "features": [],
+      "fraction": 0.0,
+      "fpr": 0.17706546275395033,
+      "recall": 0.9874370814093765,
+      "f1": 0.9545006735428353,
+      "tn": 9114,
+      "fp": 1961,
+      "fn": 302,
+      "tp": 23737
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "timing",
+      "features": [
+        "timing"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1796839729119639,
+      "recall": 0.9886434543866217,
+      "f1": 0.9545536700471935,
+      "tn": 9085,
+      "fp": 1990,
+      "fn": 273,
+      "tp": 23766
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "volume",
+      "features": [
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.16758465011286683,
+      "recall": 0.9520362743874538,
+      "f1": 0.9383161476804494,
+      "tn": 9219,
+      "fp": 1856,
+      "fn": 1153,
+      "tp": 22886
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "protocol",
+      "features": [
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.24180586907449209,
+      "recall": 0.9257456632971421,
+      "f1": 0.908864429968757,
+      "tn": 8397,
+      "fp": 2678,
+      "fn": 1785,
+      "tp": 22254
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "context",
+      "features": [
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17571106094808125,
+      "recall": 0.9675943258871001,
+      "f1": 0.944664432937354,
+      "tn": 9129,
+      "fp": 1946,
+      "fn": 779,
+      "tp": 23260
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "timing+volume",
+      "features": [
+        "timing",
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17164785553047404,
+      "recall": 0.9539498315237739,
+      "f1": 0.9384514650515633,
+      "tn": 9174,
+      "fp": 1901,
+      "fn": 1107,
+      "tp": 22932
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "timing+protocol",
+      "features": [
+        "timing",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.24397291196388263,
+      "recall": 0.9262864511834935,
+      "f1": 0.9087087822396344,
+      "tn": 8373,
+      "fp": 2702,
+      "fn": 1772,
+      "tp": 22267
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "timing+context",
+      "features": [
+        "timing",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1778781038374718,
+      "recall": 0.969591081159782,
+      "f1": 0.9452318673074194,
+      "tn": 9105,
+      "fp": 1970,
+      "fn": 731,
+      "tp": 23308
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "volume+protocol",
+      "features": [
+        "volume",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.23909706546275394,
+      "recall": 0.8932567910478806,
+      "f1": 0.8917358803986711,
+      "tn": 8427,
+      "fp": 2648,
+      "fn": 2566,
+      "tp": 21473
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "volume+context",
+      "features": [
+        "volume",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17182844243792325,
+      "recall": 0.9332334955696993,
+      "f1": 0.927484703158591,
+      "tn": 9172,
+      "fp": 1903,
+      "fn": 1605,
+      "tp": 22434
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "condition": "protocol+context",
+      "features": [
+        "protocol",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.24487584650112867,
+      "recall": 0.9076084695702816,
+      "f1": 0.8984331569519652,
+      "tn": 8363,
+      "fp": 2712,
+      "fn": 2221,
+      "tp": 21818
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "clean",
+      "features": [],
+      "fraction": 0.0,
+      "fpr": 0.10248306997742664,
+      "recall": 0.9778276966595948,
+      "f1": 0.9657354149548069,
+      "tn": 9940,
+      "fp": 1135,
+      "fn": 533,
+      "tp": 23506
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "timing",
+      "features": [
+        "timing"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.112686230248307,
+      "recall": 0.9776613003868714,
+      "f1": 0.9634138842771937,
+      "tn": 9827,
+      "fp": 1248,
+      "fn": 537,
+      "tp": 23502
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "volume",
+      "features": [
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.11909706546275395,
+      "recall": 0.9743333749324015,
+      "f1": 0.9603116031160311,
+      "tn": 9756,
+      "fp": 1319,
+      "fn": 617,
+      "tp": 23422
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "protocol",
+      "features": [
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1288487584650113,
+      "recall": 0.9309039477515704,
+      "f1": 0.9354569015968565,
+      "tn": 9648,
+      "fp": 1427,
+      "fn": 1661,
+      "tp": 22378
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "context",
+      "features": [
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.12081264108352144,
+      "recall": 0.979408461250468,
+      "f1": 0.9625314282210093,
+      "tn": 9737,
+      "fp": 1338,
+      "fn": 495,
+      "tp": 23544
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "timing+volume",
+      "features": [
+        "timing",
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1271331828442438,
+      "recall": 0.9713798410915595,
+      "f1": 0.9570474199762286,
+      "tn": 9667,
+      "fp": 1408,
+      "fn": 688,
+      "tp": 23351
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "timing+protocol",
+      "features": [
+        "timing",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.15024830699774266,
+      "recall": 0.929031989683431,
+      "f1": 0.9298442834540761,
+      "tn": 9411,
+      "fp": 1664,
+      "fn": 1706,
+      "tp": 22333
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "timing+context",
+      "features": [
+        "timing",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.12966139954853273,
+      "recall": 0.9761221348641791,
+      "f1": 0.9589293011851246,
+      "tn": 9639,
+      "fp": 1436,
+      "fn": 574,
+      "tp": 23465
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "volume+protocol",
+      "features": [
+        "volume",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.15774266365688489,
+      "recall": 0.9253712716835143,
+      "f1": 0.9262767795798547,
+      "tn": 9328,
+      "fp": 1747,
+      "fn": 1794,
+      "tp": 22245
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "volume+context",
+      "features": [
+        "volume",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.13968397291196388,
+      "recall": 0.9741253795914971,
+      "f1": 0.9557374038324185,
+      "tn": 9528,
+      "fp": 1547,
+      "fn": 622,
+      "tp": 23417
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "condition": "protocol+context",
+      "features": [
+        "protocol",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.16623024830699773,
+      "recall": 0.9289487915470693,
+      "f1": 0.9263860944597706,
+      "tn": 9234,
+      "fp": 1841,
+      "fn": 1708,
+      "tp": 22331
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "clean",
+      "features": [],
+      "fraction": 0.0,
+      "fpr": 0.17387762490948588,
+      "recall": 0.9885234313277059,
+      "f1": 0.9558329815250387,
+      "tn": 9127,
+      "fp": 1921,
+      "fn": 276,
+      "tp": 23773
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "timing",
+      "features": [
+        "timing"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17641202027516292,
+      "recall": 0.9891887396565345,
+      "f1": 0.955630988008918,
+      "tn": 9099,
+      "fp": 1949,
+      "fn": 260,
+      "tp": 23789
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "volume",
+      "features": [
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.166183924692252,
+      "recall": 0.9503097841906109,
+      "f1": 0.9378116087732616,
+      "tn": 9212,
+      "fp": 1836,
+      "fn": 1195,
+      "tp": 22854
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "protocol",
+      "features": [
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.2363323678493845,
+      "recall": 0.9234895421847062,
+      "f1": 0.908919765086251,
+      "tn": 8437,
+      "fp": 2611,
+      "fn": 1840,
+      "tp": 22209
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "context",
+      "features": [
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17749818971759596,
+      "recall": 0.9722233772714042,
+      "f1": 0.9467716790508393,
+      "tn": 9087,
+      "fp": 1961,
+      "fn": 668,
+      "tp": 23381
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "timing+volume",
+      "features": [
+        "timing",
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1693519188993483,
+      "recall": 0.9523472909476486,
+      "f1": 0.9382053540339594,
+      "tn": 9177,
+      "fp": 1871,
+      "fn": 1146,
+      "tp": 22903
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "timing+protocol",
+      "features": [
+        "timing",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.23832367849384503,
+      "recall": 0.9241548505135349,
+      "f1": 0.9088678512278406,
+      "tn": 8415,
+      "fp": 2633,
+      "fn": 1824,
+      "tp": 22225
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "timing+context",
+      "features": [
+        "timing",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.180032585083273,
+      "recall": 0.9729302673707847,
+      "f1": 0.946597621166761,
+      "tn": 9059,
+      "fp": 1989,
+      "fn": 651,
+      "tp": 23398
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "volume+protocol",
+      "features": [
+        "volume",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.23886676321506156,
+      "recall": 0.8898914715788598,
+      "f1": 0.8900580174260225,
+      "tn": 8409,
+      "fp": 2639,
+      "fn": 2648,
+      "tp": 21401
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "volume+context",
+      "features": [
+        "volume",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.17369659666908038,
+      "recall": 0.9356314191858289,
+      "f1": 0.9284697435474221,
+      "tn": 9129,
+      "fp": 1919,
+      "fn": 1548,
+      "tp": 22501
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "condition": "protocol+context",
+      "features": [
+        "protocol",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.24013396089790007,
+      "recall": 0.9078547964572331,
+      "f1": 0.8996806428350674,
+      "tn": 8395,
+      "fp": 2653,
+      "fn": 2216,
+      "tp": 21833
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "clean",
+      "features": [],
+      "fraction": 0.0,
+      "fpr": 0.09703113685734975,
+      "recall": 0.9787932970185871,
+      "f1": 0.9674886970817921,
+      "tn": 9976,
+      "fp": 1072,
+      "fn": 510,
+      "tp": 23539
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "timing",
+      "features": [
+        "timing"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.10119478638667632,
+      "recall": 0.9779200798369995,
+      "f1": 0.9661291979048988,
+      "tn": 9930,
+      "fp": 1118,
+      "fn": 531,
+      "tp": 23518
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "volume",
+      "features": [
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.12156046343229544,
+      "recall": 0.9834088735498357,
+      "f1": 0.9644794257982954,
+      "tn": 9705,
+      "fp": 1343,
+      "fn": 399,
+      "tp": 23650
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "protocol",
+      "features": [
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.14871469949312094,
+      "recall": 0.9318890598361679,
+      "f1": 0.9317921959129368,
+      "tn": 9405,
+      "fp": 1643,
+      "fn": 1638,
+      "tp": 22411
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "context",
+      "features": [
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.11866401158580739,
+      "recall": 0.9823277475154892,
+      "f1": 0.9645598562796015,
+      "tn": 9737,
+      "fp": 1311,
+      "fn": 425,
+      "tp": 23624
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "timing+volume",
+      "features": [
+        "timing",
+        "volume"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.125,
+      "recall": 0.9816624391866605,
+      "f1": 0.9628451405032832,
+      "tn": 9667,
+      "fp": 1381,
+      "fn": 441,
+      "tp": 23608
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "timing+protocol",
+      "features": [
+        "timing",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1642831281679942,
+      "recall": 0.9296852259969229,
+      "f1": 0.9272945958276305,
+      "tn": 9233,
+      "fp": 1815,
+      "fn": 1691,
+      "tp": 22358
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "timing+context",
+      "features": [
+        "timing",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.11965966690803766,
+      "recall": 0.9752588465216849,
+      "f1": 0.9607373271889401,
+      "tn": 9726,
+      "fp": 1322,
+      "fn": 595,
+      "tp": 23454
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "volume+protocol",
+      "features": [
+        "volume",
+        "protocol"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.18528240405503257,
+      "recall": 0.9315148239012017,
+      "f1": 0.9238319105942513,
+      "tn": 9001,
+      "fp": 2047,
+      "fn": 1647,
+      "tp": 22402
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "volume+context",
+      "features": [
+        "volume",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1418356263577118,
+      "recall": 0.9852384714541145,
+      "f1": 0.9610221050496857,
+      "tn": 9481,
+      "fp": 1567,
+      "fn": 355,
+      "tp": 23694
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "condition": "protocol+context",
+      "features": [
+        "protocol",
+        "context"
+      ],
+      "fraction": 0.25,
+      "fpr": 0.1874547429398986,
+      "recall": 0.9317643145245125,
+      "f1": 0.9235080778107484,
+      "tn": 8977,
+      "fp": 2071,
+      "fn": 1641,
+      "tp": 22408
+    }
+  ],
+  "notes": [
+    "Only the official training CSV is used, never the official test CSV.",
+    "Validation groups are separated by predictor fingerprints; not temporal or independent-network separation.",
+    "A joint shuffle preserves within-group values, but can create physically impossible cross-group feature combinations.",
+    "Changes in performance are sensitivity diagnostics, not causal feature attribution.",
+    "Paired-group interaction is delta(A+B)-delta(A)-delta(B), using clean validation metric as reference.",
+    "A replication or novelty claim requires external untouched data and literature comparison."
+  ],
+  "train_sha256": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa",
+  "interactions": [
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "pair": "timing+volume",
+      "excess_fpr_pp": 0.14397552416089143,
+      "excess_recall_loss_pp": -0.10387236164202118
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "pair": "timing+protocol",
+      "excess_fpr_pp": -0.03599388104022494,
+      "excess_recall_loss_pp": 0.03739405019111963
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "pair": "timing+context",
+      "excess_fpr_pp": 0.07198776208044433,
+      "excess_recall_loss_pp": -0.04985873358817061
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "pair": "volume+protocol",
+      "excess_fpr_pp": 0.9088454962656339,
+      "excess_recall_loss_pp": -0.5110520192787127
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "pair": "volume+context",
+      "excess_fpr_pp": 0.5219112750832366,
+      "excess_recall_loss_pp": -0.05401362805386167
+    },
+    {
+      "seed": 13,
+      "model": "Logistic Regression",
+      "pair": "protocol+context",
+      "excess_fpr_pp": 0.467920453522902,
+      "excess_recall_loss_pp": -0.14126641183315192
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "pair": "timing+volume",
+      "excess_fpr_pp": -0.49491586430306794,
+      "excess_recall_loss_pp": 0.3033072959946814
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "pair": "timing+protocol",
+      "excess_fpr_pp": 0.9898317286061359,
+      "excess_recall_loss_pp": 0.016619577862719837
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "pair": "timing+context",
+      "excess_fpr_pp": -0.5219112750832353,
+      "excess_recall_loss_pp": 0.349011135117161
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "pair": "volume+protocol",
+      "excess_fpr_pp": 0.9178439665256901,
+      "excess_recall_loss_pp": 0.2659132458035618
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "pair": "volume+context",
+      "excess_fpr_pp": -0.13497705390083659,
+      "excess_recall_loss_pp": 0.2035898288183513
+    },
+    {
+      "seed": 13,
+      "model": "Random Forest",
+      "pair": "protocol+context",
+      "excess_fpr_pp": 1.7726986412309895,
+      "excess_recall_loss_pp": 0.5359813860727924
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "pair": "timing+volume",
+      "excess_fpr_pp": 0.1444695259593648,
+      "excess_recall_loss_pp": -0.07071841590748917
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "pair": "timing+protocol",
+      "excess_fpr_pp": -0.04514672686230237,
+      "excess_recall_loss_pp": 0.06655850908938721
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "pair": "timing+context",
+      "excess_fpr_pp": -0.04514672686230237,
+      "excess_recall_loss_pp": -0.0790382295436598
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "pair": "volume+protocol",
+      "excess_fpr_pp": 0.6772009029345355,
+      "excess_recall_loss_pp": -0.2911934772661162
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "pair": "volume+context",
+      "excess_fpr_pp": 0.5598194130925493,
+      "excess_recall_loss_pp": -0.10399767045218278
+    },
+    {
+      "seed": 29,
+      "model": "Logistic Regression",
+      "pair": "protocol+context",
+      "excess_fpr_pp": 0.44243792325056597,
+      "excess_recall_loss_pp": -0.1705561795415811
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "pair": "timing+volume",
+      "excess_fpr_pp": -0.21670428893905136,
+      "excess_recall_loss_pp": 0.27871375681185473
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "pair": "timing+protocol",
+      "excess_fpr_pp": 1.1196388261851014,
+      "excess_recall_loss_pp": 0.1705561795415922
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "pair": "timing+context",
+      "excess_fpr_pp": -0.1354401805869071,
+      "excess_recall_loss_pp": 0.31199301135654833
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "pair": "volume+protocol",
+      "excess_fpr_pp": 1.2279909706546286,
+      "excess_recall_loss_pp": 0.2038354340862747
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "pair": "volume+context",
+      "excess_fpr_pp": 0.22573363431151322,
+      "excess_recall_loss_pp": 0.1788759931777517
+    },
+    {
+      "seed": 29,
+      "model": "Random Forest",
+      "pair": "protocol+context",
+      "excess_fpr_pp": 1.905191873589164,
+      "excess_recall_loss_pp": 0.35359207953742366
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "pair": "timing+volume",
+      "excess_fpr_pp": 0.06335988414192806,
+      "excess_recall_loss_pp": -0.1372198428209126
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "pair": "timing+protocol",
+      "excess_fpr_pp": -0.05430847212165024,
+      "excess_recall_loss_pp": 0.0
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "pair": "timing+context",
+      "excess_fpr_pp": 0.0,
+      "excess_recall_loss_pp": -0.004158177055191281
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "pair": "volume+protocol",
+      "excess_fpr_pp": 1.022809558291096,
+      "excess_recall_loss_pp": -0.46155765312486663
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "pair": "volume+context",
+      "excess_fpr_pp": 0.3892107168718323,
+      "excess_recall_loss_pp": -0.16216890515198257
+    },
+    {
+      "seed": 47,
+      "model": "Logistic Regression",
+      "pair": "protocol+context",
+      "excess_fpr_pp": 0.01810282404055008,
+      "excess_recall_loss_pp": -0.06653083288286066
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "pair": "timing+volume",
+      "excess_fpr_pp": -0.07241129616220171,
+      "excess_recall_loss_pp": 0.08732171815876155
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "pair": "timing+protocol",
+      "excess_fpr_pp": 1.140477914554669,
+      "excess_recall_loss_pp": 0.13306166576573242
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "pair": "timing+context",
+      "excess_fpr_pp": -0.3167994207096306,
+      "excess_recall_loss_pp": 0.619568381221669
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "pair": "volume+protocol",
+      "excess_fpr_pp": 1.2038377986965942,
+      "excess_recall_loss_pp": 0.49898124662148824
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "pair": "volume+context",
+      "excess_fpr_pp": -0.13577118030412838,
+      "excess_recall_loss_pp": 0.17048525926234293
+    },
+    {
+      "seed": 47,
+      "model": "Random Forest",
+      "pair": "protocol+context",
+      "excess_fpr_pp": 1.7107168718320034,
+      "excess_recall_loss_pp": 0.3659195808557558
+    }
+  ]
+}
