@@ -1,0 +1,8 @@
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+data/*.csv
+results/metrics_*.csv
+results/metadata_*.json
+results/train_cv_*.csv
