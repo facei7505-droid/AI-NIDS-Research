@@ -93,3 +93,39 @@ The executed baseline indicates that discrimination quality and the false-positi
 - `src/run_robustness.py` — synthetic sensitivity tests
 - `src/alert_budget_study.py` — exploratory alert-budget investigation
 - `results/` — executed baseline artifact exports (see workflow history)
+
+
+## 8. Follow-up: false-alarm-budget transfer (executed exploratory analysis)
+
+This section documents an **exploratory follow-up**, developed after the official test performance of the baseline models had already been viewed. It is therefore not an independent pre-registered hypothesis test or proof of scientific novelty.
+
+A separate group-held-out split of the original training data used 139,989 records to fit the models and 35,352 for validation. Duplicate predictor fingerprints were kept in the same validation group to reduce direct training/validation contamination. Model-specific thresholds were selected to target a **5% benign false-positive rate** on validation, with a one-sided Wilson upper-bound constraint. The frozen thresholds were then evaluated on the original 82,332-row official test set and its 73,791-row subset without matching training predictor fingerprints.
+
+| Model | Policy | Official-test FPR | Official-test recall | Official-test F1 |
+|---|---|---:|---:|---:|
+| Logistic Regression | Default probability threshold 0.5 | 39.14% | 97.30% | 84.89% |
+| Logistic Regression | Validation-constrained threshold 0.79660 | 11.41% | 86.71% | 88.47% |
+| Random Forest | Default probability threshold 0.5 | 28.62% | 98.84% | 88.97% |
+| Random Forest | Validation-constrained threshold 0.68444 | 14.54% | 95.32% | 92.01% |
+
+The new validation-split models differ from those trained on the complete 175,341-row original training set; therefore their default-threshold baseline metrics are not numerically identical to Section 4.
+
+For the constrained Random Forest, **5,210 fewer benign records were falsely flagged**, at a cost of **1,598 additional missed attacks** relative to the default threshold on the same test set. Logistic Regression avoided **10,261 false alarms**, but missed **4,799 additional attacks**.
+
+Despite nominal validation false-positive rates of approximately **4.66%** for both learned models and an upper validation confidence bound under 5%, the measured official-test FPR reached **11.41%** for LR and **14.54%** for RF. These results fail the targeted 5% operational budget.
+
+On the train-fingerprint non-overlap subset, constrained FPR was **10.66%** for LR and **14.15%** for RF. The subset therefore did not restore the nominal budget. Because overlap exclusion changes the composition of the sample, it is inappropriate to infer that duplicate contamination causes the discrepancy.
+
+Descriptive two-sided 95% Wilson intervals for constrained official-test FPR were approximately **11.09–11.74%** for LR and **14.18–14.90%** for RF. These simple row-level intervals rely on independence assumptions and do not account for clustered network flows, selection after seeing baseline results, or shifts between datasets.
+
+### Interpretation
+
+The experiment provides evidence that a threshold selected to meet a false-alarm constraint on training-held-out validation **did not transfer that constraint** to the historical official test distribution. This observation supports further research into shifts in class-conditional score distributions and validation design. It does not establish a globally new technique, nor does it prove that distribution shift is the only explanation.
+
+Before a stronger causal explanation or originality claim, we need multiple independent validation splits, source-level verification of overlap fingerprints, threshold calibration comparisons, an untouched external test dataset, and uncertainty estimates accounting for flow dependence.
+
+**Evidence:** `results/alert_budget_study.json`, `results/alert_budget_analysis.json`, `results/ALERT_BUDGET_ANALYSIS.md`. The experimental pipeline and report-generation code are in `src/alert_budget_study.py` and `src/analyze_alert_budget.py`.
+
+### Updated research conclusion
+
+The strongest supported finding to date is a *negative transfer result*: a conservatively selected validation FPR budget of 5% was not preserved on the designated test split, even after separating test rows without identical training predictor fingerprints. The measured improvement in false alarms came with a quantifiable increase in missed attacks. Because the data and question are not fully independent, external confirmation is essential.
