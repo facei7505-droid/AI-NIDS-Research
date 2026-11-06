@@ -1,49 +1,21 @@
-# Research status and evidence policy
+# Research status (updated 2026-11-06)
 
-Date: 2026-11-06
+## Completed, verifiable in repository
 
-## Completed in this GitHub repository
+- Full official-designated UNSW-NB15 baseline experiment on 175,341 training and 82,332 test records. Saved `results/metrics_FULL_BENCHMARK.csv`, hash-identified inputs, `results/metadata_FULL_BENCHMARK.json`, `results/train_cv_FULL_BENCHMARK.csv`, synthetic robustness output and environmental package versions.
+- LR, RF and majority Dummy comparisons. **RF: F1=0.8902, recall=0.9885, FPR=0.2847** (10,535 false positives). These are measured OFFLINE benchmark values, not operational effectiveness claims.
+- Train/test feature fingerprint screening flagged 8,541 test rows matched to training (10.37%), requiring further source-level investigation.
+- Baseline SVG charts generated from archived metrics, and a draft manuscript under `paper/MANUSCRIPT_DRAFT.md`.
+- Group-held-out threshold study implementation, tests, preregistration-style research plan and automatic workflow are committed.
 
-- A scikit-learn training/evaluation program with train-only preprocessing.
-- Validation for binary labels, feature schema, and expected split sizes.
-- Logistic Regression and Random Forest baselines.
-- F1, precision, recall, balanced accuracy, confusion counts, FPR/FNR and prediction latency.
-- Optional 3-fold stratified cross-validation **on training samples only**.
-- SHA-256 recording of supplied CSV files.
-- A small synthetic-data unit test suite and GitHub Actions configuration.
+## Unfinished / uncertain
 
-## Not completed
+- **No independently established scientific novelty.** Threshold tuning and overlap-aware screening are established methods; the combined hypothesis remains to be tested and compared against literature.
+- Alert-budget study outputs will only count as executed evidence when `results/alert_budget_study.json` and the corresponding workflow record exist and are reviewed. The follow-up is **exploratory**, because the official test outcomes were already inspected.
+- Need validation of source-level duplicate/overlap fingerprints and the characteristics of conflicting labels.
+- Need repeated validation splits, realistic uncertainty estimates, cost/recall trade-off, independent external benchmark, and a reviewed comparison against published methods.
+- Need independent human replication of every figure and metric, full authorship and AI-assistance disclosure, and external review.
 
-- The full UNSW-NB15 training and evaluation run.
-- Independent confirmation of dataset hashes/provenance.
-- Any statistically supported claim that one model generalizes better.
-- Distribution-shift experiments, category-wise evaluation, confidence intervals.
-- A final paper with results from the released pipeline.
-- Migration of the earlier NSL-KDD pilot PDF, PPTX, plots, and original local Git history.
+## Ethical scientific reporting
 
-## Methodological warnings
-
-The pipeline does not automatically remove cross-split duplicate predictor rows. Inspect and document them, and analyze the impact on estimates before publication. Avoid repeated selection against the designated test set. The timings are machine-dependent. The fixed train/test benchmark is historical; it does not certify deployed network monitoring quality.
-
-## AI contribution
-
-Research planning, baseline code, tests, and documentation were AI-assisted. Researchers must independently validate the outputs, run and interpret the experiments, and accurately disclose assistance in any academic submission.
-
-## Minimum bar for a final scientific report
-
-1. Log source URL, download date, file hashes, full environment and hardware.
-2. Reproduce all stated metrics from raw inputs using published code.
-3. Inspect data overlap, class imbalance and category-wise failure cases.
-4. Use training-only validation and provide uncertainty estimates.
-5. Discuss leakage, distribution shift, external validity and limitations without exaggeration.
-
-**Do not claim the project is complete, 10/10, or accepted by a university.**
-
-## Update: research utilities added (2026-11-06)
-
-- `src/data_audit.py` + dedicated tests: screening for train/test overlap and contradictory feature/label groups.
-- `src/uncertainty.py` + dedicated tests: paired bootstrap confidence intervals from fixed predictions.
-- `src/robustness.py` + dedicated tests: seeded synthetic input corruptions for prospective stress testing.
-- Majority-class dummy control and average precision were added to the benchmark.
-- These utilities have been committed, but full experiment integration, actual UNSW-NB15 execution, and confirmed successful CI run are **not yet verified**.
-- GitHub file existence was checked through the connector; this is not equivalent to running unit tests.
+This repository and draft were substantially AI-assisted. A student should personally reproduce and interpret the work, document their research decisions and represent all assistance accurately. No university admission, award, research originality or peer-review outcome is guaranteed.
