@@ -1,6 +1,6 @@
 # AI-NIDS Research
 
-**Status: Research software under validation.** Full UNSW-NB15 results have **not** been measured or published here. Historical NSL-KDD pilot results are not independently reproduced.
+**Status: baseline benchmark executed and published; follow-up originality study exploratory and not yet validated.** Full UNSW-NB15 binary baseline results and reproducibility metadata are available under `results/`. Historical NSL-KDD pilot results are not independently reproduced.
 
 This repository studies defensive, offline network intrusion detection using Logistic Regression and Random Forest. The research objective is to compare model discrimination, false-alarm burden and prediction latency under transparent, repeatable evaluation conditions.
 
@@ -21,7 +21,7 @@ python -m pytest -q
 python src/run_experiments.py --cv
 ```
 
-Results are generated only when the designated input files are present. They are stored in `results/` as CSV and JSON with confusion counts, scores, timings, and input SHA-256 hashes.
+The already executed, verified-input baseline results are committed in `results/`. Fresh reproduction requires the pinned CSV files and the commands below. Metrics include confusion counts, scores, timings and SHA-256 hashes.
 
 ## Research integrity
 
@@ -82,3 +82,18 @@ The script fits each classifier **once on the unmodified training split** and ev
 **Research warning:** Synthetic input corruption is only a stress test, not evidence of robustness to real-life network drift or malicious traffic. For alternative datasets or toy examples pass `--exploratory`; those runs must not be reported as official UNSW-NB15 results.
 
 The integration was locally smoke-tested on a small fabricated dataset (3 tests passed; 39 scenario rows generated). These are **software verification results, not scientific model accuracy results**. Full-benchmark execution and GitHub CI confirmation remain pending.
+
+## Executed benchmark, novelty work and manuscript
+
+- [Real baseline results](results/metrics_FULL_BENCHMARK.csv) — 175,341 training and 82,332 held-out test records. Random Forest baseline F1 **0.8902**, Recall **0.9885**, FPR **0.2847** (10,535 benign false alarms). This is **not** a deployment-ready alarm rate.
+- [Data audit](results/data_audit.json) — 8,541 test records match a training predictor fingerprint (~10.37%); fingerprint coincidences are not verified identical source events.
+- [Measured F1 figure](results/figures/f1.svg), [Recall figure](results/figures/recall.svg), [FPR figure](results/figures/false_positive_rate.svg).
+- [Evidence-grounded manuscript draft](paper/MANUSCRIPT_DRAFT.md) — research article in progress, not peer reviewed.
+- [Novelty and validation plan](NOVELTY_AND_VALIDATION_PLAN.md) — explicit hypotheses and caveats.
+- [Exploratory alert-budget study code](src/alert_budget_study.py) and [automated workflow](.github/workflows/alert-budget-study.yml).
+
+The alert-budget workflow is designed to publish `results/alert_budget_study.json` and `results/ALERT_BUDGET_REPORT.md` **only after successful execution and validation**. If these files are absent, results are pending or the run failed — no threshold-transfer conclusion is claimed. The official test dataset had been inspected before the follow-up study was designed; therefore that analysis is **exploratory** and cannot establish original confirmatory evidence on its own.
+
+## AI assistance and student ownership
+
+Much of the software and draft text was AI-assisted. Scientific authorship must accurately reflect the investigator's personal contributions, independent verification and ability to explain the study. A high school research project should not present automated output as a student-discovered result without independent validation.
