@@ -49,7 +49,7 @@ jobs:
           import json, pathlib, pandas as pd
           metrics = pd.read_csv('results/metrics_FULL_BENCHMARK.csv')
           out=['# Executed benchmark (see artifacts)', '', '## Binary classification']
-          out += [metrics.to_markdown(index=False)]
+          out += ['```', metrics.to_string(index=False), '```']
           record=json.loads(pathlib.Path('results/robustness.json').read_text())
           out += ['', f"Stress-test rows: {len(record['results'])}",
                   'Synthetic stress tests cannot verify performance on new real attacks.',
