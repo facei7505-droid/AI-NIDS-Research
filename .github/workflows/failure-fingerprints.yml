@@ -1,0 +1,75 @@
+name: Failure Fingerprints - training-only study
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/failure-fingerprints.yml'
+permissions:
+  contents: write
+concurrency:
+  group: failure-fingerprints
+  cancel-in-progress: false
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install locked environment
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip freeze > environment-failure-fingerprints.txt
+      - name: Run tests
+        run: python -m pytest -q
+      - name: Download hash-pinned research input
+        run: python src/download_data.py
+      - name: Run only on official training rows
+        run: |
+          python src/failure_fingerprints.py \
+            --train data/UNSW_NB15_training-set.csv \
+            --fraction .25 \
+            --output results/failure_fingerprints.json
+          python src/report_failure_fingerprints.py \
+            --input results/failure_fingerprints.json \
+            --output results/FAILURE_FINGERPRINTS_REPORT.md
+      - name: Validate all model-group-seed conditions
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("results/failure_fingerprints.json").read_text())
+          assert r["train_sha256"]=="bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa"
+          assert r["status"]=="TRAINING_ONLY_EXPLORATORY_SYNTHETIC_DIAGNOSTIC"
+          assert len(r["rows"])==3*2*11, len(r["rows"])
+          assert len(r["interactions"])==3*2*6, len(r["interactions"])
+          for record in r["rows"]:
+              assert 0<=record["f1"]<=1 and 0<=record["recall"]<=1 and 0<=record["fpr"]<=1
+              assert sum(record[key] for key in ["tn","fp","fn","tp"])>0
+          print("All study invariants validated")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: failure-fingerprints-validation-only
+          path: |
+            results/failure_fingerprints.json
+            results/FAILURE_FINGERPRINTS_REPORT.md
+            environment-failure-fingerprints.txt
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Publish executed findings
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          cp environment-failure-fingerprints.txt results/environment-failure-fingerprints.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/failure_fingerprints.json results/FAILURE_FINGERPRINTS_REPORT.md results/environment-failure-fingerprints.txt
+          git commit -m "results: publish executed training-only feature interaction study [skip ci]"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
