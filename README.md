@@ -64,3 +64,21 @@ python src/data_audit.py \
 ```
 
 Read [RESEARCH_STATUS.md](RESEARCH_STATUS.md) for the evidence status and [EXPERIMENT_LOG_TEMPLATE.md](EXPERIMENT_LOG_TEMPLATE.md) to record run metadata.
+
+
+### Run the synthetic robustness study
+
+Once both official training/test CSVs are in `data/`, run:
+
+```bash
+python src/run_robustness.py \
+  --train data/UNSW_NB15_training-set.csv \
+  --test data/UNSW_NB15_testing-set.csv \
+  --output results/robustness.json
+```
+
+The script fits each classifier **once on the unmodified training split** and evaluates it on the untouched test features and predetermined synthetic missingness, numerical-noise, and novel-category conditions. The output records CSV SHA-256 hashes, feature names, class-specific performance, corruption severity and environment. The clean-input evaluation is a reference point, not an independent repeated trial.
+
+**Research warning:** Synthetic input corruption is only a stress test, not evidence of robustness to real-life network drift or malicious traffic. For alternative datasets or toy examples pass `--exploratory`; those runs must not be reported as official UNSW-NB15 results.
+
+The integration was locally smoke-tested on a small fabricated dataset (3 tests passed; 39 scenario rows generated). These are **software verification results, not scientific model accuracy results**. Full-benchmark execution and GitHub CI confirmation remain pending.
