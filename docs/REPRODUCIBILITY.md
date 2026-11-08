@@ -1,6 +1,6 @@
 # Reproducibility
 
-_Last updated: 6 November 2026._
+_Last updated: 8 November 2026._
 
 ## Requirements
 
@@ -53,7 +53,7 @@ python src/ttl_decomposition.py
 - `results/data_audit.json` — cross-split fingerprint audit
 - `results/alert_budget_study.json` — exploratory 5% FPR transfer
 - `results/failure_fingerprints.json` — training-only group interactions
-- `results/ttl_decomposition.json` — **only after** the corresponding workflow publishes and validates this file
+- `results/ttl_decomposition.json` — published post-hoc training-only evidence (60 perturbation conditions)
 - `paper/MANUSCRIPT_DRAFT.md` — working manuscript, not peer reviewed
 
 Results are stored as plain JSON/CSV and should not be regenerated into claims by manually changing numeric values.
