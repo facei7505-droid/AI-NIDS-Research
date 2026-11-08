@@ -1,6 +1,6 @@
 # Research design and evidence boundaries
 
-_Last updated: 6 November 2026 (Asia/Almaty)._
+_Last updated: 8 November 2026 (Asia/Almaty)._
 
 ## Central question
 
@@ -16,7 +16,7 @@ This is a falsifiable *research question*, not a claim to have discovered a nove
 | B. Duplication and label disagreement audit | Official train/test | Executed (fingerprint screening only) | Overlap counts and contradictory feature groups |
 | C. 5% false-alarm-budget validation | Group-held-out training validation; official test reused | Executed **exploratory** | Frozen-threshold FPR/recall, including unmatched test subgroup |
 | D. Failure Fingerprints | **Only official training split**; group-held-out folds | Executed exploratory | Single-group and pairwise excess FPR/recall loss |
-| E. TTL shortcut decomposition | **Only official training split** | Code and workflow committed; results subject to execution check | Compare TTL-only vs TTL-excluded Protocol/Context effects |
+| E. TTL shortcut decomposition | **Only official training split** | Executed, post-hoc exploratory | 60 perturbation conditions; compare TTL-only vs TTL-excluded Protocol/Context effects |
 | F. Independent replication | Untouched external data | **Not performed** | Confirmation of transferability and scientific novelty |
 
 ## Frozen feature-group protocol (Failure Fingerprints)
