@@ -1,6 +1,6 @@
 # Research comparison and novelty assessment
 
-_Last reviewed: 6 November 2026._
+_Last reviewed: 8 November 2026._
 
 The purpose of comparison is to identify **gaps**, not to borrow unsupported performance claims.
 
