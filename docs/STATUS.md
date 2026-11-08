@@ -1,6 +1,6 @@
 # Research status and release gates
 
-_Status as reviewed 6 November 2026 (Asia/Almaty). Dates refer to documented project commits and are not publication dates._
+_Status as reviewed 8 November 2026 (Asia/Almaty). Dates refer to documented project commits and are not publication dates._
 
 | Area | Status | Evidence |
 | --- | --- | --- |
@@ -8,7 +8,7 @@ _Status as reviewed 6 November 2026 (Asia/Almaty). Dates refer to documented pro
 | Dataset overlap audit | Measured screening | `results/data_audit.json`; 8,541 test predictor fingerprints match training |
 | Validation FPR budget | Measured, exploratory | `results/alert_budget_study.json`; 5% validation goal missed on official test (RF 14.54% FPR) |
 | Failure Fingerprints | Measured, training-only exploratory | `results/failure_fingerprints.json`; RF Protocol+Context +1.796 pp mean excess FPR |
-| TTL contribution | Code and workflow committed | `src/ttl_decomposition.py`; require validated results artifact |
+| TTL contribution | Measured, post-hoc exploratory | `results/ttl_decomposition.json`; 60 perturbation conditions |
 | Independent external validation | Not done | Protocol and untouched external dataset needed |
 | Paper | Draft | `paper/MANUSCRIPT_DRAFT.md`; not peer reviewed |
 | Originality | Candidate hypothesis | No validated first-in-world claim |
