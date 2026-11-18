@@ -68,3 +68,33 @@ Both regimes use the same grouped fit/validation split indices (13, 29, 47), tra
 - This experiment was conceived after inspecting the earlier Protocol+Context result, and is therefore **post-hoc exploratory**, not preregistered independent confirmation.
 
 This diagnostic compares synthetic regimes; it is not physically constrained traffic simulation, validation on another network, or proof of first-in-world scientific novelty. The result remains pending until `results/class_mixing_control.json` is published from an executed and validated workflow.
+
+
+## Three-way donor-policy falsification control — 18 November 2026
+
+**Exploratory extension selected after inspecting earlier class-mixing results.** Hypothesis: the excess Protocol+Context FPR estimated with unrestricted feature-block shuffling will be greater than estimates when donors are selected from similar observed traffic, and the effect may differ by model family.
+
+### Defined experiment
+
+- Data: only original pinned 175,341-row UNSW-NB15 **training CSV**, no official test labels.
+- Group-held-out fit/validation split seeds: 13, 29, 47.
+- Model families: Logistic Regression and Random Forest.
+- Separate donor-permutation seeds: 101, 211, 307.
+- Predefined perturbation fraction: 25% of validation rows, preserving within-group column blocks.
+- Groups: Protocol and Context as previously specified.
+- **Global donors:** all selected rows are candidate sources.
+- **Observable-stratified donors:** use only the unperturbed numeric predictors `dur` and `sbytes`, separated into up to three quantile bins per feature. No class labels are used for stratification. This is a *transductive evaluation diagnostic*, not a production-trained donor sampler.
+- **Same-class oracle donors:** use known labels to choose sources, strictly as an offline diagnostic; this policy would leak targets if used at inference.
+- Outcomes: excess FPR interaction defined as `100*(FPR_joint-FPR_protocol-FPR_context+FPR_clean)`, together with clean/joint FPR and recall, group-specific exchange rates and split/seed provenance.
+- Planned factorial records: 3 split seeds × 3 donor seeds × 2 model families × 3 donor policies = **54**.
+
+### Interpret all outcomes, not selected examples
+
+- A global > observable-stratified contrast is consistent with unrestricted donor shuffling generating stronger synthetic artifacts, **not proof of causation**.
+- A difference between observable-stratified and oracle control may reflect remaining class-dependent information not captured by the two matching attributes; it also may reflect variable exchange rates or sparse strata.
+- If differences disappear or reverse, report the failure as evidence against the proposed interpretation rather than hiding it.
+- The true deployment operating point or real network-shift response cannot be established from any of these synthetic controls.
+- Different donor strata may have different swap counts; comparisons must report `joint_group_exchange_rate` and, ideally, include a matched effective-exchange-rate sensitivity check.
+- Repeat all results on a previously untouched external corpus before claiming generalizable NIDS failure modes. Prior research on conditional permutation already exists; this is not a claim to invent conditional feature importance.
+
+Evidence is considered executed only when `results/observable_donor_control.json` is produced by a successful workflow and its provenance and full design are checked. AI-assisted design and coding must be disclosed.
