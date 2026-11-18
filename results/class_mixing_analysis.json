@@ -1,0 +1,72 @@
+{
+  "status": "DESCRIPTIVE_POST_HOC_CLASS_MIXING_ANALYSIS",
+  "data_sha256": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa",
+  "n_models": 2,
+  "n_splits": 3,
+  "results": [
+    {
+      "model": "Logistic Regression",
+      "split_seeds": [
+        13,
+        29,
+        47
+      ],
+      "global_excess_fpr_pp_by_seed": [
+        0.3959326914424549,
+        0.42437923250564225,
+        0.09956553222302544
+      ],
+      "within_class_excess_fpr_pp_by_seed": [
+        0.3689372806622848,
+        0.3340857787810375,
+        0.16292541636495628
+      ],
+      "paired_global_minus_within_class_pp_by_seed": [
+        0.026995410780170093,
+        0.09029345372460473,
+        -0.06335988414193083
+      ],
+      "mean_global_excess_fpr_pp": 0.30662581872370753,
+      "mean_within_class_excess_fpr_pp": 0.28864949193609285,
+      "mean_paired_difference_pp": 0.017976326787614665,
+      "sd_paired_difference_pp": 0.07722269722322907,
+      "paired_difference_positive_all_splits": false
+    },
+    {
+      "model": "Random Forest",
+      "split_seeds": [
+        13,
+        29,
+        47
+      ],
+      "global_excess_fpr_pp_by_seed": [
+        1.8266894627913268,
+        1.8058690744921002,
+        1.348660391020999
+      ],
+      "within_class_excess_fpr_pp_by_seed": [
+        -0.3239449293620078,
+        -0.14446952595936757,
+        -0.36205648081100716
+      ],
+      "paired_global_minus_within_class_pp_by_seed": [
+        2.150634392153335,
+        1.9503386004514678,
+        1.7107168718320063
+      ],
+      "mean_global_excess_fpr_pp": 1.6604063094348087,
+      "mean_within_class_excess_fpr_pp": -0.27682364537746085,
+      "mean_paired_difference_pp": 1.9372299548122696,
+      "sd_paired_difference_pp": 0.220251523523192,
+      "paired_difference_positive_all_splits": true
+    }
+  ],
+  "limitations": [
+    "Ground-truth class labels define the within-class permutation donor pool. This is an offline diagnostic, not an inference-time operation.",
+    "The mean paired difference is not a formal inferential effect estimate across independent networks.",
+    "The sample contains just three overlapping training-held-out splits; no independent dataset replication.",
+    "Global permutation mixes labels and can generate physically inconsistent joint feature values.",
+    "The Protocol+Context pairing was chosen after inspecting earlier effects: all findings are post-hoc exploratory.",
+    "A shift in nonadditive excess FPR is not proof that class mixing is the unique cause of differences."
+  ]
+}
