@@ -1,0 +1,66 @@
+name: Replicate donor policy across permutation seeds
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/permutation-seed-replication.yml'
+permissions:
+  contents: write
+concurrency:
+  group: permutation-seed-replication
+  cancel-in-progress: false
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Run all unit and evidence-consistency tests
+        run: python -m pytest -q
+      - name: Download hash-pinned UNSW data
+        run: python src/download_data.py
+      - name: Replicate donor-policy diagnostic on training only
+        run: |
+          python src/permutation_seed_replication.py \
+            --train data/UNSW_NB15_training-set.csv \
+            --output results/permutation_seed_replication.json
+      - name: Validate all factorial combinations and data provenance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('results/permutation_seed_replication.json').read_text(encoding='utf-8'))
+          assert x['status']=='EXPLORATORY_TRAIN_ONLY_PERMUTATION_SEED_REPLICATION'
+          assert x['train_sha256']=='bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa'
+          assert len(x['rows'])==3*5*2*2
+          assert len(x['summaries'])==3*2
+          assert len({(r['split_seed'],r['permutation_seed'],r['model'],r['donor_policy']) for r in x['rows']})==len(x['rows'])
+          for row in x['rows']:
+              assert row['validation_rows']>0
+              assert 0<=row['joint_fpr']<=1
+              assert 0<=row['joint_recall']<=1
+          print('All 60 factorial conditions verified')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: replicated-feature-interaction-evidence
+          path: results/permutation_seed_replication.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Publish real generated evidence
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/permutation_seed_replication.json
+          git commit -m "results: publish executed permutation-seed replication [skip ci]"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
