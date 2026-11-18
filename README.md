@@ -108,7 +108,7 @@ See [full reproducibility instructions](docs/REPRODUCIBILITY.md) for Windows, ex
 - Academic novelty must be established through a systematic literature review, matched baselines and independent reproducibility; it **cannot** be guaranteed by the title or repository presentation.
 - This codebase and manuscript were substantially AI-assisted. Any student authorship claim must identify the investigator's own work and disclose assistance accurately.
 
-**Project documentation:** [Study protocol](docs/RESEARCH_DESIGN.md) · [Related work](docs/RELATED_WORK.md) · [Reproducibility](docs/REPRODUCIBILITY.md) · [Evidence status](docs/STATUS.md) · [Working paper](paper/MANUSCRIPT_DRAFT.md).
+**Quality review:** [Measured scientific quality gates](docs/QUALITY_GATES.md) · [Archived prior research plans](docs/archive/RESEARCH_PROTOCOL_2026-11-06.md).\n\n**Project documentation:** [Study protocol](docs/RESEARCH_DESIGN.md) · [Related work](docs/RELATED_WORK.md) · [Reproducibility](docs/REPRODUCIBILITY.md) · [Evidence status](docs/STATUS.md) · [Working paper](paper/MANUSCRIPT_DRAFT.md).
 
 _Last repository documentation review: **18 November 2026**._
 
