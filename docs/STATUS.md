@@ -1,6 +1,6 @@
 # Research status and release gates
 
-_Status as reviewed 8 November 2026 (Asia/Almaty). Dates refer to documented project commits and are not publication dates._
+_Status as reviewed 18 November 2026 (Asia/Almaty). Dates refer to documented project commits and are not publication dates._
 
 | Area | Status | Evidence |
 | --- | --- | --- |
@@ -9,6 +9,7 @@ _Status as reviewed 8 November 2026 (Asia/Almaty). Dates refer to documented pro
 | Validation FPR budget | Measured, exploratory | `results/alert_budget_study.json`; 5% validation goal missed on official test (RF 14.54% FPR) |
 | Failure Fingerprints | Measured, training-only exploratory | `results/failure_fingerprints.json`; RF Protocol+Context +1.796 pp mean excess FPR |
 | TTL contribution | Measured, post-hoc exploratory | `results/ttl_decomposition.json`; 60 perturbation conditions |
+| Matched TTL retraining ablation | Code and CI configured (result not yet verified) | `src/ttl_retraining_ablation.py`, `.github/workflows/ttl-retraining-ablation.yml` |
 | Independent external validation | Not done | Protocol and untouched external dataset needed |
 | Paper | Draft | `paper/MANUSCRIPT_DRAFT.md`; not peer reviewed |
 | Originality | Candidate hypothesis | No validated first-in-world claim |
@@ -28,3 +29,10 @@ _Status as reviewed 8 November 2026 (Asia/Almaty). Dates refer to documented pro
 - [ ] Final article, figures, cited sources and AI disclosure approved by investigator
 
 This checklist is not a score. Do not equate repository polish with scientific novelty.
+
+## Repository curation — 18 November 2026
+
+- Rebuilt `README.md` around confirmed measurements and transparent limitations.
+- Consolidated active methodology under `docs/`. Older protocol snapshots and benchmarking notes are preserved under `docs/archive/` (Git history retained); the root-level duplicates were removed.
+- Added archived-evidence consistency tests and a retrained TTL ablation design. The new ablation's scientific conclusion remains pending successful experiment execution.
+- Quality target 9.5/10 is aspirational. It requires independent dataset replication and reviewer scrutiny; no numeric grade is certified by these commits.
