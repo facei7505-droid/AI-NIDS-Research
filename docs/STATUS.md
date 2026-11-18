@@ -38,3 +38,10 @@ This checklist is not a score. Do not equate repository polish with scientific n
 - Consolidated active methodology under `docs/`. Older protocol snapshots and benchmarking notes are preserved under `docs/archive/` (Git history retained); the root-level duplicates were removed.
 - Added archived-evidence consistency tests and a retrained TTL ablation design. The new ablation's scientific conclusion remains pending successful experiment execution.
 - Quality target 9.5/10 is aspirational. It requires independent dataset replication and reviewer scrutiny; no numeric grade is certified by these commits.
+
+## Novelty falsification progress — 18 November 2026
+
+- **Executed:** 60-condition repeated donor-policy experiment from `results/permutation_seed_replication.json`. For RF, mean global minus same-class excess-FPR interaction is +1.796 pp (15/15 matched comparisons positive); LR difference +0.005 pp (6/15 positive). All trials use UNSW-NB15 original *training* split.
+- **Documented:** raw study and derived table at `results/PERMUTATION_SEED_REPLICATION_REPORT.md`; manuscript updated.
+- **Implemented, not yet confirmed as executed:** Observable-stratified donor control uses class-blind matching on unperturbed `dur` and `sbytes`; code, unit tests, separate CI and complete output checks committed. No numeric results should be inferred until `results/observable_donor_control.json` exists.
+- **Still missing for originality 9/10:** matched comparison to published conditional permutation methods, physically plausible traffic controls, untouched external dataset, and independent human replication.
