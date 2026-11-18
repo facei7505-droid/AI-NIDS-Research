@@ -129,3 +129,29 @@ Before a stronger causal explanation or originality claim, we need multiple inde
 ### Updated research conclusion
 
 The strongest supported finding to date is a *negative transfer result*: a conservatively selected validation FPR budget of 5% was not preserved on the designated test split, even after separating test rows without identical training predictor fingerprints. The measured improvement in false alarms came with a quantifiable increase in missed attacks. Because the data and question are not fully independent, external confirmation is essential.
+
+
+## 9. Failure of naive group-interaction interpretation: donor-policy control (exploratory, 18 November 2026)
+
+After observing a positive excess false-positive interaction for the Protocol and Context feature groups, we designed an explicit falsification analysis to test whether **unrestricted group shuffling itself** was amplifying the effect by swapping feature blocks between attack and benign records. The analysis uses the original UNSW-NB15 training CSV and group-held-out training/validation partitions; **it does not access the designated official test split**.
+
+The same fitted model, Protocol/Context group definitions, split seeds, and fraction of permuted rows (25%) were used with two donor policies. The unrestricted condition allows swapping blocks across both ground-truth classes. The class-conditional control draws block donors from validation records *with the same ground-truth class label*; this use of labels is acceptable only as a retrospective diagnostic, not a deployable IDS inference procedure.
+
+The executed `results/class_mixing_control.json` reports three grouped split seeds (13, 29, 47), two models, and the three perturbation conditions necessary to form an interaction contrast. The measured excess FPR values were:
+
+| Model | Global donor excess FPR (mean pp) | Within-class donor excess FPR (mean pp) | Paired mean difference (pp) |
+| --- | ---: | ---: | ---: |
+| Logistic Regression | +0.307 | +0.289 | +0.018 |
+| Random Forest | +1.660 | −0.277 | **+1.937** |
+
+The difference appears model-dependent: under these chosen conditions, Random Forest's apparent positive excess interaction was far weaker (and changed sign) with class-matched donors, whereas LR changed little. **These findings suggest possible experimental-design sensitivity, not proof of a unique mechanism.** Only three highly overlapping training splits were tested; these are not independent datasets. The result was examined after earlier outcomes motivated Protocol/Context selection, so it is **exploratory**.
+
+### Relation to prior work
+
+Unconditional permutation can break dependencies among predictor variables, and conditional or subgroup-based feature importance has been developed to address such issues in general ML. Modern NIDS interpretability studies already examine feature interactions, group-level importance and dependence on the model family. We do not claim to have invented conditional permutation or discovered a globally novel phenomenon; the possible contribution is the *quantified falsification of an apparent false-alarm feature interaction under a specific diagnostic control*. See `docs/RELATED_WORK.md`.
+
+### Validation obligations before a novelty claim
+
+A more rigorous factorial replication is implemented in `src/permutation_seed_replication.py` to vary permutation randomness independently of model fitting (three grouped splits, five permutation seeds, two models, two donor policies). All conditions should be reported; scientific conclusions await its executed output and verification. Further evidence would require physically plausible feature transitions, a genuinely independent network corpus, stronger dependence-aware uncertainty analysis, and full comparison against recent conditional importance research.
+
+The manuscript remains a **draft**, substantially AI-assisted, without peer review or independent external confirmation.
