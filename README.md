@@ -133,3 +133,11 @@ We now prioritize *falsification*, not claiming novelty from the first positive-
 - [Class mixing falsification code](src/class_mixing_control.py), [tests](tests/test_class_mixing_control.py) and [workflow](.github/workflows/class-mixing-control.yml)
 
 The class-mixing study contrasts global feature-group donor shuffling with same-class donor shuffling. The latter uses **ground-truth labels only as an offline diagnostic**, and must never be presented as a deployable IDS method. New results should not be claimed until `results/class_mixing_control.json` is actually generated and checked.
+
+## Donor-policy falsification — executed exploratory finding
+
+[Executed global vs same-class donor study](results/class_mixing_control.json) found the Protocol+Context excess FPR interaction for Random Forest was **+1.660 pp** using global donor shuffles and **−0.277 pp** using within-class donor shuffles (mean paired difference **+1.937 pp**, 3 non-independent grouped splits). Logistic Regression changed far less (+0.307 vs +0.289 pp). The same-class comparison uses true class labels **only for offline diagnostics** and is not deployable.
+
+Interpretation: the interaction finding is sensitive to how synthetic donor blocks are selected. This does **not** establish causation, independent replication, or a new algorithm. See the [quantitative report](results/CLASS_MIXING_ANALYSIS.md), [replication challenge](docs/INTERACTION_REPLICATION_CHALLENGE.md), and [closest prior work](docs/RELATED_WORK.md).
+
+[Repeated random-permutation factorial experiment](src/permutation_seed_replication.py) and [CI workflow](.github/workflows/permutation-seed-replication.yml) are committed to test 60 combinations across three grouped splits, five perturbation seeds, two models and two donor policies. Treat the experiment as **pending until** `results/permutation_seed_replication.json` is published from verified execution.
