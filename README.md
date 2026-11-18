@@ -6,7 +6,7 @@
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-blue)
 ![Research status](https://img.shields.io/badge/research-exploratory-64748b)
 
-> **Research status — 8 November 2026:** Historical UNSW-NB15 baseline, false-alarm transfer, feature-group interaction, and TTL sensitivity experiments have **executed**. Scientific originality and external generalization are **not established**. No claim of peer review, novel detector architecture, real-time protection or independent external validation is made.
+> **Research status — 18 November 2026:** Historical UNSW-NB15 baseline, false-alarm transfer, feature-group interaction, and TTL sensitivity experiments have **executed**. Scientific originality and external generalization are **not established**. No claim of peer review, novel detector architecture, real-time protection or independent external validation is made.
 
 ## Research question
 
@@ -110,4 +110,14 @@ See [full reproducibility instructions](docs/REPRODUCIBILITY.md) for Windows, ex
 
 **Project documentation:** [Study protocol](docs/RESEARCH_DESIGN.md) · [Related work](docs/RELATED_WORK.md) · [Reproducibility](docs/REPRODUCIBILITY.md) · [Evidence status](docs/STATUS.md) · [Working paper](paper/MANUSCRIPT_DRAFT.md).
 
-_Last repository documentation review: **8 November 2026**._
+_Last repository documentation review: **18 November 2026**._
+
+## Retrained TTL ablation — next controlled experiment
+
+The earlier TTL test perturbed a model **already trained with TTL fields**. That cannot establish how a model trained *without* TTL behaves. To address this, we now compare a full-feature and a TTL-removed model, **retrained independently on identical training indices and assessed on the same held-out rows**.
+
+- [Experiment](src/ttl_retraining_ablation.py) and [paired reporting code](src/report_ttl_retraining.py)
+- [Unit tests](tests/test_ttl_retraining_ablation.py) and [report tests](tests/test_report_ttl_retraining.py)
+- [Reproducible GitHub Actions run](.github/workflows/ttl-retraining-ablation.yml)
+
+Once CI has successfully completed, `results/ttl_retraining_ablation.json` and `results/TTL_RETRAINING_REPORT.md` will contain measured comparisons. Until then **no result or scientific conclusion is claimed**. The new analysis was formulated after studying existing TTL interactions; it is exploratory and must be independently replicated.
