@@ -1,0 +1,952 @@
+{
+  "status": "TRAINING_ONLY_POST_HOC_OBSERVABLE_DONOR_CONTROL",
+  "split_seeds": [
+    13,
+    29,
+    47
+  ],
+  "donor_seeds": [
+    101,
+    211,
+    307
+  ],
+  "policies": [
+    "global",
+    "observable_strata",
+    "same_class_oracle"
+  ],
+  "matching_features": [
+    "dur",
+    "sbytes"
+  ],
+  "quantile_bins_per_feature": 3,
+  "fraction": 0.25,
+  "rows": [
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.23836947718887788,
+      "context_fpr": 0.17619004769189237,
+      "joint_fpr": 0.23989921713308737,
+      "joint_recall": 0.9049360146252285,
+      "excess_fpr_pp": 0.3959326914424577,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24987919615701656,
+        "context": 0.24618401978340582
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.23522001259785835,
+      "context_fpr": 0.18014937460631691,
+      "joint_fpr": 0.24016917124088905,
+      "joint_recall": 0.9308625560910753,
+      "excess_fpr_pp": 0.34194186988212305,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24956652738694182,
+        "context": 0.2458429265796879
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.16467200575902097,
+      "context_fpr": 0.15954287771078918,
+      "joint_fpr": 0.14991451453252946,
+      "joint_recall": 0.9686720957287684,
+      "excess_fpr_pp": 0.4319265724826771,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24987919615701656,
+        "context": 0.24615559534976267
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.23890938540448123,
+      "context_fpr": 0.17646000179969404,
+      "joint_fpr": 0.2411590029694952,
+      "joint_recall": 0.9034818015622403,
+      "excess_fpr_pp": 0.44092504274273747,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24942440521872603,
+        "context": 0.2499360450243029
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.23414019616665166,
+      "context_fpr": 0.17924952758031135,
+      "joint_fpr": 0.2371096913524701,
+      "joint_recall": 0.9299484793086256,
+      "excess_fpr_pp": 0.23396022676145378,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24919700974958073,
+        "context": 0.24962337625422815
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.1603527400341942,
+      "context_fpr": 0.15783316836137856,
+      "joint_fpr": 0.14208584540628094,
+      "joint_recall": 0.9671347847764666,
+      "excess_fpr_pp": 0.2519571672815635,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24939598078508285,
+        "context": 0.24982234728973024
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.2441284981553136,
+      "context_fpr": 0.17349050661387563,
+      "joint_fpr": 0.24331863583190858,
+      "joint_recall": 0.9027754695030746,
+      "excess_fpr_pp": 0.43192657248267985,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2517552087774651,
+        "context": 0.25033398709530713
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.2380995230810762,
+      "context_fpr": 0.17924952758031135,
+      "joint_fpr": 0.24187888059029966,
+      "joint_recall": 0.9291175004154895,
+      "excess_fpr_pp": 0.31494645910195573,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2514709644410335,
+        "context": 0.2500781671925187
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35181,
+      "clean_fpr": 0.17861963466210745,
+      "protocol_fpr": 0.16476199046162152,
+      "context_fpr": 0.15684333663277242,
+      "joint_fpr": 0.1468550346441105,
+      "joint_recall": 0.9670101379424962,
+      "excess_fpr_pp": 0.38693422118240284,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2517552087774651,
+        "context": 0.2502771382280208
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.1395662737334653,
+      "context_fpr": 0.118869792135337,
+      "joint_fpr": 0.1742103842346801,
+      "joint_recall": 0.9199351836463354,
+      "excess_fpr_pp": 1.4757491226491504,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24987919615701656,
+        "context": 0.24618401978340582
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.12948798704220282,
+      "context_fpr": 0.11814991451453254,
+      "joint_fpr": 0.15855304598218303,
+      "joint_recall": 0.9619827156390228,
+      "excess_fpr_pp": 0.9898317286061373,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24956652738694182,
+        "context": 0.2458429265796879
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.09718347880860254,
+      "context_fpr": 0.11572032754431746,
+      "joint_fpr": 0.11248087825069739,
+      "joint_recall": 0.9690875851753366,
+      "excess_fpr_pp": -0.14397552416089143,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24987919615701656,
+        "context": 0.24615559534976267
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.14244578421668316,
+      "context_fpr": 0.11967965445874201,
+      "joint_fpr": 0.1768199406100963,
+      "joint_recall": 0.9202675752035898,
+      "excess_fpr_pp": 1.367767479528481,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24942440521872603,
+        "context": 0.2499360450243029
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.13029784936560784,
+      "context_fpr": 0.11832988391973365,
+      "joint_fpr": 0.15864303068478358,
+      "joint_recall": 0.961068638856573,
+      "excess_fpr_pp": 0.8998470260055791,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24919700974958073,
+        "context": 0.24962337625422815
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.0985332493476109,
+      "context_fpr": 0.11482048051831188,
+      "joint_fpr": 0.11194097003509404,
+      "joint_recall": 0.968796742562739,
+      "excess_fpr_pp": -0.24295869702150447,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24939598078508285,
+        "context": 0.24982234728973024
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.14523530999730047,
+      "context_fpr": 0.1201295779717448,
+      "joint_fpr": 0.18095923692972193,
+      "joint_recall": 0.9172760511882998,
+      "excess_fpr_pp": 1.4577521821290365,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2517552087774651,
+        "context": 0.25033398709530713
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.13002789525780617,
+      "context_fpr": 0.11931971564833978,
+      "joint_fpr": 0.16062269414199587,
+      "joint_recall": 0.959365132125644,
+      "excess_fpr_pp": 1.0258256096463623,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2514709644410335,
+        "context": 0.2500781671925187
+      }
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35181,
+      "clean_fpr": 0.0989831728606137,
+      "protocol_fpr": 0.10060289750742374,
+      "context_fpr": 0.11769999100152974,
+      "joint_fpr": 0.11518041932871412,
+      "joint_recall": 0.9673840784444075,
+      "excess_fpr_pp": -0.413929631962566,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2517552087774651,
+        "context": 0.2502771382280208
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.24216704288939053,
+      "context_fpr": 0.17616252821670428,
+      "joint_fpr": 0.2455981941309255,
+      "joint_recall": 0.9088980406838887,
+      "excess_fpr_pp": 0.4334085778781027,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2499288033263086,
+        "context": 0.24619809762487896
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.22997742663656884,
+      "context_fpr": 0.18049661399548533,
+      "joint_fpr": 0.23593679458239278,
+      "joint_recall": 0.932983901160614,
+      "excess_fpr_pp": 0.25282167042889325,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24953010195363673,
+        "context": 0.2460272256080196
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.16505643340857787,
+      "context_fpr": 0.15413092550790067,
+      "joint_fpr": 0.14582392776523703,
+      "joint_recall": 0.9755813469778277,
+      "excess_fpr_pp": 0.3702031602708822,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24990032465683204,
+        "context": 0.2461126616164493
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.24144469525959367,
+      "context_fpr": 0.17571106094808125,
+      "joint_fpr": 0.24460496613995486,
+      "joint_recall": 0.9076084695702816,
+      "excess_fpr_pp": 0.45146726862302644,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24944466594520703,
+        "context": 0.2499857606652617
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.23033860045146726,
+      "context_fpr": 0.1815801354401806,
+      "joint_fpr": 0.2381038374717833,
+      "joint_recall": 0.933316693706061,
+      "excess_fpr_pp": 0.32505643340857704,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24938770860625392,
+        "context": 0.24967249530101954
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.16279909706546275,
+      "context_fpr": 0.15539503386004513,
+      "joint_fpr": 0.14591422121896164,
+      "joint_recall": 0.9737509879778693,
+      "excess_fpr_pp": 0.47855530474040786,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24944466594520703,
+        "context": 0.2499857606652617
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.2455079006772009,
+      "context_fpr": 0.17516930022573363,
+      "joint_fpr": 0.24767494356659142,
+      "joint_recall": 0.9063604975248555,
+      "excess_fpr_pp": 0.4063205417607213,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2520077461980976,
+        "context": 0.25027054736002735
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.236568848758465,
+      "context_fpr": 0.18130925507900678,
+      "joint_fpr": 0.24252821670428895,
+      "joint_recall": 0.9351886517742003,
+      "excess_fpr_pp": 0.171557562076749,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2518653528507148,
+        "context": 0.25009967534316796
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35114,
+      "clean_fpr": 0.17706546275395033,
+      "protocol_fpr": 0.16532731376975168,
+      "context_fpr": 0.15367945823927764,
+      "joint_fpr": 0.14555304740406322,
+      "joint_recall": 0.9750821581596573,
+      "excess_fpr_pp": 0.3611738148984217,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2519507888591445,
+        "context": 0.25021359002107424
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.12686230248306998,
+      "context_fpr": 0.1217155756207675,
+      "joint_fpr": 0.1656884875846501,
+      "joint_recall": 0.9276176213652814,
+      "excess_fpr_pp": 1.9593679458239255,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2499288033263086,
+        "context": 0.24619809762487896
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.12207674943566592,
+      "context_fpr": 0.12117381489841987,
+      "joint_fpr": 0.15205417607223476,
+      "joint_recall": 0.9676359249552811,
+      "excess_fpr_pp": 1.1286681715575606,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24953010195363673,
+        "context": 0.2460272256080196
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.0962528216704289,
+      "context_fpr": 0.11738148984198646,
+      "joint_fpr": 0.11051918735891648,
+      "joint_recall": 0.9675943258871001,
+      "excess_fpr_pp": -0.06320541760722331,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24990032465683204,
+        "context": 0.2461126616164493
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.13327313769751692,
+      "context_fpr": 0.12,
+      "joint_fpr": 0.1689390519187359,
+      "joint_recall": 0.927451225092558,
+      "excess_fpr_pp": 1.8148984198645621,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24944466594520703,
+        "context": 0.2499857606652617
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.12460496613995485,
+      "context_fpr": 0.12144469525959369,
+      "joint_fpr": 0.15358916478555304,
+      "joint_recall": 0.9675527268189192,
+      "excess_fpr_pp": 1.002257336343114,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24938770860625392,
+        "context": 0.24967249530101954
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.09760722347629797,
+      "context_fpr": 0.11873589164785553,
+      "joint_fpr": 0.11169300225733635,
+      "joint_recall": 0.9681351137734515,
+      "excess_fpr_pp": -0.21670428893905136,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24944466594520703,
+        "context": 0.2499857606652617
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.13264108352144469,
+      "context_fpr": 0.11972911963882618,
+      "joint_fpr": 0.16930022573363432,
+      "joint_recall": 0.9262032530471317,
+      "excess_fpr_pp": 1.9413092550790088,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2520077461980976,
+        "context": 0.25027054736002735
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.12641083521444696,
+      "context_fpr": 0.12,
+      "joint_fpr": 0.15404063205417606,
+      "joint_recall": 0.9665543491825783,
+      "excess_fpr_pp": 1.0112866817155743,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2518653528507148,
+        "context": 0.25009967534316796
+      }
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35114,
+      "clean_fpr": 0.10248306997742664,
+      "protocol_fpr": 0.09760722347629797,
+      "context_fpr": 0.11647855530474041,
+      "joint_fpr": 0.1108803611738149,
+      "joint_recall": 0.9668039435916636,
+      "excess_fpr_pp": -0.07223476297968379,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2519507888591445,
+        "context": 0.25021359002107424
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.23986241853729182,
+      "context_fpr": 0.1809377262853005,
+      "joint_fpr": 0.24746560463432296,
+      "joint_recall": 0.9056509626179883,
+      "excess_fpr_pp": 0.05430847212165302,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24993589195657748,
+        "context": 0.24626036413368663
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.22764301230992035,
+      "context_fpr": 0.18265749456915278,
+      "joint_fpr": 0.23723750905141203,
+      "joint_recall": 0.934633456692586,
+      "excess_fpr_pp": 0.08146270818247814,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24965096731914407,
+        "context": 0.2459469470325099
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.16518826937002173,
+      "context_fpr": 0.16518826937002173,
+      "joint_fpr": 0.15767559739319334,
+      "joint_recall": 0.962742733585596,
+      "excess_fpr_pp": 0.11766835626357552,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24990739949283414,
+        "context": 0.24626036413368663
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.23850470673425053,
+      "context_fpr": 0.18175235336712528,
+      "joint_fpr": 0.24918537291817525,
+      "joint_recall": 0.9059420350118508,
+      "excess_fpr_pp": 0.2805937726285318,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24939453514545404,
+        "context": 0.2500783542752942
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.22900072411296163,
+      "context_fpr": 0.18265749456915278,
+      "joint_fpr": 0.23886676321506156,
+      "joint_recall": 0.935215601480311,
+      "excess_fpr_pp": 0.10861694424330326,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24905262558053395,
+        "context": 0.24985041456534746
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.16609341057204924,
+      "context_fpr": 0.16627443881245474,
+      "joint_fpr": 0.16057204923968138,
+      "joint_recall": 0.9644060044076677,
+      "excess_fpr_pp": 0.2081824764663287,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2493660426817107,
+        "context": 0.25004986181155087
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.24058653149891382,
+      "context_fpr": 0.18102824040550325,
+      "joint_fpr": 0.2490948587979725,
+      "joint_recall": 0.9038213647137096,
+      "excess_fpr_pp": 0.13577118030413116,
+      "joint_group_exchange_rate": {
+        "protocol": 0.25195885688235464,
+        "context": 0.25039177137647095
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.2333454018826937,
+      "context_fpr": 0.18274800868935553,
+      "joint_fpr": 0.2438450398262129,
+      "joint_recall": 0.9340513119048609,
+      "excess_fpr_pp": 0.1629254163649535,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2518163945636379,
+        "context": 0.25019232413026754
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "validation_rows": 35097,
+      "clean_fpr": 0.17387762490948588,
+      "protocol_fpr": 0.16455467052860245,
+      "context_fpr": 0.1646451846488052,
+      "joint_fpr": 0.1570419985517741,
+      "joint_recall": 0.9640317684727016,
+      "excess_fpr_pp": 0.17197682838523132,
+      "joint_group_exchange_rate": {
+        "protocol": 0.25198734934609796,
+        "context": 0.2502493090577542
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.15106806661839248,
+      "context_fpr": 0.11468139029688632,
+      "joint_fpr": 0.18383417813178857,
+      "joint_recall": 0.9294357353736122,
+      "excess_fpr_pp": 1.5115858073859525,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24993589195657748,
+        "context": 0.24626036413368663
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.14002534395365676,
+      "context_fpr": 0.11450036205648081,
+      "joint_fpr": 0.16717958001448227,
+      "joint_recall": 0.9676078007401555,
+      "excess_fpr_pp": 0.9685010861694445,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24965096731914407,
+        "context": 0.2459469470325099
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.10137581462708183,
+      "context_fpr": 0.11287110789283128,
+      "joint_fpr": 0.11495293265749457,
+      "joint_recall": 0.9733045033057508,
+      "excess_fpr_pp": -0.22628530050687878,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24990739949283414,
+        "context": 0.24626036413368663
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.15170166545981173,
+      "context_fpr": 0.11576755973931933,
+      "joint_fpr": 0.1865496017378711,
+      "joint_recall": 0.9299762983907854,
+      "excess_fpr_pp": 1.6111513396089794,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24939453514545404,
+        "context": 0.2500783542752942
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.1386676321506155,
+      "context_fpr": 0.11459087617668356,
+      "joint_fpr": 0.1648262128892107,
+      "joint_recall": 0.9661940205413947,
+      "excess_fpr_pp": 0.8598841419261385,
+      "joint_group_exchange_rate": {
+        "protocol": 0.24905262558053395,
+        "context": 0.24985041456534746
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.10409123823316438,
+      "context_fpr": 0.11196596669080376,
+      "joint_fpr": 0.11612961622013034,
+      "joint_recall": 0.9720154684186453,
+      "excess_fpr_pp": -0.28964518464880545,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2493660426817107,
+        "context": 0.25004986181155087
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "global",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.15378349022447502,
+      "context_fpr": 0.1164011585807386,
+      "joint_fpr": 0.18664011585807386,
+      "joint_recall": 0.9265250114349869,
+      "excess_fpr_pp": 1.348660391020999,
+      "joint_group_exchange_rate": {
+        "protocol": 0.25195885688235464,
+        "context": 0.25039177137647095
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.13930123099203476,
+      "context_fpr": 0.1173062997827661,
+      "joint_fpr": 0.16699855177407674,
+      "joint_recall": 0.9652792215892553,
+      "excess_fpr_pp": 0.7422157856625631,
+      "joint_group_exchange_rate": {
+        "protocol": 0.2518163945636379,
+        "context": 0.25019232413026754
+      }
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "validation_rows": 35097,
+      "clean_fpr": 0.09703113685734975,
+      "protocol_fpr": 0.10372918175235336,
+      "context_fpr": 0.11232802317161478,
+      "joint_fpr": 0.11603910209992759,
+      "joint_recall": 0.972472867894715,
+      "excess_fpr_pp": -0.2986965966690805,
+      "joint_group_exchange_rate": {
+        "protocol": 0.25198734934609796,
+        "context": 0.2502493090577542
+      }
+    }
+  ],
+  "caveats": [
+    "Within-class policy is an oracle control and not usable without ground-truth labels.",
+    "Observable matching is label-blind but bins are computed on the held-out validation features, so it is a transductive evaluation diagnostic, not a learned production sampler.",
+    "Stratification on two features does not guarantee realistic joint flows or complete feature-conditional draws.",
+    "Per-stratum donor pool sizes change exchange frequency; exchange-rate metadata must be compared.",
+    "Protocol+Context was selected after prior results. No independent external dataset used."
+  ],
+  "train_sha256": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa"
+}
