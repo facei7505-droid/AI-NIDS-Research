@@ -18,8 +18,8 @@ No example above establishes that our method is novel; these are **quality pract
 | Valid inputs | Byte-pinned dataset provenance, exact split, full class metrics and confusion counts | **Completed** for UNSW-NB15 |
 | Research design | Hypotheses fixed before outcome inspection; no tuning on held-out test | **Partial**; several current experiments explicitly post-hoc |
 | Independent replication | At least one truly external, previously untouched corpus with harmonized features | **Missing** |
-| Causal and alternative explanations | Matched retrained TTL ablation, alternative groupings, physically plausible shifts | **Partial**; retraining workflow published, results not yet verified |
-| Statistical rigor | Dependence/cluster-aware uncertainty, multiple comparisons correction, repeated independent datasets | **Missing/partial**; Wilson intervals assume row independence |
+| Causal and alternative explanations | Matched retrained TTL ablation, donor-policy comparison, realistic shifts | **Partial**; TTL retraining and class-mixing executed on training data; realistic independent shifts missing |
+| Statistical rigor | Dependence/cluster-aware uncertainty, multiple comparisons correction, repeated independent datasets | **Missing/partial**; 60-condition permutation-seed control coded, results not yet confirmed; Wilson intervals assume row independence |
 | Strong matched baselines | Modern threshold/calibration and group-interaction comparisons, matched runtime/budget | **Partial**; majority, LR and RF supported |
 | Reproducibility | Automated tests, environment freeze, checksums, data-split audit, all outcomes and failures published | **Mostly implemented**; complete current CI outcome still needs verification |
 | Scientific argument | Clear review of closest methods and transparent limits of novelty | **Partial**; targeted overview but not a systematic review |
