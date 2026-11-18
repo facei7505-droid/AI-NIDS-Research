@@ -40,7 +40,7 @@ def test_report_is_explicitly_exploratory():
     data=example()
     report=render(data,compare(data))
     assert "Post-hoc" in report
-    assert "not independent" in report.lower()
+    assert "not an independent confirmation" in report.lower()
     assert "example-only" in report
 
 
