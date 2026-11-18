@@ -46,3 +46,25 @@ After observing RF Protocol + Context excess FPR, we identified a plausible data
 ## Authorship and integrity
 
 Code and writing are substantially AI-assisted. The human investigator must personally verify figures, rerun the experiments, check bibliography details, defend the choices and disclose assistance. Unverified claims of first-in-world novelty, peer review, real-world protection or guaranteed admissions must not appear in the manuscript.
+
+## Falsification: class-mixing permutation control (18 November 2026)
+
+The initial Failure Fingerprints permutation study drew replacement feature blocks from arbitrary validation rows. This can **mix attack-labelled and normal-labelled traffic**, possibly making group interaction estimates reflect out-of-distribution synthetic combinations rather than a stable model failure.
+
+A later exploratory diagnostic, `src/class_mixing_control.py`, pairs two synthetic perturbation regimes:
+
+1. **Global block shuffling** within each predefined Protocol/Context group (original style).
+2. **Within-class block shuffling**, where donors for each validation row come from the *same ground-truth class*.
+
+Both regimes use the same grouped fit/validation split indices (13, 29, 47), trained model, perturbation fraction (.25), and group-specific random mask rules. All clean/single/joint conditions are preserved. The official designated test set is **never loaded**.
+
+**Predefined interpretation rules before looking at this experiment's outcome:**
+
+- If positive excess FPR seen in global permutations becomes near zero or negative under within-class shuffling, this supports the **alternative explanation** that artificial class mixing contributes materially to the measured interaction. It does not prove its unique cause.
+- If the sign and sizable effect persist in within-class shuffling, simple label mixing cannot completely explain the measured synthetic sensitivity, but neither causal attribution nor generalization has been demonstrated.
+- If the effect changes sign across split seeds, report instability and refrain from promoting the interaction as an established mechanism.
+- Do not choose only the most flattering model or subgroup. Include the full 3-seed × 2-model × 2-mode set.
+- Using true labels to choose donors is valid **only as a retrospective offline diagnostic**. It is not an available operation at intrusion-detection inference time, and it would be target leakage if used in a deployed algorithm or predictor fitting.
+- This experiment was conceived after inspecting the earlier Protocol+Context result, and is therefore **post-hoc exploratory**, not preregistered independent confirmation.
+
+This diagnostic compares synthetic regimes; it is not physically constrained traffic simulation, validation on another network, or proof of first-in-world scientific novelty. The result remains pending until `results/class_mixing_control.json` is published from an executed and validated workflow.
