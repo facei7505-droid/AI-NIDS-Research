@@ -49,3 +49,22 @@ The matched result is post-hoc, and three correlated split seeds do not establis
 ## Integrity statement
 
 This discussion was AI-assisted, and claims are limited to the exact values in published GitHub data. Differences between experiments cannot be assigned to individual causes without single-factor comparisons.
+
+## Observed class-mixing control — 18 November 2026
+
+The subsequent **executed training-only donor-policy comparison** (`results/class_mixing_control.json`) held the feature groups, models, split seeds and perturbation fraction fixed while comparing unrestricted donors versus same-class donors:
+
+| Model | Global donor policy: mean excess FPR | Same-class donor policy: mean excess FPR | Paired difference |
+|---|---:|---:|---:|
+| Random Forest | +1.660 pp | −0.277 pp | **+1.937 pp** |
+| Logistic Regression | +0.307 pp | +0.289 pp | **+0.018 pp** |
+
+All numbers are **descriptive** means across grouped split seeds 13, 29 and 47. The shift was much larger for RF, while LR showed little change. This is a falsification-style observation about the *experimental permutation methodology*, not proof that cross-class mixing uniquely caused the result.
+
+Reproducible evidence: `results/class_mixing_control.json`, `results/class_mixing_analysis.json`, and `results/CLASS_MIXING_ANALYSIS.md`.
+
+### Further replication now specified
+
+The post-hoc next phase is a full factorial **fixed-model, repeated-permutation-seed** experiment (`src/permutation_seed_replication.py`). It has 3 grouped split seeds × 5 independent permutation seeds × 2 models × 2 donor policies = 60 paired setting records. All outcomes must be reported, including seed-level reversals.
+
+The new outcome is **pending** until the corresponding CI workflow publishes `results/permutation_seed_replication.json`. Even if all 5 perturbation seeds agree, this does not imply independent network population replication or a first-in-world discovery.
