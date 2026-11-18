@@ -31,7 +31,7 @@ jobs:
           python src/ttl_retraining_ablation.py \
             --train data/UNSW_NB15_training-set.csv \
             --output results/ttl_retraining_ablation.json
-      - name: Verify evidence counts and provenance
+      - name: Generate measured results report\n        run: python src/report_ttl_retraining.py --input results/ttl_retraining_ablation.json --output results/TTL_RETRAINING_REPORT.md\n      - name: Verify evidence counts and provenance
         run: |
           python - <<'PY'
           import json
@@ -40,7 +40,7 @@ jobs:
           assert r["status"]=="TRAIN_ONLY_POST_HOC_RETRAINED_TTL_ABLATION"
           assert r["train_sha256"]=="bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa"
           assert len(r["rows"])==3*2*2*4
-          assert len(r["effect_summaries"])==3*2*2
+          assert len(r["effect_summaries"])==3*2*2\n          assert Path("results/TTL_RETRAINING_REPORT.md").is_file()
           for x in r["rows"]:
               assert x["train_rows"]+x["validation_rows"]==175341
               assert x["tn"]+x["fp"]+x["fn"]+x["tp"]==x["validation_rows"]
@@ -50,7 +50,7 @@ jobs:
         if: always()
         with:
           name: matched-ttl-retraining-study
-          path: results/ttl_retraining_ablation.json
+          path: |\n            results/ttl_retraining_ablation.json\n            results/TTL_RETRAINING_REPORT.md
           if-no-files-found: warn
           retention-days: 30
       - name: Publish executed scientific evidence
@@ -58,7 +58,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f results/ttl_retraining_ablation.json
+          git add -f results/ttl_retraining_ablation.json results/TTL_RETRAINING_REPORT.md
           git commit -m "results: publish executed matched TTL retraining study [skip ci]"
           git fetch origin main
           git rebase origin/main
