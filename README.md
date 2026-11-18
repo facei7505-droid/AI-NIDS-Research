@@ -141,3 +141,16 @@ The class-mixing study contrasts global feature-group donor shuffling with same-
 Interpretation: the interaction finding is sensitive to how synthetic donor blocks are selected. This does **not** establish causation, independent replication, or a new algorithm. See the [quantitative report](results/CLASS_MIXING_ANALYSIS.md), [replication challenge](docs/INTERACTION_REPLICATION_CHALLENGE.md), and [closest prior work](docs/RELATED_WORK.md).
 
 [Repeated random-permutation factorial experiment](src/permutation_seed_replication.py) and [CI workflow](.github/workflows/permutation-seed-replication.yml) are committed to test 60 combinations across three grouped splits, five perturbation seeds, two models and two donor policies. Treat the experiment as **pending until** `results/permutation_seed_replication.json` is published from verified execution.
+
+## Replicated donor policy comparison — November 2026
+
+The executed [60-condition perturbation-seed study](results/permutation_seed_replication.json) used three grouped training/validation splits, five independent perturbation seeds, and two ML models. It compared unrestricted donor sampling with within-ground-truth-class donors while freezing group definitions and training splits.
+
+| Model | Global excess FPR | Within-class excess FPR | Paired mean difference | Positive paired comparisons |
+|---|---:|---:|---:|---:|
+| Random Forest | +1.591 pp | −0.205 pp | **+1.796 pp** | 15/15 |
+| Logistic Regression | +0.290 pp | +0.285 pp | +0.005 pp | 6/15 |
+
+Read the [full verified-data summary](results/PERMUTATION_SEED_REPLICATION_REPORT.md). These 15 comparisons are **not 15 independent studies**. They reuse the same training corpus. Ground-truth labels are used only to *diagnose* donor-policy artifacts, not to train or operate a deployed detection model.
+
+**Next falsification step:** [Observable Donor Control](src/observable_donor_control.py) matches potential donors using only unperturbed numeric features `dur` and `sbytes`, without ground-truth class labels. [Tests](tests/test_observable_donor_control.py) and [CI](.github/workflows/observable-donor-control.yml) are committed. Its findings must not be reported before `results/observable_donor_control.json` is published from an executed successful run. This is transductive evaluation stratification, not physically validated or production-ready matching.
