@@ -10,6 +10,8 @@ _Status as reviewed 18 November 2026 (Asia/Almaty). Dates refer to documented pr
 | Failure Fingerprints | Measured, training-only exploratory | `results/failure_fingerprints.json`; RF Protocol+Context +1.796 pp mean excess FPR |
 | TTL contribution | Measured, post-hoc exploratory | `results/ttl_decomposition.json`; 60 perturbation conditions |
 | Matched TTL retraining ablation | Code and CI configured (result not yet verified) | `src/ttl_retraining_ablation.py`, `.github/workflows/ttl-retraining-ablation.yml` |
+| Donor-policy falsification | Executed, exploratory | `results/class_mixing_control.json`; RF mean +1.660 global versus -0.277 within-class excess FPR |
+| Permutation-seed replication | Code, tests and workflow committed; results pending | `src/permutation_seed_replication.py`; 60 planned conditions |
 | Independent external validation | Not done | Protocol and untouched external dataset needed |
 | Paper | Draft | `paper/MANUSCRIPT_DRAFT.md`; not peer reviewed |
 | Originality | Candidate hypothesis | No validated first-in-world claim |
