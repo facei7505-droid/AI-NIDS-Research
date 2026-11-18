@@ -155,3 +155,21 @@ Unconditional permutation can break dependencies among predictor variables, and 
 A more rigorous factorial replication is implemented in `src/permutation_seed_replication.py` to vary permutation randomness independently of model fitting (three grouped splits, five permutation seeds, two models, two donor policies). All conditions should be reported; scientific conclusions await its executed output and verification. Further evidence would require physically plausible feature transitions, a genuinely independent network corpus, stronger dependence-aware uncertainty analysis, and full comparison against recent conditional importance research.
 
 The manuscript remains a **draft**, substantially AI-assisted, without peer review or independent external confirmation.
+
+
+## 10. Replication across permutation seeds (executed exploratory results, 18 November 2026)
+
+To assess whether the observed donor-policy difference was an arbitrary feature of a single random permutation, we repeated the class-mixing diagnostic on the official UNSW-NB15 **training split only** using three duplicate-group validation split seeds (13, 29, 47) and five different permutation seeds (101, 211, 307, 401, 503). For each split and permutation seed we evaluated two previously trained model families (Logistic Regression, Random Forest) under unrestricted and within-class donor policies, yielding **60 evaluated conditions**. All 60 records are stored in `results/permutation_seed_replication.json`, with the descriptive summary in `results/PERMUTATION_SEED_REPLICATION_REPORT.md`.
+
+| Model | Mean global excess FPR interaction | Mean within-class excess FPR interaction | Mean paired difference | Global > within-class |
+|---|---:|---:|---:|---:|
+| Random Forest | +1.591 pp | −0.205 pp | +1.796 pp | 15/15 comparisons |
+| Logistic Regression | +0.290 pp | +0.285 pp | +0.005 pp | 6/15 comparisons |
+
+Across these matched perturbation conditions, the Random Forest false-alarm interaction estimate was sensitive to whether feature blocks came from either label class versus the same class. In contrast, LR showed no comparably large or consistently signed donor-policy contrast. The model-specific difference is **a research observation under synthetic perturbations**, not an established causal mechanism.
+
+### Caveats and next falsification test
+
+The interaction was selected after observing earlier results, so this analysis remains *post-hoc*. The fifteen comparisons per model are not independent network populations; they reuse three validation partitions of the same historical benchmark. Within-class donor sampling uses ground-truth labels as an offline diagnostic and is unavailable in realistic unlabeled deployment. Neither unrestricted nor within-class sampling fully preserves physical consistency of network-flow features. Related methods for conditional permutations and dependence-aware feature interpretation already exist and must be compared directly before originality claims.
+
+To move beyond the label-oracle comparison, a class-blind, observable-stratified diagnostic is now implemented in `src/observable_donor_control.py`. It groups potential donor rows based only on the unperturbed observed fields `dur` and `sbytes` and records realized exchange rates. This follow-up does not establish a deployable sampler, and **no numerical result is asserted until its executed JSON is available and validated**.
