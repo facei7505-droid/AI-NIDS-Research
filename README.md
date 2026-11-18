@@ -121,3 +121,15 @@ The earlier TTL test perturbed a model **already trained with TTL fields**. That
 - [Reproducible GitHub Actions run](.github/workflows/ttl-retraining-ablation.yml)
 
 Once CI has successfully completed, `results/ttl_retraining_ablation.json` and `results/TTL_RETRAINING_REPORT.md` will contain measured comparisons. Until then **no result or scientific conclusion is claimed**. The new analysis was formulated after studying existing TTL interactions; it is exploratory and must be independently replicated.
+
+## Interaction replication challenge — 18 November 2026
+
+The initial RF Protocol + Context experiment showed +1.796 pp mean excess FPR, but the later **core-group** matched TTL retraining study did not reproduce the same positive sign (full-model core-group mean **−0.259 pp**, retrained no-TTL mean **+0.060 pp**). **These are not equivalent experiments:** group membership and permutation seed differed, so the discrepancy cannot yet be attributed to one cause.
+
+We now prioritize *falsification*, not claiming novelty from the first positive-looking result:
+
+- [Exactly what changed between studies](docs/INTERACTION_REPLICATION_CHALLENGE.md)
+- [Executed full-vs-no-TTL retraining data](results/ttl_retraining_ablation.json)
+- [Class mixing falsification code](src/class_mixing_control.py), [tests](tests/test_class_mixing_control.py) and [workflow](.github/workflows/class-mixing-control.yml)
+
+The class-mixing study contrasts global feature-group donor shuffling with same-class donor shuffling. The latter uses **ground-truth labels only as an offline diagnostic**, and must never be presented as a deployable IDS method. New results should not be claimed until `results/class_mixing_control.json` is actually generated and checked.
