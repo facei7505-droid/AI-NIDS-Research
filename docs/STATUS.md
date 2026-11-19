@@ -1,6 +1,6 @@
 # Research status and release gates
 
-_Status as reviewed 18 November 2026 (Asia/Almaty). Dates refer to documented project commits and are not publication dates._
+_Status as reviewed 19 November 2026 (Asia/Almaty). Dates refer to documented project commits and are not publication dates._
 
 | Area | Status | Evidence |
 | --- | --- | --- |
@@ -12,7 +12,8 @@ _Status as reviewed 18 November 2026 (Asia/Almaty). Dates refer to documented pr
 | Matched TTL retraining ablation | Code and CI configured (result not yet verified) | `src/ttl_retraining_ablation.py`, `.github/workflows/ttl-retraining-ablation.yml` |
 | Donor-policy falsification | Executed, exploratory | `results/class_mixing_control.json`; RF mean +1.660 global versus -0.277 within-class excess FPR |
 | Permutation-seed replication | Code, tests and workflow committed; results pending | `src/permutation_seed_replication.py`; 60 planned conditions |
-| Independent external validation | Not done | Protocol and untouched external dataset needed |
+| Observable donor matching | Executed, exploratory | `results/observable_donor_control.json` (54 conditions) and `results/OBSERVABLE_DONOR_REPORT.md` |
+| Independent external validation | Not done | `docs/EXTERNAL_VALIDATION_PROTOCOL.md` defines candidate independent corpora and mapping gates |
 | Paper | Draft | `paper/MANUSCRIPT_DRAFT.md`; not peer reviewed |
 | Originality | Candidate hypothesis | No validated first-in-world claim |
 
@@ -45,3 +46,9 @@ This checklist is not a score. Do not equate repository polish with scientific n
 - **Documented:** raw study and derived table at `results/PERMUTATION_SEED_REPLICATION_REPORT.md`; manuscript updated.
 - **Implemented, not yet confirmed as executed:** Observable-stratified donor control uses class-blind matching on unperturbed `dur` and `sbytes`; code, unit tests, separate CI and complete output checks committed. No numeric results should be inferred until `results/observable_donor_control.json` exists.
 - **Still missing for originality 9/10:** matched comparison to published conditional permutation methods, physically plausible traffic controls, untouched external dataset, and independent human replication.
+
+## Research status, 19 November 2026
+
+- Executed 54-condition class-blind observable-stratified donor control, saved raw JSON and derived report with reproducibility tests. RF mean excess FPR: global +1.610 pp, observable +0.959 pp, class-oracle −0.219 pp. This is synthetic training-only sensitivity, **not external validation**.
+- [External validation protocol](EXTERNAL_VALIDATION_PROTOCOL.md) specifies official potential CIC corpora, provenance requirements and strict semantic feature-mapping gates. No independent dataset has yet been downloaded or tested.
+- Missing gates: independent dataset with predefined legitimate shared groups, physical-consistency controls, formal literature review and statistical independence/cluster-aware uncertainty analysis. **9/10 novelty is not established.**
