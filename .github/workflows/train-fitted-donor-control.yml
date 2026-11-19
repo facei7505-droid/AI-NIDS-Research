@@ -1,0 +1,70 @@
+name: Training-fitted label-blind donor control
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/train-fitted-donor-control.yml'
+permissions:
+  contents: write
+concurrency:
+  group: training-fitted-donor-control
+  cancel-in-progress: false
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install research environment
+        run: python -m pip install -r requirements.txt
+      - name: Run full unit and published-evidence checks
+        run: python -m pytest -q
+      - name: Verify pinned input files
+        run: python src/download_data.py
+      - name: Execute training-fitted donor matching experiment
+        run: |
+          python src/train_fitted_donor_control.py \
+            --train data/UNSW_NB15_training-set.csv \
+            --output results/train_fitted_donor_control.json
+      - name: Validate model/split/policy coverage, training provenance and frozen matching
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('results/train_fitted_donor_control.json').read_text())
+          assert d['train_sha256']=='bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa'
+          assert d['status']=='POST_HOC_TRAIN_FITTED_OBSERVABLE_STRATA'
+          assert len(d['rows'])==3*3*2*3
+          assert len(d['frozen_strata_parameters'])==3
+          assert len({(x['split_seed'],x['donor_seed'],x['model'],x['policy']) for x in d['rows']})==54
+          for s in d['frozen_strata_parameters']:
+              assert s['strata_parameters_fit_on']=='training_rows_only'
+              assert s['fit_rows']+s['validation_rows']==175341
+              assert set(s['strata']['columns'])=={'dur','sbytes'}
+          for r in d['rows']:
+              assert 0<=r['joint_fpr']<=1 and 0<=r['joint_recall']<=1
+              assert 0<=r['exchange_protocol']<=1 and 0<=r['exchange_context']<=1
+          print('Verified training-fitted matching across all 54 outcomes')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: training-fitted-donor-evidence
+          path: results/train_fitted_donor_control.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Publish executed evidence only after all checks succeed
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/train_fitted_donor_control.json
+          git commit -m "results: publish executed training-fitted donor sensitivity [skip ci]"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
