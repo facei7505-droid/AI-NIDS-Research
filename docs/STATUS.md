@@ -9,11 +9,11 @@ _Status as reviewed 19 November 2026 (Asia/Almaty). Dates refer to documented pr
 | Validation FPR budget | Measured, exploratory | `results/alert_budget_study.json`; 5% validation goal missed on official test (RF 14.54% FPR) |
 | Failure Fingerprints | Measured, training-only exploratory | `results/failure_fingerprints.json`; RF Protocol+Context +1.796 pp mean excess FPR |
 | TTL contribution | Measured, post-hoc exploratory | `results/ttl_decomposition.json`; 60 perturbation conditions |
-| Matched TTL retraining ablation | Code and CI configured (result not yet verified) | `src/ttl_retraining_ablation.py`, `.github/workflows/ttl-retraining-ablation.yml` |
+| Matched TTL retraining ablation | Executed, post-hoc exploratory | `results/ttl_retraining_ablation.json` (48 model/split/condition records) |
 | Donor-policy falsification | Executed, exploratory | `results/class_mixing_control.json`; RF mean +1.660 global versus -0.277 within-class excess FPR |
-| Permutation-seed replication | Code, tests and workflow committed; results pending | `src/permutation_seed_replication.py`; 60 planned conditions |
+| Permutation-seed replication | Executed, exploratory | `results/permutation_seed_replication.json` (60 records); RF +1.796 pp mean paired global-vs-oracle contrast |
 | Observable donor matching | Executed, exploratory | `results/observable_donor_control.json` (54 conditions) and `results/OBSERVABLE_DONOR_REPORT.md` |
-| Independent external validation | Not done | `docs/EXTERNAL_VALIDATION_PROTOCOL.md` defines candidate independent corpora and mapping gates |
+| Training-fitted observable quantile control | Executed, exploratory | `results/train_fitted_donor_control.json` (54 rows and 3 frozen training parameter sets); compared with earlier transductive experiment |\n| External NetFlow-v2 compatibility audit | Code and tests committed, real CSV audit **not executed** | `src/audit_netflow_v2_schema.py`, `docs/NETFLOW_V2_EXTERNAL_PLAN.md` |\n| Independent external validation | Not done | No UQ NetFlow-v2 source/target dataset downloaded, no external model run |
 | Paper | Draft | `paper/MANUSCRIPT_DRAFT.md`; not peer reviewed |
 | Originality | Candidate hypothesis | No validated first-in-world claim |
 
@@ -52,3 +52,11 @@ This checklist is not a score. Do not equate repository polish with scientific n
 - Executed 54-condition class-blind observable-stratified donor control, saved raw JSON and derived report with reproducibility tests. RF mean excess FPR: global +1.610 pp, observable +0.959 pp, class-oracle −0.219 pp. This is synthetic training-only sensitivity, **not external validation**.
 - [External validation protocol](EXTERNAL_VALIDATION_PROTOCOL.md) specifies official potential CIC corpora, provenance requirements and strict semantic feature-mapping gates. No independent dataset has yet been downloaded or tested.
 - Missing gates: independent dataset with predefined legitimate shared groups, physical-consistency controls, formal literature review and statistical independence/cluster-aware uncertainty analysis. **9/10 novelty is not established.**
+
+## Additional evidence and blockers — 19 November 2026
+
+- **Measured:** frozen, training-fitted quantile boundaries for `dur` and `sbytes` were evaluated over 54 matched conditions (`results/train_fitted_donor_control.json`); the RF observable-strata excess FPR changed from +0.958702 pp (transductive quantiles) to +0.958734 pp (training-fitted quantiles), while LR changed from +0.221477 to +0.213412 pp. These are **post-hoc within-corpus sensitivity checks**.
+- **Automation pending:** CI generated the frozen study JSON, but the additional `results/donor_quantile_comparison.json` and Markdown report have not yet been independently verified as published. Do not claim the derived report exists until it does.
+- **Potential external data:** UQ NF-UNSW-NB15-v2 (source) and NF-CSE-CIC-IDS2018-v2 (target) share a published common NetFlow-v2 feature scheme. Before claims, real files must be acquired, hashed, schema-audited and semantically reviewed; the current GitHub repository has no executed external validation.
+- **Integrity:** external input CSVs and packet captures are excluded through `.gitignore`. These assets must not be silently committed or redistributed.
+- **Novelty rating:** 9/10 still unestablished, because the strongest control finding remains within a single historical corpus and related conditional-permutation methods already exist.
