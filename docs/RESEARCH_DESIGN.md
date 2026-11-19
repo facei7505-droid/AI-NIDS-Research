@@ -98,3 +98,16 @@ This diagnostic compares synthetic regimes; it is not physically constrained tra
 - Repeat all results on a previously untouched external corpus before claiming generalizable NIDS failure modes. Prior research on conditional permutation already exists; this is not a claim to invent conditional feature importance.
 
 Evidence is considered executed only when `results/observable_donor_control.json` is produced by a successful workflow and its provenance and full design are checked. AI-assisted design and coding must be disclosed.
+
+
+## Train-fitted observable matching control — added 19 November 2026
+
+The first observable matching diagnostic computed quantile boundaries from validation features. Although this used no class labels, it was a **transductive procedure**, making its matching rule dependent on the target batch.
+
+The new experiment in `src/train_fitted_donor_control.py` freezes matching quantiles and missing-value medians from **fitting-subset features only** for `dur` and `sbytes`. Validation records are assigned to frozen strata without refitting. It preserves the same 3 held-out split seeds (13,29,47), 3 donor seeds (101,211,307), RF/LR model families, 25% intervention fraction, Protocol and Context groups, and original three donor policies (global, label-blind observable, oracle same class). Expected output: 54 factorial condition rows plus **training-fitted cutpoints** per split. The designated official test is never loaded.
+
+**Primary diagnostic:** change in mean paired (global minus observable) excess-FPR interaction relative to the earlier transductive study. This checks sensitivity to the origin of matching bins, not efficacy in production. Secondary diagnostics: per-policy joint recall, joint FPR and actual exchange rates. Report all models, conditions and unfavorable outcomes.
+
+**Interpretation gates:** same outcome suggests transductive quantile fitting was not an important sensitivity driver in this dataset. Different outcome indicates a dependence on how matching boundaries were estimated. **Neither result is an independently replicated scientific discovery.** Same-class oracle donors remain a retrospective upper-bound comparison, not a deployable method. Partitions overlap within the same historical UNSW corpus, and group permutations may create physically invalid flow values.
+
+**Release gate:** no numeric result should be attributed to this experiment until `results/train_fitted_donor_control.json` is written by successful CI and checked against the expected 54 unique conditions, frozen cutpoints, row counts and pinned train-file SHA-256.
