@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this research software, please cite the repository. The working manuscript is unpublished and not peer reviewed."
+type: software
+title: "AI-NIDS Research: Auditing False Alarms and Feature-Interaction Evaluation Artifacts"
+authors:
+  - name: "AI-NIDS Research contributors"
+date-released: 2026-11-19
+url: "https://github.com/facei7505-droid/AI-NIDS-Research"
+repository-code: "https://github.com/facei7505-droid/AI-NIDS-Research"
+abstract: "Reproducible exploratory machine-learning network intrusion detection research on false alarms, synthetic perturbation donors, validation transfer, and feature interaction artifacts, using historical UNSW-NB15 data. Working paper, not peer reviewed."
+keywords:
+  - "network intrusion detection"
+  - "machine learning"
+  - "false positives"
+  - "feature interactions"
+  - "reproducibility"
