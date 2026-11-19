@@ -1,201 +1,160 @@
-# Reproducibility, False Alarms and Validation Shift in Lightweight Network Intrusion Detection
+# When False-Alarm Interaction Estimates Depend on the Perturbation Protocol: An Exploratory Study of Network Intrusion Detection
 
-**Manuscript draft v0.1 — 6 November 2026. Not peer reviewed, not submitted, and not a claim of novel discovery.**
+**Working paper · version 0.2 · updated 19 November 2026**  
+**Status:** Unpublished, not peer reviewed. Software, experiments, and manuscript are substantially AI-assisted; the human investigator must verify authorship, computations, citations, and conclusions before submission.
 
 ## Abstract
 
-Network intrusion detection models are often compared by aggregate classification scores, which may conceal high false-alarm rates and evaluation instability. We implement a transparent offline benchmark of majority-class classification, logistic regression (LR), and random forest (RF) on the prescribed UNSW-NB15 splits (175,341 training, 82,332 test records). Processing is fit on the training records only, and saved experiment metadata include file hashes, software versions, per-model confusion counts, and prediction timing. On the held-out test, RF attained F1=0.8902, recall=0.9885, precision=0.8096, and false-positive rate (FPR)=0.2847, while LR attained F1=0.8492 and FPR=0.3895. An exact-predictor-fingerprint screening flagged 8,541 (10.37%) test records as matching training predictors, and training-only cross-validation produced substantially higher F1 than the official test. These results motivate additional **exploratory** analyses of false-alarm-bounded thresholds and the role of cross-split overlap. A new group-held-out validation study is implemented, but its outcomes are **not included in this draft**. This article reports measured baseline findings and describes open uncertainties rather than claiming practical deployment readiness or novel detector performance.
+This study examines whether apparent feature-group interactions in machine-learning network intrusion detection systems (NIDS) depend on *how synthetic perturbation donors are selected*. We first benchmark a majority-class predictor, logistic regression (LR), and random forest (RF) on the historical UNSW-NB15 designated binary train/test splits (175,341/82,332 records). RF obtains test F1 of 0.8902 and recall of 0.9885, but generates 10,535 false alarms (FPR 0.2847). A subsequent validation-derived 5% false-alarm policy fails to transfer to the official test: the constrained RF test FPR is 14.54%. These analyses motivate an exploratory training-only investigation of feature-group permutation artifacts. For Protocol and Context feature blocks, unrestricted donor shuffling yields an RF mean excess FPR interaction of **+1.591 pp** versus **−0.205 pp** when donors are selected within the known class (three group-held-out splits, five donor seeds, 60 evaluated conditions). A later class-blind matching experiment using observed duration and source bytes lowers RF interaction from **+1.610 pp** under global shuffling to **+0.959 pp** under observable matching (54 conditions), with nearly identical actual exchange fractions. A further 54-condition follow-up freezes quantile bin boundaries using training records only and observes RF **+0.958734 pp**, indicating limited sensitivity to whether these particular boundaries were learned from validation data. The experiments concern **synthetic evaluation artifacts**, not a novel deployed detector. All follow-ups are post-hoc, use the same historical source corpus and require independent, semantically harmonized network-origin replication.
 
-## 1. Background and research gap
+**Keywords:** network intrusion detection; false alarms; feature interaction; conditional permutation; benchmark shift; reproducibility.
 
-A network intrusion detection system (NIDS) seeks to identify traffic associated with potentially harmful activity. Because most machine-learning NIDS studies report global metrics, it is important to inspect class prevalence, false alarms, sensitivity, and the evaluation split. UNSW-NB15, introduced by Moustafa and Slay (2015), includes deliberately configured normal and attack flows. The designated split enables comparable offline evaluation, although it represents an older controlled dataset, not today's live network environments.
+## 1. Introduction and research questions
 
-Recent work by Berhili, Chaieb and Benabdellah (2026) discusses how evaluation choices can inflate NIDS scores, highlighting why an attractive random-split metric cannot replace a held-out official-test estimate. Our contribution candidate is a carefully audited comparison of how a validation-only false-alarm budget transfers to both the official test distribution and a separate subset of records without identical training fingerprints. Threshold methods and overlap screening are not intrinsically novel; further literature review and new evidence are necessary to establish any original insight.
+NIDS benchmarks often reward recall and F1 while obscuring false alarms and vulnerability to evaluation-design choices. Moreover, unconstrained feature permutations can break predictor relationships and create flow records that would not occur on a real network. We therefore ask:
 
-## 2. Research questions
+**RQ1.** What baseline performance and false-alarm burden do simple supervised models demonstrate on the official UNSW-NB15 split?
 
-RQ1. What tradeoffs do LR, RF, and a majority-class negative control exhibit on the designated UNSW-NB15 binary test split?
+**RQ2.** Does a threshold selected to meet a 5% FPR constraint on grouped training-only validation preserve that constraint on the designated test distribution?
 
-RQ2. How different are the training-only cross-validation and official held-out scores, and is cross-split feature-vector overlap present?
+**RQ3.** For predefined Protocol and Context feature blocks, does changing the donor-selection policy change the measured *non-additive FPR interaction*? Is this contrast model-dependent?
 
-RQ3 (pending analysis). Does a threshold chosen on grouped validation with an upper confidence constraint on the benign false-positive rate satisfy its nominal 5% alarm budget on the official test and non-overlap subset?
+**RQ4.** Does observable class-blind donor grouping based on unperturbed flow duration and source bytes reduce that measured interaction? Does fitting grouping boundaries on training records (rather than held-out validation features) substantially change the result?
 
-RQ4 (pending analysis). Does the same policy retain useful recall under synthetic feature corruption? Synthetic corruption cannot establish resilience to real malicious adaptation.
+This is an empirical reliability question, **not** a claim to invent conditional permutation or to discover a universally new network phenomenon.
 
-## 3. Methods
+## 2. Data, provenance and models
 
-### Dataset and provenance
+The first benchmark uses the official-designated UNSW-NB15 split CSV formats containing 175,341 train and 82,332 test rows. The research downloader retrieves a public mirror with explicit SHA-256 verification:
 
-Official-designated CSV splits contain 175,341 training and 82,332 test rows. Files were retrieved from a publicly hosted mirror; the original dataset is credited to UNSW. The benchmark records SHA-256 hashes:
+| Input | Records | SHA-256 |
+| --- | ---: | --- |
+| UNSW-NB15 designated training CSV | 175,341 | `bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa` |
+| UNSW-NB15 designated testing CSV | 82,332 | `734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559` |
 
-- Train: `bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa`
-- Test: `734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559`
+Hash agreement identifies pinned mirror files; **it does not independently authenticate the mirror or demonstrate data collection by this project**. Positive label 1 represents an attack; FPR = FP/(FP+TN), with benign label 0.
 
-Mirror provenance must be distinguished from obtaining files directly from UNSW. Hash verification demonstrates byte identity to pinned files, not the mirror's scientific authority.
+Numeric imputation, scaling where used, and categorical encoding are fitted only on each corresponding model-training fold. LR and RF are compared against a majority-class dummy predictor. RF uses 100 estimators and minimum leaf size 2, with random seed 42; full parameter details are in `src/run_experiments.py`.
 
-### Predictors and leakage control
+For subsequent synthetic perturbation studies, records originate exclusively from the pinned **training CSV**, partitioned with `GroupShuffleSplit` by predictor fingerprint to reduce exact cross-fold predictor overlap. Reported validation-seed repetitions share most of the same records; **they are not independent network populations**.
 
-The released pipeline excludes `id`, target `label` and attack category `attack_cat` and selected address/timestamp identifiers. Numeric fields receive median imputation and standard scaling; categorical fields receive imputation and one-hot encoding with unknown-category handling. All preprocessing steps are nested in scikit-learn pipelines fitted on training data only. RF uses 100 estimators, minimum leaf size 2 and a fixed random seed; LR uses maximum 1,000 iterations and fixed seed. Models were not tuned against the official test to create the reported baseline.
+## 3. Experimental design
 
-### Comparison protocol
+### 3.1 Baseline and alert-budget studies
 
-All models were evaluated on the official 82,332-row test split. Positive class = network attack. Confusion counts are recorded alongside F1, precision, recall, average precision (ranking metric), balanced accuracy, false-positive and false-negative rates. Three-fold stratified cross-validation was conducted only on the official training records. Prediction timing is environment-specific, and does not represent network packet-by-packet throughput.
+The baseline evaluates full-training LR/RF/dummy models on the designated test. In a later *exploratory* threshold study, LR and RF train on 139,989 records, choose thresholds on 35,352 grouped validation records to satisfy a one-sided Wilson upper bound for a nominal 5% benign FPR, then evaluate on the previously inspected official test split. Hence the result is a post-hoc stress test, not pristine confirmatory inference.
 
-### Data overlap audit
+### 3.2 Feature-group interaction metric
 
-A screening audit hashes 42 predictor values for each row; 8,541 test rows matched at least one training fingerprint. This is not definitive proof of identical underlying network events, and the fingerprint is not cryptographic. The official split is never silently altered. Any unmatched-subset evaluation will be clearly distinguished as a sensitivity analysis.
+We assign existing UNSW predictors to Timing, Volume, Protocol and Context groups (`src/failure_fingerprints.py`). For synthetic selected-row donor permutation, feature values in a predefined group are permuted **together**, preserving within-group co-occurrence but not necessarily consistency across groups. The primary contrast for two feature groups A and B is:
 
-## 4. Executed baseline results
+```text
+Excess interaction FPR (percentage points) =
+    100 × [ FPR(A+B) - FPR(A) - FPR(B) + FPR(clean) ].
+```
 
-| Model | F1 | Precision | Recall | FPR | Average precision | False positives | False negatives |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Majority Dummy | 0.7102 | 0.5506 | 1.0000 | 1.0000 | 0.5506 | 37,000 | 0 |
-| Logistic Regression | 0.8492 | 0.7536 | 0.9726 | 0.3895 | 0.9661 | 14,412 | 1,243 |
-| Random Forest | 0.8902 | 0.8096 | 0.9885 | 0.2847 | 0.9870 | 10,535 | 522 |
+The original four-group scan used three group-held-out split seeds (13, 29, 47) and a 25% perturbation rate. Its largest observed RF Protocol+Context excess FPR was +1.796 pp on average, which motivated subsequent **post-hoc** falsification controls.
 
-RF offered the highest measured F1 and recall in this implementation but incorrectly flagged 10,535 benign test rows, demonstrating that high recall alone is not evidence of an operationally acceptable alerting system. The deliberately weak dummy classifier predicts attacks for every row, yielding recall of 1.0 while triggering a false alarm for every benign sample.
+### 3.3 Falsifying unrestricted donor selection
 
-Training-only three-fold mean F1 was approximately 0.9539 for LR and 0.9692 for RF, compared with official-test scores of 0.8492 and 0.8902. Such gaps may reflect distribution differences, class composition or other aspects of the benchmark and cannot be causally attributed to any one explanation on the current evidence.
+The first control compares unrestricted global block permutation to a **same-class oracle** donor policy. In the oracle policy, the true benign/attack label is used solely to match donor pools during *offline evaluation*. It is **not available for an unlabeled production IDS**. Both policies use the same fitted estimator, grouped train/validation splits, Protocol/Context feature lists and perturbation fraction. Three validation seeds and five separate donor seeds yield 60 model × split × seed × donor-policy outcomes.
 
-An audit flagged 74,301 repeated training predictor fingerprints, 28,386 repeated test fingerprints, and 229 training predictor groups with conflicting labels. These are *audit counts*, not independently confirmed duplicate events, and are a priority for follow-up verification.
+### 3.4 Label-blind matching and leakage-reduction control
 
-## 5. Research integrity and limitations
+A later 54-condition study includes a third policy matching donors by quantile bins of unperturbed observed duration (`dur`) and source bytes (`sbytes`). This version computes bins on validation covariates and is therefore **transductive**, although it does not use class labels. It records actual exchanged-row proportions separately from selection masks.
 
-1. This is an offline benchmark on historical UNSW-NB15. No claimed field deployment, zero-day protection, or production readiness is justified.
-2. Training-only cross-validation and the designated test use different data regimes; further experiments are needed to explain the gap.
-3. The overlap fingerprint depends on type normalization and hashing and can miss semantically equivalent records or conflate collisions.
-4. False-positive control requires training/validation-based threshold selection, independent testing, and explicit reporting of recall loss.
-5. A one-sided Wilson bound on validation false-positive proportion relies on assumptions that may fail under network distribution shift.
-6. One run and single train/test split cannot capture uncertainty across new networks and periods.
-7. The previously viewed official test results mean any newly designed follow-up on this test is exploratory, not confirmatory.
-8. The research software and paper development were substantially AI-assisted; the student must independently run, inspect, understand and accurately disclose these contributions.
+A further 54-condition experiment fits numeric medians and quantile boundaries **on the fitting fold only**, freezes them and applies them unchanged to validation. This controls for a specific form of evaluation-distribution adaptation. The design uses the same three grouped split seeds, three donor seeds, two model families and three donor policies.
 
-## 6. Prospective next experiments
+### 3.5 Statistical interpretation
 
-The companion script `src/alert_budget_study.py` will select a threshold using grouped training-held-out validation without seeing official test labels, then measure the resulting FPR and recall on the complete official test and non-overlap subset. Threshold infeasibility will be reported as a valid result. Planned extensions include repeated validation seeds, uncertainty intervals, calibrated comparisons, external dataset evaluation, and feature-shift experiments at frozen thresholds. These are proposals, not completed measurements in this draft.
+Reported averages and repeated-seed comparisons are descriptive. The splits overlap heavily, network flows may be correlated, and feature-group/donor policies were chosen after earlier results were inspected. Treating 9 or 15 permuted conditions as independent population samples would be invalid. We do not claim formal significance, a causal mechanism or novelty priority.
 
-## 7. Conclusion
+## 4. Results
 
-The executed baseline indicates that discrimination quality and the false-positive burden can paint very different pictures of the same NIDS model. Substantial separation between cross-validation and official-test performance, plus an overlap screening finding, motivate careful evaluation-policy research. We have **not established** a novel method or a generalizable detection improvement. The next scientific step is to complete and independently review confirmatory experiments, not to optimize a score for appearances.
+### 4.1 Official designated test benchmark
+
+| Model | F1 | Recall | Precision | FPR | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| Majority Dummy | 0.7102 | 1.0000 | 0.5506 | 1.0000 | 37,000 | 0 |
+| Logistic Regression | 0.8492 | 0.9726 | 0.7536 | 0.3895 | 14,412 | 1,243 |
+| Random Forest | **0.8902** | **0.9885** | **0.8096** | **0.2847** | 10,535 | 522 |
+
+Source: `results/metrics_FULL_BENCHMARK.csv`. Three-fold training-only CV produced higher F1 values (LR about 0.9539, RF about 0.9692); this gap is not causally explained by the current analysis. Predictor-fingerprint screening flagged **8,541** test rows (10.37%) as matching training predictor fingerprints; these are not proof of identical real network events. Details: `results/data_audit.json`.
+
+### 4.2 Alert-budget transfer
+
+| Validation-trained model | Test FPR, threshold 0.5 | Test FPR, validation-constrained | Constrained recall |
+|---|---:|---:|---:|
+| Logistic Regression | 39.14% | **11.41%** | 86.71% |
+| Random Forest | 28.62% | **14.54%** | 95.32% |
+
+Source: `results/alert_budget_study.json`. For RF, the constrained threshold prevents 5,210 false alarms but adds 1,598 missed attacks on the same designated test compared with the threshold-0.5 control. Validation met the nominal ~5% criterion, but the official test did not. The test data had been viewed during earlier baseline analysis; no prospective confirmation is implied.
+
+### 4.3 Perturbation donor-policy replication
+
+| Model | Global donor excess FPR | Same-class oracle excess FPR | Paired difference | Positive paired differences |
+|---|---:|---:|---:|---:|
+| Random Forest | **+1.591 pp** | **−0.205 pp** | **+1.796 pp** | 15/15 |
+| Logistic Regression | +0.290 pp | +0.285 pp | +0.005 pp | 6/15 |
+
+Source: `results/permutation_seed_replication.json`; 60 conditions across three overlapping grouped validation splits and five permutation seeds. The contrast appears model-specific under these conditions. **It does not show a first-in-world interaction.**
+
+### 4.4 Three-way donor-policy comparison
+
+| Model | Global donors | Observable class-blind strata | Same-class oracle |
+|---|---:|---:|---:|
+| Random Forest | **+1.610 pp** | **+0.959 pp** | −0.219 pp |
+| Logistic Regression | +0.337 pp | +0.221 pp | +0.309 pp |
+
+Entries are mean *excess FPR interaction* in percentage points; data: `results/observable_donor_control.json` (54 conditions). RF global vs observable decreases by **0.651 pp**. Joint-condition Protocol and Context exchange fractions remain close to 25% across policies, reducing the plausibility of a simple exchange-count explanation but not ruling out distortion-severity confounding.
+
+### 4.5 Frozen quantile boundaries
+
+With the same model/split/seed/policy cells, observable-matching RF excess FPR was **+0.958702 pp** when bin limits were learned from validation and **+0.958734 pp** when learned strictly on fitting data. LR changed from **+0.221477 pp** to **+0.213412 pp**. Sources: `results/train_fitted_donor_control.json` and `results/donor_quantile_comparison.json` (54 paired conditions).
+
+The near-zero RF contrast suggests this particular bin-learning choice had little impact *in the historical training corpus*. Frozen boundaries are methodologically cleaner; they do not alone establish cross-dataset generalization.
+
+### 4.6 TTL shortcut sensitivity
+
+The earlier training-only TTL perturbation experiment measured mean RF increases in FPR of **+6.24 pp** for TTL-only feature changes and **+7.93 pp** for combined complete Protocol+Context group changes. A separate retraining-without-TTL experiment is stored in `results/ttl_retraining_ablation.json`. These experiments altered different factors; results cannot be combined to infer that TTL is the unique cause of the original interaction. Full caveats and numerical comparisons: `docs/INTERACTION_REPLICATION_CHALLENGE.md`.
+
+## 5. Discussion and relationship to prior work
+
+The central observed result is **instability in the measured synthetic feature-interaction diagnostic** when donor policies differ. The Random Forest interaction shows a large unrestricted-versus-class-oracle contrast, while LR's is small. Observable, label-blind donor matching sits between these two policies for RF. Thus, conclusions about which feature groups jointly produce excess false alarms may depend on **evaluation design**, not solely on the learned model.
+
+Conditional permutation and dependence-aware feature importance have already been studied. NIDS evaluation bias, domain shift and common-feature NetFlow dataset families are established areas. This project's possible contribution is a *specific quantitative audit and falsification protocol* for false-alarm interaction estimates, **not** the invention of conditional feature permutation or a novel NIDS classifier.
+
+The strongest next test is an independent-origin, standardized feature-space comparison: UQ's NetFlow v2 source family and an external-origin CIC-derived domain. This has **not** been executed. See `docs/NETFLOW_V2_EXTERNAL_PLAN.md` and `src/audit_netflow_v2_schema.py` for the provenance and schema gate. Mapping raw UNSW Protocol/Context fields directly into CICFlowMeter records would not be valid.
+
+## 6. Limitations and research integrity
+
+1. All current model experiments derive from a **single historical network benchmark**; independent network-origin replication is missing.
+2. Synthetic donor-block permutations may create impossible joint network-flow values; no live network or realistic traffic generator was evaluated.
+3. Validation-split seeds are correlated, and no session-clustered uncertainty model has been completed.
+4. Protocol+Context and the donor-policy follow-ups are **post-hoc**, selected after seeing preliminary outcomes. Multiple comparison selection bias remains.
+5. Same-class oracle donors use true labels in diagnostic donor selection and cannot be deployed at inference.
+6. The original threshold-transfer follow-up reused an already inspected official test split.
+7. Cross-split fingerprint matches do not prove identical underlying events; collisions and canonicalization effects remain possible.
+8. The research is **substantially AI-assisted**; independent investigator verification and disclosure are required. No peer review, world-first priority or practical protection is claimed.
+
+## 7. Reproducibility and data availability
+
+The public repository includes preprocessing, model definitions, hash-verified file-download logic, all archived numeric results and automated unit/evidence-integrity tests. Primary artifacts are ordinary CSV/JSON; test infrastructure is GitHub Actions. Study commands and detailed data/provenance boundaries are in `docs/REPRODUCIBILITY.md`.
+
+The actual source CSVs are not redistributed by this repository. Public source information is linked below. **A no-license repository cannot be assumed to grant reuse permission**; the investigator must choose an explicit code license before public redistribution or reuse claims.
+
+## 8. Conclusion
+
+We found a **model-dependent sensitivity of measured false-alarm feature-group interactions to the donor-selection policy** within a historical NIDS benchmark. The finding survived repeated synthetic perturbation seeds, and a label-blind observable matching control partly reduced the RF interaction without meaningfully reducing the number of exchanged rows. A training-fitted matching variant produced similar findings. These outcomes constitute **exploratory methodological evidence**, not an original validated algorithm, a causal explanation of real attacks, or a claim that we have reached scientific novelty 9/10. Confirmation requires held-out external-origin data, a frozen harmonized feature protocol, stronger inference and independent review.
 
 ## References
 
-1. Moustafa, N., & Slay, J. (2015). UNSW-NB15: A comprehensive data set for network intrusion detection systems. *MilCIS*. https://doi.org/10.1109/MilCIS.2015.7348942
-2. Moustafa, N., & Slay, J. (2016). The evaluation of network anomaly detection systems: Statistical analysis of the UNSW-NB15 data set and the comparison with the KDD99 data set. *Information Security Journal: A Global Perspective, 25*(1–3), 18–31. https://doi.org/10.1080/19393555.2015.1125974
-3. Berhili, M., Chaieb, O., & Benabdellah, M. (2026). How evaluation protocol choices inflate intrusion detection accuracy: A three-dataset systematic study. *Computers & Security*. https://doi.org/10.1016/j.cose.2026.105218
-4. University of New South Wales (UNSW). UNSW-NB15 dataset. https://research.unsw.edu.au/projects/unsw-nb15-dataset
+1. Moustafa, N., & Slay, J. (2015). *UNSW-NB15: A comprehensive data set for network intrusion detection systems.* MilCIS. https://doi.org/10.1109/MilCIS.2015.7348942
+2. Moustafa, N., & Slay, J. (2016). *The evaluation of network anomaly detection systems: Statistical analysis of the UNSW-NB15 data set and the comparison with the KDD99 data set.* Information Security Journal. https://doi.org/10.1080/19393555.2015.1125974
+3. Berhili, M., Chaieb, O., & Benabdellah, M. (2026 online). *How evaluation protocol choices inflate intrusion detection accuracy: A three-dataset systematic study.* Computers & Security. https://doi.org/10.1016/j.cose.2026.105218
+4. Han, S., Hu, X., Huang, H., Jiang, M., & Zhao, Y. (2022). *ADBench: Anomaly Detection Benchmark.* NeurIPS, Datasets and Benchmarks. https://proceedings.neurips.cc/paper_files/paper/2022/hash/cf93972b116ca5268827d575f2cc226b-Abstract-Datasets_and_Benchmarks.html
+5. Sarhan, M., Layeghy, S., & Portmann, M. (2022). *Towards a Standard Feature Set for Network Intrusion Detection System Datasets.* Mobile Networks and Applications. https://doi.org/10.1007/s11036-021-01843-0
+6. University of Queensland Cyber Research Centre. *Machine Learning-Based NIDS Datasets* (NetFlow v2, common feature format). https://www.cyber.uq.edu.au/project/machine-learning-based-nids-datasets
+7. University of New South Wales. *UNSW-NB15 dataset.* https://research.unsw.edu.au/projects/unsw-nb15-dataset
 
-### Reproduction entry points
-
-- `src/download_data.py` — pinned split files
-- `src/data_audit.py` — overlap screening
-- `src/run_experiments.py` — full baseline and train-only CV
-- `src/run_robustness.py` — synthetic sensitivity tests
-- `src/alert_budget_study.py` — exploratory alert-budget investigation
-- `results/` — executed baseline artifact exports (see workflow history)
-
-
-## 8. Follow-up: false-alarm-budget transfer (executed exploratory analysis)
-
-This section documents an **exploratory follow-up**, developed after the official test performance of the baseline models had already been viewed. It is therefore not an independent pre-registered hypothesis test or proof of scientific novelty.
-
-A separate group-held-out split of the original training data used 139,989 records to fit the models and 35,352 for validation. Duplicate predictor fingerprints were kept in the same validation group to reduce direct training/validation contamination. Model-specific thresholds were selected to target a **5% benign false-positive rate** on validation, with a one-sided Wilson upper-bound constraint. The frozen thresholds were then evaluated on the original 82,332-row official test set and its 73,791-row subset without matching training predictor fingerprints.
-
-| Model | Policy | Official-test FPR | Official-test recall | Official-test F1 |
-|---|---|---:|---:|---:|
-| Logistic Regression | Default probability threshold 0.5 | 39.14% | 97.30% | 84.89% |
-| Logistic Regression | Validation-constrained threshold 0.79660 | 11.41% | 86.71% | 88.47% |
-| Random Forest | Default probability threshold 0.5 | 28.62% | 98.84% | 88.97% |
-| Random Forest | Validation-constrained threshold 0.68444 | 14.54% | 95.32% | 92.01% |
-
-The new validation-split models differ from those trained on the complete 175,341-row original training set; therefore their default-threshold baseline metrics are not numerically identical to Section 4.
-
-For the constrained Random Forest, **5,210 fewer benign records were falsely flagged**, at a cost of **1,598 additional missed attacks** relative to the default threshold on the same test set. Logistic Regression avoided **10,261 false alarms**, but missed **4,799 additional attacks**.
-
-Despite nominal validation false-positive rates of approximately **4.66%** for both learned models and an upper validation confidence bound under 5%, the measured official-test FPR reached **11.41%** for LR and **14.54%** for RF. These results fail the targeted 5% operational budget.
-
-On the train-fingerprint non-overlap subset, constrained FPR was **10.66%** for LR and **14.15%** for RF. The subset therefore did not restore the nominal budget. Because overlap exclusion changes the composition of the sample, it is inappropriate to infer that duplicate contamination causes the discrepancy.
-
-Descriptive two-sided 95% Wilson intervals for constrained official-test FPR were approximately **11.09–11.74%** for LR and **14.18–14.90%** for RF. These simple row-level intervals rely on independence assumptions and do not account for clustered network flows, selection after seeing baseline results, or shifts between datasets.
-
-### Interpretation
-
-The experiment provides evidence that a threshold selected to meet a false-alarm constraint on training-held-out validation **did not transfer that constraint** to the historical official test distribution. This observation supports further research into shifts in class-conditional score distributions and validation design. It does not establish a globally new technique, nor does it prove that distribution shift is the only explanation.
-
-Before a stronger causal explanation or originality claim, we need multiple independent validation splits, source-level verification of overlap fingerprints, threshold calibration comparisons, an untouched external test dataset, and uncertainty estimates accounting for flow dependence.
-
-**Evidence:** `results/alert_budget_study.json`, `results/alert_budget_analysis.json`, `results/ALERT_BUDGET_ANALYSIS.md`. The experimental pipeline and report-generation code are in `src/alert_budget_study.py` and `src/analyze_alert_budget.py`.
-
-### Updated research conclusion
-
-The strongest supported finding to date is a *negative transfer result*: a conservatively selected validation FPR budget of 5% was not preserved on the designated test split, even after separating test rows without identical training predictor fingerprints. The measured improvement in false alarms came with a quantifiable increase in missed attacks. Because the data and question are not fully independent, external confirmation is essential.
-
-
-## 9. Failure of naive group-interaction interpretation: donor-policy control (exploratory, 18 November 2026)
-
-After observing a positive excess false-positive interaction for the Protocol and Context feature groups, we designed an explicit falsification analysis to test whether **unrestricted group shuffling itself** was amplifying the effect by swapping feature blocks between attack and benign records. The analysis uses the original UNSW-NB15 training CSV and group-held-out training/validation partitions; **it does not access the designated official test split**.
-
-The same fitted model, Protocol/Context group definitions, split seeds, and fraction of permuted rows (25%) were used with two donor policies. The unrestricted condition allows swapping blocks across both ground-truth classes. The class-conditional control draws block donors from validation records *with the same ground-truth class label*; this use of labels is acceptable only as a retrospective diagnostic, not a deployable IDS inference procedure.
-
-The executed `results/class_mixing_control.json` reports three grouped split seeds (13, 29, 47), two models, and the three perturbation conditions necessary to form an interaction contrast. The measured excess FPR values were:
-
-| Model | Global donor excess FPR (mean pp) | Within-class donor excess FPR (mean pp) | Paired mean difference (pp) |
-| --- | ---: | ---: | ---: |
-| Logistic Regression | +0.307 | +0.289 | +0.018 |
-| Random Forest | +1.660 | −0.277 | **+1.937** |
-
-The difference appears model-dependent: under these chosen conditions, Random Forest's apparent positive excess interaction was far weaker (and changed sign) with class-matched donors, whereas LR changed little. **These findings suggest possible experimental-design sensitivity, not proof of a unique mechanism.** Only three highly overlapping training splits were tested; these are not independent datasets. The result was examined after earlier outcomes motivated Protocol/Context selection, so it is **exploratory**.
-
-### Relation to prior work
-
-Unconditional permutation can break dependencies among predictor variables, and conditional or subgroup-based feature importance has been developed to address such issues in general ML. Modern NIDS interpretability studies already examine feature interactions, group-level importance and dependence on the model family. We do not claim to have invented conditional permutation or discovered a globally novel phenomenon; the possible contribution is the *quantified falsification of an apparent false-alarm feature interaction under a specific diagnostic control*. See `docs/RELATED_WORK.md`.
-
-### Validation obligations before a novelty claim
-
-A more rigorous factorial replication is implemented in `src/permutation_seed_replication.py` to vary permutation randomness independently of model fitting (three grouped splits, five permutation seeds, two models, two donor policies). All conditions should be reported; scientific conclusions await its executed output and verification. Further evidence would require physically plausible feature transitions, a genuinely independent network corpus, stronger dependence-aware uncertainty analysis, and full comparison against recent conditional importance research.
-
-The manuscript remains a **draft**, substantially AI-assisted, without peer review or independent external confirmation.
-
-
-## 10. Replication across permutation seeds (executed exploratory results, 18 November 2026)
-
-To assess whether the observed donor-policy difference was an arbitrary feature of a single random permutation, we repeated the class-mixing diagnostic on the official UNSW-NB15 **training split only** using three duplicate-group validation split seeds (13, 29, 47) and five different permutation seeds (101, 211, 307, 401, 503). For each split and permutation seed we evaluated two previously trained model families (Logistic Regression, Random Forest) under unrestricted and within-class donor policies, yielding **60 evaluated conditions**. All 60 records are stored in `results/permutation_seed_replication.json`, with the descriptive summary in `results/PERMUTATION_SEED_REPLICATION_REPORT.md`.
-
-| Model | Mean global excess FPR interaction | Mean within-class excess FPR interaction | Mean paired difference | Global > within-class |
-|---|---:|---:|---:|---:|
-| Random Forest | +1.591 pp | −0.205 pp | +1.796 pp | 15/15 comparisons |
-| Logistic Regression | +0.290 pp | +0.285 pp | +0.005 pp | 6/15 comparisons |
-
-Across these matched perturbation conditions, the Random Forest false-alarm interaction estimate was sensitive to whether feature blocks came from either label class versus the same class. In contrast, LR showed no comparably large or consistently signed donor-policy contrast. The model-specific difference is **a research observation under synthetic perturbations**, not an established causal mechanism.
-
-### Caveats and next falsification test
-
-The interaction was selected after observing earlier results, so this analysis remains *post-hoc*. The fifteen comparisons per model are not independent network populations; they reuse three validation partitions of the same historical benchmark. Within-class donor sampling uses ground-truth labels as an offline diagnostic and is unavailable in realistic unlabeled deployment. Neither unrestricted nor within-class sampling fully preserves physical consistency of network-flow features. Related methods for conditional permutations and dependence-aware feature interpretation already exist and must be compared directly before originality claims.
-
-To move beyond the label-oracle comparison, a class-blind, observable-stratified diagnostic is now implemented in `src/observable_donor_control.py`. It groups potential donor rows based only on the unperturbed observed fields `dur` and `sbytes` and records realized exchange rates. This follow-up does not establish a deployable sampler, and **no numerical result is asserted until its executed JSON is available and validated**.
-
-
-## 11. A class-blind donor-control check (executed exploratory results; 19 November 2026)
-
-A prior experiment showed that matching perturbation donor rows within the *ground-truth* attack/benign class dramatically changed the measured Random Forest Protocol+Context excess false-positive interaction. That control is unavailable at detection inference time because class labels are unknown. To examine whether a label-blind alternative could partially avoid the same apparent artifact, we evaluated donor matching by **two observed unperturbed traffic attributes**: flow duration (`dur`) and source bytes (`sbytes`).
-
-The completed experiment (`results/observable_donor_control.json`) used the UNSW-NB15 official training split only, three group-held-out fit/validation split seeds (13, 29, 47), three permutation seeds (101, 211, 307), two model families and three donor selection strategies: unrestricted global donors, observable-stratified donors, and a same-class oracle diagnostic. The 54 conditions were stored verbatim, with machine-readable summary and exchange counts in `results/observable_donor_analysis.json`.
-
-| Model | Donor policy | Mean excess FPR interaction | Mean joint-test-on-validation FPR | Mean attack recall | Protocol exchange rate | Context exchange rate |
-|---|---|---:|---:|---:|---:|---:|
-| Random Forest | Global donors | +1.610 pp | 17.70% | 92.50% | 25.04% | 24.88% |
-| Random Forest | Observable-stratified donors | +0.959 pp | 15.96% | 96.48% | 25.02% | 24.86% |
-| Random Forest | Same-class oracle | −0.219 pp | 11.33% | 96.95% | 25.04% | 24.88% |
-| Logistic Regression | Global donors | +0.337 pp | 24.53% | 90.55% | 25.04% | 24.88% |
-| Logistic Regression | Observable-stratified donors | +0.221 pp | 23.95% | 93.28% | 25.02% | 24.86% |
-| Logistic Regression | Same-class oracle | +0.309 pp | 15.02% | 96.87% | 25.04% | 24.88% |
-
-Here "joint-test-on-validation FPR" describes a *perturbed held-out subset of the original training corpus*, not the original UNSW official test split. Mean excess interaction is measured in percentage points and is not identical to absolute FPR.
-
-The RF excess interaction was **0.651 pp lower with observable matching** than unrestricted shuffling. Exchange rates were nearly identical, reducing but not eliminating the possibility that differing intervention frequency explains the contrast. Using only two matching attributes cannot guarantee physically valid synthetic network flows or full conditional dependence preservation. The result provides a reproducible observation about **how the diagnostic method can affect inferred feature-group interactions**. It does not show a new IDS detector or guarantee that any donor policy improves real-time network security.
-
-### External validation needed
-
-On 19 November 2026, the separate `docs/EXTERNAL_VALIDATION_PROTOCOL.md` was introduced before claiming any external results. CIC-IDS2017 and CSE-CIC-IDS2018 are proposed as candidate independent corpora based on their official University of New Brunswick and public-cloud dataset descriptions. Their CICFlowMeter features cannot simply be equated with UNSW-NB15 Protocol/Context groups, especially TTL/counter features; a cross-dataset test requires verified unit conversions, a semantically legitimate set of shared groups, and an independent temporal or network holdout. No such external dataset comparison has yet been executed in this repository.
-
-All findings in this section are **exploratory, AI-assisted, and not peer-reviewed**. Claiming a first-in-world conditional permutation method would contradict pre-existing related research.
+**Citation audit needed before submission:** the bibliography is intentionally short and does not replace a systematic literature search covering conditional importance, feature interactions, NIDS session dependence and drift.
