@@ -110,7 +110,7 @@ See [full reproducibility instructions](docs/REPRODUCIBILITY.md) for Windows, ex
 
 **Quality review:** [Measured scientific quality gates](docs/QUALITY_GATES.md) · [Archived prior research plans](docs/archive/RESEARCH_PROTOCOL_2026-11-06.md).\n\n**Project documentation:** [Study protocol](docs/RESEARCH_DESIGN.md) · [Related work](docs/RELATED_WORK.md) · [Reproducibility](docs/REPRODUCIBILITY.md) · [Evidence status](docs/STATUS.md) · [Working paper](paper/MANUSCRIPT_DRAFT.md).
 
-_Last repository documentation review: **18 November 2026**._
+_Last repository documentation review: **19 November 2026**._
 
 ## Retrained TTL ablation — next controlled experiment
 
@@ -154,3 +154,20 @@ The executed [60-condition perturbation-seed study](results/permutation_seed_rep
 Read the [full verified-data summary](results/PERMUTATION_SEED_REPLICATION_REPORT.md). These 15 comparisons are **not 15 independent studies**. They reuse the same training corpus. Ground-truth labels are used only to *diagnose* donor-policy artifacts, not to train or operate a deployed detection model.
 
 **Next falsification step:** [Observable Donor Control](src/observable_donor_control.py) matches potential donors using only unperturbed numeric features `dur` and `sbytes`, without ground-truth class labels. [Tests](tests/test_observable_donor_control.py) and [CI](.github/workflows/observable-donor-control.yml) are committed. Its findings must not be reported before `results/observable_donor_control.json` is published from an executed successful run. This is transductive evaluation stratification, not physically validated or production-ready matching.
+
+## Observable donor matching: 54 executed conditions (19 November 2026)
+
+The [executed 3-policy donor study](results/observable_donor_control.json) and [reproducible scientific analysis](results/OBSERVABLE_DONOR_REPORT.md) compare unrestricted global donor shuffling, two-feature observable-stratified matching (class-blind), and within-class matching (an offline label-oracle control only).
+
+| Model | Global excess FPR | Observable-stratified excess FPR | Same-class oracle excess FPR |
+|---|---:|---:|---:|
+| Random Forest | +1.610 pp | **+0.959 pp** | −0.219 pp |
+| Logistic Regression | +0.337 pp | +0.221 pp | +0.309 pp |
+
+The values come from 3 grouped validation splits × 3 donor seeds × 2 models × 3 policies (**54 conditions**), using the official UNSW-NB15 **training** data only. For RF, the observed contrast global minus observable is **+0.651 pp**; measured exchange rates are close to 25% for Protocol and Context under each policy. This identifies an empirical **methodological sensitivity**, not a new detector architecture or independent confirmation of a previously unknown mechanism.
+
+- [Executed analysis JSON](results/observable_donor_analysis.json)
+- [Analysis generator](src/report_observable_donor.py) and [integrity tests](tests/test_observable_donor_evidence.py)
+- [External validation protocol](docs/EXTERNAL_VALIDATION_PROTOCOL.md) — CIC-IDS2017 / CSE-CIC-IDS2018 are **candidates only**. Source/target feature mappings have not been verified and no independent cross-dataset result is claimed.
+
+The study is exploratory: the feature pair and donor policies were developed after viewing related results, and class-blind observable matching is transductive, not physically guaranteed or production-grade.
