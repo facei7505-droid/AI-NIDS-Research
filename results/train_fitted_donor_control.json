@@ -1,0 +1,794 @@
+{
+  "status": "POST_HOC_TRAIN_FITTED_OBSERVABLE_STRATA",
+  "split_seeds": [
+    13,
+    29,
+    47
+  ],
+  "donor_seeds": [
+    101,
+    211,
+    307
+  ],
+  "fraction": 0.25,
+  "policies": [
+    "global",
+    "observable_strata",
+    "same_class_oracle"
+  ],
+  "frozen_strata_parameters": [
+    {
+      "split_seed": 13,
+      "fit_rows": 140160,
+      "validation_rows": 35181,
+      "strata_parameters_fit_on": "training_rows_only",
+      "strata": {
+        "columns": [
+          "dur",
+          "sbytes"
+        ],
+        "bins": 3,
+        "boundaries": {
+          "dur": [
+            9e-06,
+            0.35105366666666665
+          ],
+          "sbytes": [
+            180.0,
+            944.0
+          ]
+        },
+        "train_medians": {
+          "dur": 0.0016645,
+          "sbytes": 466.0
+        }
+      },
+      "validation_stratum_counts": {
+        "0": 6929,
+        "1": 3015,
+        "2": 369,
+        "3": 5092,
+        "4": 3783,
+        "5": 4522,
+        "6": 64,
+        "7": 4664,
+        "8": 6743
+      }
+    },
+    {
+      "split_seed": 29,
+      "fit_rows": 140227,
+      "validation_rows": 35114,
+      "strata_parameters_fit_on": "training_rows_only",
+      "strata": {
+        "columns": [
+          "dur",
+          "sbytes"
+        ],
+        "bins": 3,
+        "boundaries": {
+          "dur": [
+            9e-06,
+            0.34567
+          ],
+          "sbytes": [
+            180.0,
+            944.0
+          ]
+        },
+        "train_medians": {
+          "dur": 0.001604,
+          "sbytes": 424.0
+        }
+      },
+      "validation_stratum_counts": {
+        "0": 6745,
+        "1": 3318,
+        "2": 313,
+        "3": 4873,
+        "4": 3626,
+        "5": 4537,
+        "6": 47,
+        "7": 4929,
+        "8": 6726
+      }
+    },
+    {
+      "split_seed": 47,
+      "fit_rows": 140244,
+      "validation_rows": 35097,
+      "strata_parameters_fit_on": "training_rows_only",
+      "strata": {
+        "columns": [
+          "dur",
+          "sbytes"
+        ],
+        "bins": 3,
+        "boundaries": {
+          "dur": [
+            9e-06,
+            0.3411243333333333
+          ],
+          "sbytes": [
+            180.0,
+            936.0
+          ]
+        },
+        "train_medians": {
+          "dur": 0.0015715,
+          "sbytes": 424.0
+        }
+      },
+      "validation_stratum_counts": {
+        "0": 6822,
+        "1": 2977,
+        "2": 302,
+        "3": 4933,
+        "4": 3806,
+        "5": 4422,
+        "6": 37,
+        "7": 4669,
+        "8": 7129
+      }
+    }
+  ],
+  "rows": [
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.23989921713308737,
+      "joint_recall": 0.9049360146252285,
+      "excess_fpr_pp": 0.3959326914424577,
+      "exchange_protocol": 0.24987919615701656,
+      "exchange_context": 0.24618401978340582
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.23656978313686675,
+      "joint_recall": 0.928785108858235,
+      "excess_fpr_pp": 0.3059479888418981,
+      "exchange_protocol": 0.24962337625422815,
+      "exchange_context": 0.24572922884511525
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.14991451453252946,
+      "joint_recall": 0.9686720957287684,
+      "excess_fpr_pp": 0.4319265724826771,
+      "exchange_protocol": 0.24987919615701656,
+      "exchange_context": 0.24615559534976267
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.2411590029694952,
+      "joint_recall": 0.9034818015622403,
+      "excess_fpr_pp": 0.44092504274273747,
+      "exchange_protocol": 0.24942440521872603,
+      "exchange_context": 0.2499360450243029
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.23530999730045893,
+      "joint_recall": 0.9290759514708327,
+      "excess_fpr_pp": 0.3419418698821203,
+      "exchange_protocol": 0.24911173644865126,
+      "exchange_context": 0.24959495182058497
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.14208584540628094,
+      "joint_recall": 0.9671347847764666,
+      "excess_fpr_pp": 0.2519571672815635,
+      "exchange_protocol": 0.24939598078508285,
+      "exchange_context": 0.24982234728973024
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.24331863583190858,
+      "joint_recall": 0.9027754695030746,
+      "excess_fpr_pp": 0.43192657248267985,
+      "exchange_protocol": 0.2517552087774651,
+      "exchange_context": 0.25033398709530713
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.23908935480968235,
+      "joint_recall": 0.9282449725776966,
+      "excess_fpr_pp": 0.3059479888418981,
+      "exchange_protocol": 0.251385691140104,
+      "exchange_context": 0.250135016059805
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17861963466210745,
+      "joint_fpr": 0.1468550346441105,
+      "joint_recall": 0.9670101379424962,
+      "excess_fpr_pp": 0.38693422118240284,
+      "exchange_protocol": 0.2517552087774651,
+      "exchange_context": 0.2502771382280208
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.1742103842346801,
+      "joint_recall": 0.9199351836463354,
+      "excess_fpr_pp": 1.4757491226491504,
+      "exchange_protocol": 0.24987919615701656,
+      "exchange_context": 0.24618401978340582
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.1558535049041663,
+      "joint_recall": 0.9615672261924547,
+      "excess_fpr_pp": 0.9268424367857477,
+      "exchange_protocol": 0.24962337625422815,
+      "exchange_context": 0.24572922884511525
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.11248087825069739,
+      "joint_recall": 0.9690875851753366,
+      "excess_fpr_pp": -0.14397552416089143,
+      "exchange_protocol": 0.24987919615701656,
+      "exchange_context": 0.24615559534976267
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.1768199406100963,
+      "joint_recall": 0.9202675752035898,
+      "excess_fpr_pp": 1.367767479528481,
+      "exchange_protocol": 0.24942440521872603,
+      "exchange_context": 0.2499360450243029
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.15828309187438136,
+      "joint_recall": 0.9609855409672594,
+      "excess_fpr_pp": 1.0078286691262497,
+      "exchange_protocol": 0.24911173644865126,
+      "exchange_context": 0.24959495182058497
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.11194097003509404,
+      "joint_recall": 0.968796742562739,
+      "excess_fpr_pp": -0.24295869702150447,
+      "exchange_protocol": 0.24939598078508285,
+      "exchange_context": 0.24982234728973024
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.18095923692972193,
+      "joint_recall": 0.9172760511882998,
+      "excess_fpr_pp": 1.4577521821290365,
+      "exchange_protocol": 0.2517552087774651,
+      "exchange_context": 0.25033398709530713
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.16341221992261315,
+      "joint_recall": 0.9598221705168689,
+      "excess_fpr_pp": 0.8638531449653569,
+      "exchange_protocol": 0.251385691140104,
+      "exchange_context": 0.250135016059805
+    },
+    {
+      "split_seed": 13,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.0989831728606137,
+      "joint_fpr": 0.11518041932871412,
+      "joint_recall": 0.9673840784444075,
+      "excess_fpr_pp": -0.413929631962566,
+      "exchange_protocol": 0.2517552087774651,
+      "exchange_context": 0.2502771382280208
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.2455981941309255,
+      "joint_recall": 0.9088980406838887,
+      "excess_fpr_pp": 0.4334085778781027,
+      "exchange_protocol": 0.2499288033263086,
+      "exchange_context": 0.24619809762487896
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.23729119638826185,
+      "joint_recall": 0.9317359291151878,
+      "excess_fpr_pp": 0.343115124153498,
+      "exchange_protocol": 0.24958705929258984,
+      "exchange_context": 0.24597026826906646
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.14582392776523703,
+      "joint_recall": 0.9755813469778277,
+      "excess_fpr_pp": 0.3702031602708822,
+      "exchange_protocol": 0.24990032465683204,
+      "exchange_context": 0.2461126616164493
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.24460496613995486,
+      "joint_recall": 0.9076084695702816,
+      "excess_fpr_pp": 0.45146726862302644,
+      "exchange_protocol": 0.24944466594520703,
+      "exchange_context": 0.2499857606652617
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.23575620767494357,
+      "joint_recall": 0.9334414909106036,
+      "excess_fpr_pp": 0.21670428893905136,
+      "exchange_protocol": 0.24933075126730078,
+      "exchange_context": 0.2497864099789258
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.14591422121896164,
+      "joint_recall": 0.9737509879778693,
+      "excess_fpr_pp": 0.47855530474040786,
+      "exchange_protocol": 0.24944466594520703,
+      "exchange_context": 0.2499857606652617
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.24767494356659142,
+      "joint_recall": 0.9063604975248555,
+      "excess_fpr_pp": 0.4063205417607213,
+      "exchange_protocol": 0.2520077461980976,
+      "exchange_context": 0.25027054736002735
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.24153498871331827,
+      "joint_recall": 0.934606264819668,
+      "excess_fpr_pp": 0.1083521444695229,
+      "exchange_protocol": 0.25183687418123823,
+      "exchange_context": 0.24995728199578515
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17706546275395033,
+      "joint_fpr": 0.14555304740406322,
+      "joint_recall": 0.9750821581596573,
+      "excess_fpr_pp": 0.3611738148984217,
+      "exchange_protocol": 0.2519507888591445,
+      "exchange_context": 0.25021359002107424
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.1656884875846501,
+      "joint_recall": 0.9276176213652814,
+      "excess_fpr_pp": 1.9593679458239255,
+      "exchange_protocol": 0.2499288033263086,
+      "exchange_context": 0.24619809762487896
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.1528668171557562,
+      "joint_recall": 0.9667207454553018,
+      "excess_fpr_pp": 1.2009029345372444,
+      "exchange_protocol": 0.24958705929258984,
+      "exchange_context": 0.24597026826906646
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.11051918735891648,
+      "joint_recall": 0.9675943258871001,
+      "excess_fpr_pp": -0.06320541760722331,
+      "exchange_protocol": 0.24990032465683204,
+      "exchange_context": 0.2461126616164493
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.1689390519187359,
+      "joint_recall": 0.927451225092558,
+      "excess_fpr_pp": 1.8148984198645621,
+      "exchange_protocol": 0.24944466594520703,
+      "exchange_context": 0.2499857606652617
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.15431151241534988,
+      "joint_recall": 0.9670951370689297,
+      "excess_fpr_pp": 0.9751693002257311,
+      "exchange_protocol": 0.24933075126730078,
+      "exchange_context": 0.2497864099789258
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.11169300225733635,
+      "joint_recall": 0.9681351137734515,
+      "excess_fpr_pp": -0.21670428893905136,
+      "exchange_protocol": 0.24944466594520703,
+      "exchange_context": 0.2499857606652617
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.16930022573363432,
+      "joint_recall": 0.9262032530471317,
+      "excess_fpr_pp": 1.9413092550790088,
+      "exchange_protocol": 0.2520077461980976,
+      "exchange_context": 0.25027054736002735
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.15693002257336344,
+      "joint_recall": 0.966013561296227,
+      "excess_fpr_pp": 1.128668171557562,
+      "exchange_protocol": 0.25183687418123823,
+      "exchange_context": 0.24995728199578515
+    },
+    {
+      "split_seed": 29,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.10248306997742664,
+      "joint_fpr": 0.1108803611738149,
+      "joint_recall": 0.9668039435916636,
+      "excess_fpr_pp": -0.07223476297968379,
+      "exchange_protocol": 0.2519507888591445,
+      "exchange_context": 0.25021359002107424
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.24746560463432296,
+      "joint_recall": 0.9056509626179883,
+      "excess_fpr_pp": 0.05430847212165302,
+      "exchange_protocol": 0.24993589195657748,
+      "exchange_context": 0.24626036413368663
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.23723750905141203,
+      "joint_recall": 0.9326375317061001,
+      "excess_fpr_pp": 0.16292541636495628,
+      "exchange_protocol": 0.2495939823916574,
+      "exchange_context": 0.24603242442373993
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.15767559739319334,
+      "joint_recall": 0.962742733585596,
+      "excess_fpr_pp": 0.11766835626357552,
+      "exchange_protocol": 0.24990739949283414,
+      "exchange_context": 0.24626036413368663
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.24918537291817525,
+      "joint_recall": 0.9059420350118508,
+      "excess_fpr_pp": 0.2805937726285318,
+      "exchange_protocol": 0.24939453514545404,
+      "exchange_context": 0.2500783542752942
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.24031498913830557,
+      "joint_recall": 0.9332196764938251,
+      "excess_fpr_pp": 0.09956553222302544,
+      "exchange_protocol": 0.24913810297176398,
+      "exchange_context": 0.2498789070290908
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.16057204923968138,
+      "joint_recall": 0.9644060044076677,
+      "excess_fpr_pp": 0.2081824764663287,
+      "exchange_protocol": 0.2493660426817107,
+      "exchange_context": 0.25004986181155087
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "global",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.2490948587979725,
+      "joint_recall": 0.9038213647137096,
+      "excess_fpr_pp": 0.13577118030413116,
+      "exchange_protocol": 0.25195885688235464,
+      "exchange_context": 0.25039177137647095
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "observable_strata",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.24411658218682114,
+      "joint_recall": 0.9331780947232733,
+      "excess_fpr_pp": 0.03620564808110016,
+      "exchange_protocol": 0.2518448870273813,
+      "exchange_context": 0.25016383166652423
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Logistic Regression",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.17387762490948588,
+      "joint_fpr": 0.1570419985517741,
+      "joint_recall": 0.9640317684727016,
+      "excess_fpr_pp": 0.17197682838523132,
+      "exchange_protocol": 0.25198734934609796,
+      "exchange_context": 0.2502493090577542
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.18383417813178857,
+      "joint_recall": 0.9294357353736122,
+      "excess_fpr_pp": 1.5115858073859525,
+      "exchange_protocol": 0.24993589195657748,
+      "exchange_context": 0.24626036413368663
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.16383055756698045,
+      "joint_recall": 0.9665682564763608,
+      "excess_fpr_pp": 0.8146270818247647,
+      "exchange_protocol": 0.2495939823916574,
+      "exchange_context": 0.24603242442373993
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 101,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.11495293265749457,
+      "joint_recall": 0.9733045033057508,
+      "excess_fpr_pp": -0.22628530050687878,
+      "exchange_protocol": 0.24990739949283414,
+      "exchange_context": 0.24626036413368663
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.1865496017378711,
+      "joint_recall": 0.9299762983907854,
+      "excess_fpr_pp": 1.6111513396089794,
+      "exchange_protocol": 0.24939453514545404,
+      "exchange_context": 0.2500783542752942
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.166183924692252,
+      "joint_recall": 0.9661524387708429,
+      "excess_fpr_pp": 0.8508327299058662,
+      "exchange_protocol": 0.24913810297176398,
+      "exchange_context": 0.2498789070290908
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 211,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.11612961622013034,
+      "joint_recall": 0.9720154684186453,
+      "excess_fpr_pp": -0.28964518464880545,
+      "exchange_protocol": 0.2493660426817107,
+      "exchange_context": 0.25004986181155087
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "global",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.18664011585807386,
+      "joint_recall": 0.9265250114349869,
+      "excess_fpr_pp": 1.348660391020999,
+      "exchange_protocol": 0.25195885688235464,
+      "exchange_context": 0.25039177137647095
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "observable_strata",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.16790369297610427,
+      "joint_recall": 0.9653623851303589,
+      "excess_fpr_pp": 0.8598841419261399,
+      "exchange_protocol": 0.2518448870273813,
+      "exchange_context": 0.25016383166652423
+    },
+    {
+      "split_seed": 47,
+      "donor_seed": 307,
+      "model": "Random Forest",
+      "policy": "same_class_oracle",
+      "clean_fpr": 0.09703113685734975,
+      "joint_fpr": 0.11603910209992759,
+      "joint_recall": 0.972472867894715,
+      "excess_fpr_pp": -0.2986965966690805,
+      "exchange_protocol": 0.25198734934609796,
+      "exchange_context": 0.2502493090577542
+    }
+  ],
+  "limitations": [
+    "This is a post-hoc diagnostic developed after inspecting donor-policy results.",
+    "All experiments use UNSW-NB15 training records; no external dataset replication.",
+    "Only source duration and byte counts define matching; semantically valid network-flow synthesis is not guaranteed.",
+    "The same-class oracle may use ground-truth labels only as an offline methodological control.",
+    "Validation labels are used in performance measurement, not to fit observable matching quantile boundaries.",
+    "Models are trained on each split's fitting subset; successive splits are correlated, not independent populations."
+  ],
+  "train_sha256": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa"
+}
