@@ -173,3 +173,29 @@ Across these matched perturbation conditions, the Random Forest false-alarm inte
 The interaction was selected after observing earlier results, so this analysis remains *post-hoc*. The fifteen comparisons per model are not independent network populations; they reuse three validation partitions of the same historical benchmark. Within-class donor sampling uses ground-truth labels as an offline diagnostic and is unavailable in realistic unlabeled deployment. Neither unrestricted nor within-class sampling fully preserves physical consistency of network-flow features. Related methods for conditional permutations and dependence-aware feature interpretation already exist and must be compared directly before originality claims.
 
 To move beyond the label-oracle comparison, a class-blind, observable-stratified diagnostic is now implemented in `src/observable_donor_control.py`. It groups potential donor rows based only on the unperturbed observed fields `dur` and `sbytes` and records realized exchange rates. This follow-up does not establish a deployable sampler, and **no numerical result is asserted until its executed JSON is available and validated**.
+
+
+## 11. A class-blind donor-control check (executed exploratory results; 19 November 2026)
+
+A prior experiment showed that matching perturbation donor rows within the *ground-truth* attack/benign class dramatically changed the measured Random Forest Protocol+Context excess false-positive interaction. That control is unavailable at detection inference time because class labels are unknown. To examine whether a label-blind alternative could partially avoid the same apparent artifact, we evaluated donor matching by **two observed unperturbed traffic attributes**: flow duration (`dur`) and source bytes (`sbytes`).
+
+The completed experiment (`results/observable_donor_control.json`) used the UNSW-NB15 official training split only, three group-held-out fit/validation split seeds (13, 29, 47), three permutation seeds (101, 211, 307), two model families and three donor selection strategies: unrestricted global donors, observable-stratified donors, and a same-class oracle diagnostic. The 54 conditions were stored verbatim, with machine-readable summary and exchange counts in `results/observable_donor_analysis.json`.
+
+| Model | Donor policy | Mean excess FPR interaction | Mean joint-test-on-validation FPR | Mean attack recall | Protocol exchange rate | Context exchange rate |
+|---|---|---:|---:|---:|---:|---:|
+| Random Forest | Global donors | +1.610 pp | 17.70% | 92.50% | 25.04% | 24.88% |
+| Random Forest | Observable-stratified donors | +0.959 pp | 15.96% | 96.48% | 25.02% | 24.86% |
+| Random Forest | Same-class oracle | −0.219 pp | 11.33% | 96.95% | 25.04% | 24.88% |
+| Logistic Regression | Global donors | +0.337 pp | 24.53% | 90.55% | 25.04% | 24.88% |
+| Logistic Regression | Observable-stratified donors | +0.221 pp | 23.95% | 93.28% | 25.02% | 24.86% |
+| Logistic Regression | Same-class oracle | +0.309 pp | 15.02% | 96.87% | 25.04% | 24.88% |
+
+Here "joint-test-on-validation FPR" describes a *perturbed held-out subset of the original training corpus*, not the original UNSW official test split. Mean excess interaction is measured in percentage points and is not identical to absolute FPR.
+
+The RF excess interaction was **0.651 pp lower with observable matching** than unrestricted shuffling. Exchange rates were nearly identical, reducing but not eliminating the possibility that differing intervention frequency explains the contrast. Using only two matching attributes cannot guarantee physically valid synthetic network flows or full conditional dependence preservation. The result provides a reproducible observation about **how the diagnostic method can affect inferred feature-group interactions**. It does not show a new IDS detector or guarantee that any donor policy improves real-time network security.
+
+### External validation needed
+
+On 19 November 2026, the separate `docs/EXTERNAL_VALIDATION_PROTOCOL.md` was introduced before claiming any external results. CIC-IDS2017 and CSE-CIC-IDS2018 are proposed as candidate independent corpora based on their official University of New Brunswick and public-cloud dataset descriptions. Their CICFlowMeter features cannot simply be equated with UNSW-NB15 Protocol/Context groups, especially TTL/counter features; a cross-dataset test requires verified unit conversions, a semantically legitimate set of shared groups, and an independent temporal or network holdout. No such external dataset comparison has yet been executed in this repository.
+
+All findings in this section are **exploratory, AI-assisted, and not peer-reviewed**. Claiming a first-in-world conditional permutation method would contradict pre-existing related research.
