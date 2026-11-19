@@ -1,44 +1,50 @@
-# Quality gates and external research benchmarks
+# Research quality gates and comparable benchmark practices
 
-_Last assessed: **18 November 2026**. This is an internal checklist, not a university admission score or peer-review verdict._
+**Assessment date: 19 November 2026.** These are internal evidence-based criteria, **not** an official academic score, peer-review verdict or university-admission judgment.
 
-## Research projects we use as methodological references
+## External examples used for structure, not borrowed scientific claims
 
-- **ADBench** ([repository](https://github.com/Minqi824/ADBench), NeurIPS 2022): encourages systematic fixed datasets, explicit baseline configurations, careful comparisons and reproducibility instead of cherry-picked model scores. We should retain all weak baselines, not only successful ones.
-- **Adversarial Robustness Toolbox** ([repository](https://github.com/Trusted-AI/adversarial-robustness-toolbox)): mature modular testing and documented perturbation boundaries. Our synthetic feature-group permutations do not qualify as certified or adversarial robustness.
-- **MLPerf** ([benchmark ecosystem](https://mlcommons.org/benchmarks/)): standardization, versioning, unambiguous metrics, logged execution conditions and comparable runs. Our project is an academic experiment, not an MLPerf-compliant submission.
-- **UNSW-NB15** ([dataset provider](https://research.unsw.edu.au/projects/unsw-nb15-dataset)): known official-designated train/test split; high historical relevance but not a current deployment population.
+- **[ADBench (NeurIPS 2022)](https://github.com/Minqi824/ADBench)** — clear scope, traceable results, diverse baselines and access to exact implementations.
+- **[Adversarial Robustness Toolbox](https://github.com/Trusted-AI/adversarial-robustness-toolbox)** — modular robustness testing and documented API boundaries; our group perturbations are *not* adversarial robustness certification.
+- **[MLPerf benchmark projects](https://mlcommons.org/benchmarks/)** — comparable run settings, validation requirements and machine-readable evidence; this repo is *not* MLPerf compliant.
+- **[NeurIPS research checklist](https://neurips.cc/public/guides/PaperChecklist)** — reproducibility, uncertainty, limitations, data licensing and the distinction between measured facts and unsupported claims.
 
-No example above establishes that our method is novel; these are **quality practices** and must not be presented as comparative scientific outcome baselines.
+Our README, manuscript, structured documentation and citation instructions borrow **publication hygiene**, not research conclusions.
 
-## Required gates for a defensible 9–9.5/10 *internal* assessment
+## Gate-by-gate status
 
-| Area | Concrete acceptance gate | Current status on 18 Nov 2026 |
+| Criterion | Current evidence | Status |
 |---|---|---|
-| Valid inputs | Byte-pinned dataset provenance, exact split, full class metrics and confusion counts | **Completed** for UNSW-NB15 |
-| Research design | Hypotheses fixed before outcome inspection; no tuning on held-out test | **Partial**; several current experiments explicitly post-hoc |
-| Independent replication | At least one truly external, previously untouched corpus with harmonized features | **Missing** |
-| Causal and alternative explanations | Matched retrained TTL ablation, donor-policy comparison, realistic shifts | **Partial**; TTL retraining and class-mixing executed on training data; realistic independent shifts missing |
-| Statistical rigor | Dependence/cluster-aware uncertainty, multiple comparisons correction, repeated independent datasets | **Missing/partial**; 60-condition permutation-seed control coded, results not yet confirmed; Wilson intervals assume row independence |
-| Strong matched baselines | Modern threshold/calibration and group-interaction comparisons, matched runtime/budget | **Partial**; majority, LR and RF supported |
-| Reproducibility | Automated tests, environment freeze, checksums, data-split audit, all outcomes and failures published | **Mostly implemented**; complete current CI outcome still needs verification |
-| Scientific argument | Clear review of closest methods and transparent limits of novelty | **Partial**; targeted overview but not a systematic review |
-| Publication quality | Final internally reviewed manuscript with graphs, source citations, date, disclosures, replication instructions | **Draft** |
-| Ownership | Student can reproduce work independently, defend choices and disclose substantial AI help | **Not externally assessed** |
+| Problem relevance | NIDS false alarms, validation transfer and group-permutation reliability | **Strong** |
+| Baseline implementations | LR, RF and majority dummy, confusion counts, model timings | **Implemented** |
+| Data provenance | Pinned train/test CSV hashes, author/source attribution, mirror caveat | **Implemented; original publisher not independently authenticated** |
+| Train-only preprocessing | Leakage-conscious scikit-learn pipelines, grouped validation for follow-ups | **Implemented** |
+| Saved real numerical results | Original benchmark, alert budget, interaction, class mixing, frozen bins | **Executed** |
+| Source code quality | Modular Python scripts and synthetic-data tests, GitHub CI | **Strong but research-specific** |
+| CI | Main tests previously passing; TTL workflow YAML repaired, rerun outcome must be verified | **Partial until successful TTL rerun** |
+| Statistical independence | Repeated donor seeds use overlapping same-source validation folds | **Not sufficient** |
+| Scientific novelty | Possible empirical donor-policy artifact quantification; conditional permutation pre-exists | **Exploratory, not independently confirmed** |
+| Independent external-origin validation | UQ common NetFlow-v2 source/target candidate, strict schema audit code | **Not executed** |
+| Manuscript quality | Coherent working paper with findings, citations, limitations and data links | **Working draft; not externally reviewed** |
+| Student verification | No third-party attestation of independent understanding/reruns | **Not verified** |
+| Reuse rights | Citation metadata and contribution rules; no explicit software license | **License decision needed from rights holder** |
 
-**No project score should be forced to 9.5/10 simply because code, visuals or documentation improved.** The unsatisfied gates are scientific, not cosmetic.
+## What is still required for a defensible originality 9/10
 
-## High-value next experiments
+1. A **new independent-origin dataset** whose semantically matching features and clean holdout protocol are frozen before looking at outcome labels.
+2. Matched comparisons against established **conditional/group permutation feature-importance** or interaction techniques using comparable feature groups and computational budgets.
+3. A dependence-aware uncertainty strategy based on independent session/day/network units; correction for selecting feature pairs and multiple statistical comparisons.
+4. Physical-consistency checks for the synthetic interventions and evidence that the finding is not merely invalid synthetic flow combinations.
+5. An independently reproduced analysis, checked citations, explicit personal research contribution and transparent AI-use disclosure.
 
-1. Execute the retrained full-vs-no-TTL study using paired training indices, keep the original 2026-11-18 design and report negative outcomes.
-2. Compare grouped interactions with a documented alternative partition and an appropriate null control on *training validation only*.
-3. Repeat on an untouched external dataset after registering the precise feature mapping, target definition and evaluation policy.
-4. Use uncertainty methods appropriate for correlated sessions/traffic groups; explicitly handle multiple feature-group hypotheses.
-5. Have the human investigator independently rerun at least one complete experiment and record hardware, dataset hashes, run time and decisions.
+Passing unit tests, clean GitHub presentation and repeated random seeds cannot substitute for these scientific gates.
 
-## How to report progress honestly
+## Integrity language
 
-- **Executed:** provide commit, input hashes, machine-readable result, model definition, and test trace.
-- **Pending:** code and workflow exist, but executed result is not yet confirmed.
-- **Exploratory:** outcome or hypothesis is influenced by previously viewed labels and requires later untouched confirmation.
-- **Unsupported:** do not claim first-in-world novelty, real-world protection, peer-review recognition or admission.
+- **Measured**: versioned outputs were generated by executed code from identified inputs.
+- **Exploratory**: hypotheses or controls were influenced by previously inspected results.
+- **Proposed**: a protocol or implementation exists but the needed data/run does not.
+- **Externally confirmed**: a properly independent-origin test supports a frozen prior hypothesis. **This status has not been reached.**
+- **Not established**: never claim novel algorithm priority, zero-day prevention, deployment readiness, publication acceptance or guaranteed admissions.
+
+Use [STATUS.md](STATUS.md), [REPRODUCIBILITY.md](REPRODUCIBILITY.md) and the [working manuscript](../paper/MANUSCRIPT_DRAFT.md) as the source of truth for current claims.
