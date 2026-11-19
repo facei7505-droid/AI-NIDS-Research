@@ -10,7 +10,7 @@
 
 **Research question.** *How much can the choice of synthetic feature-perturbation donors change the apparent false-alarm interactions of machine-learning NIDS?* We focus on measurement reliability rather than claiming a superior attack classifier.
 
-[Read working paper](paper/MANUSCRIPT_DRAFT.md) · [Reproduce](docs/REPRODUCIBILITY.md) · [Experimental design](docs/RESEARCH_DESIGN.md) · [Evidence status](docs/STATUS.md) · [Related work](docs/RELATED_WORK.md)
+[Project audit & scores](docs/PROJECT_AUDIT_2026-11-19.md) · [Read working paper](paper/MANUSCRIPT_DRAFT.md) · [Reproduce](docs/REPRODUCIBILITY.md) · [Experimental design](docs/RESEARCH_DESIGN.md) · [Evidence status](docs/STATUS.md) · [Related work](docs/RELATED_WORK.md)
 
 ---
 
@@ -82,7 +82,7 @@ The measured group exchange fractions are all close to 25%. A separate 54-condit
 git clone https://github.com/facei7505-droid/AI-NIDS-Research.git
 cd AI-NIDS-Research
 python -m venv .venv
-# Activate your virtual environment (Windows: .venv\\Scripts\\Activate.ps1)
+# Activate your virtual environment (Windows: .\.venv\Scripts\Activate.ps1)
 python -m pip install -r requirements.txt
 python -m pytest -q
 python src/download_data.py
