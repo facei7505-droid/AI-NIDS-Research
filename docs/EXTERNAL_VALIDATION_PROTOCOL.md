@@ -50,3 +50,20 @@ This is **not** a novel conditional permutation algorithm. Prior literature on c
 6. Cite official dataset documentation and reveal substantial AI assistance.
 
 If these gates cannot be met, preserve current project originality as an exploratory finding rather than claiming a 9/10 scientific contribution.
+
+
+## Added 19 November 2026: more suitable standardized external-data path
+
+The two datasets previously suggested above (original UNSW-NB15 and original CICFlowMeter files) have incompatible extraction schemas. A stronger alternative is the **University of Queensland NetFlow v2** standardization, documented at:
+
+- https://staff.itee.uq.edu.au/marius/NIDS_datasets/
+- https://www.cyber.uq.edu.au/project/machine-learning-based-nids-datasets
+- Sarhan, M., Layeghy, S., & Portmann, M., *Towards a Standard Feature Set for Network Intrusion Detection System Datasets*, https://doi.org/10.1007/s11036-021-01843-0
+
+The proposed source is **NF-UNSW-NB15-v2** (2,390,275 flows) and external-origin target **NF-CSE-CIC-IDS2018-v2** (18,893,708 flows). The v2 collection uses 43 standardized NetFlow features, as stated by UQ. These counts are *publisher metadata*, not executed project experiments. The source is a derived dataset from historical UNSW traffic and is **not independent of the original UNSW traffic collection**. The CIC-derived target comes from another collection, but also does not imply live deployment.
+
+See [NETFLOW_V2_EXTERNAL_PLAN.md](NETFLOW_V2_EXTERNAL_PLAN.md) for independent-origin study constraints and a strict validation checklist.
+
+**Implemented audit (not yet executed against real external CSVs):** `src/audit_netflow_v2_schema.py`. It validates headers, binary Label convention, exclusion of source/target IP and answer-bearing fields, candidate feature agreement, and SHA256 hashes. It intentionally **does not** fit a model or claim a cross-dataset result. Before collecting target labels, manually confirm the exact 43 feature semantics and frozen group assignments, then apply the registered test exactly once.
+
+The broader scientific question is whether donor-policy-dependent false-positive interaction estimates transfer across *different network origins* under a harmonized feature schema. This is not a claim that conditional permutation, common NetFlow features, or cross-dataset NIDS evaluation were invented in this project; all have published precedents.
