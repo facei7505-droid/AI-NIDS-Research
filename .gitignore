@@ -1,8 +1,30 @@
+# Python, local caches and dependency environments
 __pycache__/
 .pytest_cache/
 .venv/
+*.py[cod]
 node_modules/
-data/*.csv
-results/metrics_*.csv
-results/metadata_*.json
-results/train_cv_*.csv
+
+# Research input files are never committed or redistributed through Git
+/data/*.csv
+/data/external/
+/data/**/*.csv
+/data/**/*.parquet
+/data/**/*.pcap
+/data/**/*.pcapng
+/data/**/*.zip
+/data/**/*.gz
+/data/**/*.json
+
+# Large source datasets or cached archive downloads anywhere
+*.pcap
+*.pcapng
+
+# Most generated baseline files must be published only after an executed run
+/results/metrics_*.csv
+/results/metadata_*.json
+/results/train_cv_*.csv
+
+# Generated external raw-data caches, not scientific report Markdown/JSON
+/results/external_cache/
+/tmp/
