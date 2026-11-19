@@ -6,7 +6,7 @@
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-blue)
 ![Research status](https://img.shields.io/badge/research-exploratory-64748b)
 
-> **Research status — 18 November 2026:** Historical UNSW-NB15 baseline, false-alarm transfer, feature-group interaction, and TTL sensitivity experiments have **executed**. Scientific originality and external generalization are **not established**. No claim of peer review, novel detector architecture, real-time protection or independent external validation is made.
+> **Research status — 19 November 2026:** Historical UNSW-NB15 baseline, false-alarm transfer, feature-group interaction, and TTL sensitivity experiments have **executed**. Scientific originality and external generalization are **not established**. No claim of peer review, novel detector architecture, real-time protection or independent external validation is made.
 
 ## Research question
 
@@ -171,3 +171,20 @@ The values come from 3 grouped validation splits × 3 donor seeds × 2 models ×
 - [External validation protocol](docs/EXTERNAL_VALIDATION_PROTOCOL.md) — CIC-IDS2017 / CSE-CIC-IDS2018 are **candidates only**. Source/target feature mappings have not been verified and no independent cross-dataset result is claimed.
 
 The study is exploratory: the feature pair and donor policies were developed after viewing related results, and class-blind observable matching is transductive, not physically guaranteed or production-grade.
+
+## Frozen donor quantiles: paired reproducibility check (19 November 2026)
+
+A separate [54-condition frozen-bin experiment](results/train_fitted_donor_control.json) estimates class-blind matching quantiles on **training records only** and applies the cutpoints unchanged on validation. This avoids fitting matching-bin boundaries from validation covariates. The [paired report](results/DONOR_QUANTILE_COMPARISON.md) and [machine-readable comparison](results/donor_quantile_comparison.json) compare identical models, split seeds and donor-policy cells with the previous validation-fitted quantile experiment.
+
+| Model | Observable-group excess FPR with validation-fitted bins | Observable-group excess FPR with training-fitted bins |
+|---|---:|---:|
+| Random Forest | +0.958702 pp | +0.958734 pp |
+| Logistic Regression | +0.221477 pp | +0.213412 pp |
+
+The observed contrast is small in this dataset. It **does not** independently confirm deployment, scientific novelty or external transfer. A [dedicated integrity test](tests/test_donor_quantile_published_evidence.py) recomputes the report from original executed JSON files.
+
+### Proposed standardized cross-domain evaluation, NOT executed
+
+[UQ NetFlow v2 plan](docs/NETFLOW_V2_EXTERNAL_PLAN.md) and [strict schema/provenance audit](src/audit_netflow_v2_schema.py) target harmonized **NF-UNSW-NB15-v2** and **NF-CSE-CIC-IDS2018-v2**. The real external CSVs have **not been downloaded or evaluated**. Their published common feature schema must still be verified on the acquired files and semantically suitable feature groups frozen before inspecting held-out external labels. The [audit tests](tests/test_netflow_v2_schema_audit.py) check obvious label leakage and mismatched schemas.
+
+**Scientific novelty of 9/10 remains unverified.** The novelty candidate is whether model-specific false-alarm interactions are artifacts of synthetic perturbation donor selection across network domains — not the already-established principle of conditional permutation.
