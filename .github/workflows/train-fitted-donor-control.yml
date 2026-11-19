@@ -31,14 +31,14 @@ jobs:
           python src/train_fitted_donor_control.py \
             --train data/UNSW_NB15_training-set.csv \
             --output results/train_fitted_donor_control.json
-      - name: Validate model/split/policy coverage, training provenance and frozen matching
+      - name: Compare frozen quantiles to prior executed transductive control\n        run: |\n          python src/compare_matching_boundaries.py \\\n            --old results/observable_donor_control.json \\\n            --frozen results/train_fitted_donor_control.json \\\n            --json results/donor_quantile_comparison.json \\\n            --report results/DONOR_QUANTILE_COMPARISON.md\n      - name: Validate model/split/policy coverage, training provenance and frozen matching
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           d=json.loads(Path('results/train_fitted_donor_control.json').read_text())
           assert d['train_sha256']=='bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa'
-          assert d['status']=='POST_HOC_TRAIN_FITTED_OBSERVABLE_STRATA'
+          assert d['status']=='POST_HOC_TRAIN_FITTED_OBSERVABLE_STRATA'\n          c=json.loads(Path('results/donor_quantile_comparison.json').read_text())\n          assert c['n_paired_conditions']==54\n          assert len(c['summary'])==6\n          assert c['train_sha256']==d['train_sha256']
           assert len(d['rows'])==3*3*2*3
           assert len(d['frozen_strata_parameters'])==3
           assert len({(x['split_seed'],x['donor_seed'],x['model'],x['policy']) for x in d['rows']})==54
@@ -55,7 +55,7 @@ jobs:
         if: always()
         with:
           name: training-fitted-donor-evidence
-          path: results/train_fitted_donor_control.json
+          path: |\n            results/train_fitted_donor_control.json\n            results/donor_quantile_comparison.json\n            results/DONOR_QUANTILE_COMPARISON.md
           if-no-files-found: warn
           retention-days: 30
       - name: Publish executed evidence only after all checks succeed
@@ -63,7 +63,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f results/train_fitted_donor_control.json
+          git add -f results/train_fitted_donor_control.json results/donor_quantile_comparison.json results/DONOR_QUANTILE_COMPARISON.md
           git commit -m "results: publish executed training-fitted donor sensitivity [skip ci]"
           git fetch origin main
           git rebase origin/main
